@@ -30,8 +30,10 @@ struct ContentView: View {
         VStack() {
             HStack() {
                 Text("Server IP: ")
+                    .fixedSize()
+                
                 TextField("...", text: $serverInfo.urlString)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(minWidth: 100, minHeight: 100)
                 
                 stateView
             }
