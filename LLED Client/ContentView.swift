@@ -30,9 +30,7 @@ struct ContentView: View {
         VStack() {
             HStack() {
                 Text("Server IP: ")
-                TextField("...", text: $serverInfo.urlString, onEditingChanged: { (changed) in
-                    print("Editing Changed")
-                })
+                TextField("...", text: $serverInfo.urlString)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 stateView
