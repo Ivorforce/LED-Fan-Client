@@ -13,9 +13,10 @@ class ServerInfo: ObservableObject {
         case invalidURL, noConnection, connecting, connected
     }
     
-    var urlString: String = "" {
+    var urlString: String = UserDefaults.standard.string(forKey: "server") ?? "" {
         didSet {
-            self.url = URL(string: "http://\(urlString)")
+            UserDefaults.standard.set(urlString, forKey: "server")
+            url = URL(string: "http://\(urlString)")
         }
     }
     
