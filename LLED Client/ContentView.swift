@@ -9,9 +9,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var serverInfo = ServerInfo()
+
+    var stateView: some View {
+        switch serverInfo.state {
+        case .noConnection, .invalidURL:
+            return AnyView(Image(systemName: NSImage.statusUnavailableName))
+        case .connecting:
+            return AnyView(ProgressIndicator(configuration: { view in
+                view.style = .spinning
+                view.controlSize = .small
+                view.startAnimation(self)
+            }))
+        case .connected:
+            return AnyView(Image(systemName: NSImage.statusAvailableName))
+        }
+    }
+    
     var body: some View {
-        Text("Hello, World!")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        VStack() {
+            HStack() {
+                Text("Server IP: ")
+                TextField("...", text: $serverInfo.urlString, onEditingChanged: { (changed) in
+                    print("Editing Changed")
+                })
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                stateView
+            }
+        }
+            .padding()
     }
 }
 

@@ -12,6 +12,9 @@
 		80E68F242485831700F47DB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F232485831700F47DB1 /* Assets.xcassets */; };
 		80E68F272485831700F47DB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F262485831700F47DB1 /* Preview Assets.xcassets */; };
 		80E68F2A2485831700F47DB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F282485831700F47DB1 /* Main.storyboard */; };
+		80E68F332485B2F900F47DB1 /* ServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F322485B2F900F47DB1 /* ServerInfo.swift */; };
+		80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F342485B89200F47DB1 /* Foundation+LLED.swift */; };
+		80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,9 @@
 		80E68F292485831700F47DB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		80E68F2B2485831700F47DB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80E68F2C2485831700F47DB1 /* LLED_Client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LLED_Client.entitlements; sourceTree = "<group>"; };
+		80E68F322485B2F900F47DB1 /* ServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfo.swift; sourceTree = "<group>"; };
+		80E68F342485B89200F47DB1 /* Foundation+LLED.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+LLED.swift"; sourceTree = "<group>"; };
+		80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Ports.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,9 @@
 			children = (
 				80E68F1F2485831400F47DB1 /* AppDelegate.swift */,
 				80E68F212485831400F47DB1 /* ContentView.swift */,
+				80E68F322485B2F900F47DB1 /* ServerInfo.swift */,
+				80E68F342485B89200F47DB1 /* Foundation+LLED.swift */,
+				80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */,
 				80E68F232485831700F47DB1 /* Assets.xcassets */,
 				80E68F282485831700F47DB1 /* Main.storyboard */,
 				80E68F2B2485831700F47DB1 /* Info.plist */,
@@ -147,6 +156,9 @@
 			files = (
 				80E68F222485831400F47DB1 /* ContentView.swift in Sources */,
 				80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */,
+				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
+				80E68F332485B2F900F47DB1 /* ServerInfo.swift in Sources */,
+				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
