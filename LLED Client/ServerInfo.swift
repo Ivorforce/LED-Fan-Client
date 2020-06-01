@@ -36,7 +36,10 @@ class ServerInfo: ObservableObject {
 
             let task = URLSession.shared.dataTask(with: url) { [unowned self] (data, response, error) in
                 DispatchQueue.main.sync {
-                    guard let data = data, let string = String(data: data, encoding: .ascii) else {
+                    guard
+                        let data = data,
+                        let json =  try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    else {
                         self.state = .noConnection
                         return
                     }
