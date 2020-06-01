@@ -38,7 +38,8 @@ class ServerInfo: ObservableObject {
                 DispatchQueue.main.sync {
                     guard
                         let data = data,
-                        let json =  try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        let json =  try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                        self._interpret(info: json)
                     else {
                         self.state = .noConnection
                         return
@@ -50,5 +51,9 @@ class ServerInfo: ObservableObject {
 
             task.resume()
         }
+    }
+    
+    func _interpret(info: [String: Any]) -> Bool {
+        return false
     }
 }
