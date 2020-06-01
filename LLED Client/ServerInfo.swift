@@ -22,7 +22,6 @@ class ServerInfo: ObservableObject {
     var state: State = .invalidURL {
         willSet {
             self.objectWillChange.send()
-            print(state)
         }
     }
     
