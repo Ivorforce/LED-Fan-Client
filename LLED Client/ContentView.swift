@@ -13,8 +13,14 @@ struct ContentView: View {
 
     var stateView: some View {
         switch serverInfo.state {
-        case .noConnection, .invalidURL:
+        case .invalidURL:
             return AnyView(Image(systemName: NSImage.statusUnavailableName))
+        case .noConnection:
+            return AnyView(Button(action: {
+                self.serverInfo.connect()
+            }) {
+                Image(systemName: NSImage.refreshTemplateName)
+            })
         case .connecting:
             return AnyView(ProgressIndicator(configuration: { view in
                 view.style = .spinning
@@ -36,6 +42,7 @@ struct ContentView: View {
                     .frame(minWidth: 100, minHeight: 100)
                 
                 stateView
+                    .frame(width: 50)
             }
         }
             .padding()
