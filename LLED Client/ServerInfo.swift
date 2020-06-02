@@ -24,7 +24,9 @@ class ServerInfo: ObservableObject {
         }
     }
     
-    var url: URL? { URL(string: "http://\(urlString)") }
+    var url: URL? {
+        urlString != "" ? URL(string: "http://\(urlString)") : nil
+    }
 
     var state: State = .invalidURL {
         willSet {
