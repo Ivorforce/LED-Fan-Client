@@ -35,9 +35,11 @@ struct ContentView: View {
     var body: some View {
         VStack() {
             HStack() {
-                Text("Server IP: ")
+                Text("Server IP")
+                    .bold()
                     .fixedSize()
-                
+                    .frame(minWidth: 100)
+
                 TextField("...", text: $serverInfo.urlString)
                     .frame(minWidth: 100)
                 
