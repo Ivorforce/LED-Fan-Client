@@ -50,6 +50,6 @@ class ArtnetProvider {
         packet.append(contentsOf: payload.count.bigEndian.bytes[0...1])
         packet.append(payload)
 
-        return packet // TODO
+        return packet
     }
 }
