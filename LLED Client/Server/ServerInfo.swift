@@ -74,12 +74,11 @@ class ServerInfo: ObservableObject {
     func endpoint(mode: ScreenMode.Type) -> Endpoint? {
         guard
             let info = serverInfo[mode.key] as? [String: Any],
-            let screenMode = mode.parse(info),
-            let url = url
+            let screenMode = mode.parse(info)
         else {
             return nil
         }
 
-        return Endpoint(screenMode: screenMode, address: url)
+        return Endpoint(screenMode: screenMode, address: urlString)
     }
 }

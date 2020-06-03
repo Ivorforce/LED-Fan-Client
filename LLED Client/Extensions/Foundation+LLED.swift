@@ -13,3 +13,9 @@ extension Image {
         self = Image(nsImage: NSImage(named: systemName)!)
     }
 }
+
+extension TimeInterval {
+    static func seconds(_ seconds: Double) -> TimeInterval {
+        return seconds
+    }
+}

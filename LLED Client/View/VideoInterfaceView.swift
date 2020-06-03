@@ -28,6 +28,6 @@ struct VideoInterfaceView: View {
 
 struct VideoInterfaceView_Previews: PreviewProvider {
     static var previews: some View {
-        VideoInterfaceView(endpoint: Endpoint(screenMode: Cartesian(width: 20, height: 20), address: URL(string: "")!))
+        VideoInterfaceView(endpoint: Endpoint(screenMode: Cartesian(width: 20, height: 20), address: ""))
     }
 }

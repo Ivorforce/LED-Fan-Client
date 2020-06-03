@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cocoa
 
 protocol ScreenMode {
     static var key: String { get }
@@ -14,6 +15,8 @@ protocol ScreenMode {
     static func parse(_ dict: [String: Any]) -> Self?
 
     var description: String { get }
+
+    func pack(image: NSImage) -> Data
 }
 
 struct Cartesian: ScreenMode {
@@ -30,6 +33,10 @@ struct Cartesian: ScreenMode {
     
     let width: Int
     let height: Int
+    
+    func pack(image: NSImage) -> Data {
+        return Data() // TODO
+    }
 
     var description: String {
         "Size: \(width)x\(height)"
