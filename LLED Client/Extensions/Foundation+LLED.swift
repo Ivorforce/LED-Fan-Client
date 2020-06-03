@@ -20,6 +20,12 @@ extension TimeInterval {
     }
 }
 
+extension Int {
+    var bytes : [UInt8] {
+        return withUnsafeBytes(of: self, Array.init)
+    }
+}
+
 extension NSImage {
     func resized(to newSize: NSSize) -> NSImage? {
         if let bitmapRep = NSBitmapImageRep(
