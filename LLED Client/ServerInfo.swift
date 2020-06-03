@@ -8,15 +8,39 @@
 
 import Cocoa
 
+protocol Endpoint {
+    static var key: String { get }
+    static var name: String { get }
+    static func parse(_ dict: [String: Any]) -> Self?
+
+    var description: String { get }
+}
+
+struct Cartesian: Endpoint {
+    static var key: String { "cartesian" }
+    static var name: String { "Cartesian" }
+
+    static func parse(_ dict: [String : Any]) -> Self? {
+        guard let width = dict["width"] as? Int, let height = dict["height"] as? Int else {
+            return nil
+        }
+        
+        return Cartesian(width: width, height: height)
+    }
+    
+    let width: Int
+    let height: Int
+
+    var description: String {
+        "Size: \(width)x\(height)"
+    }
+}
+
 class ServerInfo: ObservableObject {
     enum State {
         case invalidURL, noConnection, connecting, connected
     }
-    
-    enum ScreenMode {
-        case cartesian, concentric
-    }
-    
+        
     init() {
         connect()
     }
@@ -73,5 +97,13 @@ class ServerInfo: ObservableObject {
         
         serverInfo = info;
         return true
+    }
+    
+    func endpoint(mode: Endpoint.Type) -> Endpoint? {
+        guard let info = serverInfo[mode.key] as? [String: Any] else {
+            return nil
+        }
+
+        return mode.parse(info)
     }
 }

@@ -9,8 +9,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    static let selectableTypes: [Endpoint.Type] = [
+        Cartesian.self
+    ]
+    
     @ObservedObject var serverInfo = ServerInfo()
-    @State var selectedMode = ServerInfo.ScreenMode.cartesian
+
+    @State var selectedMode = 0
 
     var stateView: some View {
         switch serverInfo.state {
@@ -53,9 +58,15 @@ struct ContentView: View {
                 .fixedSize()
             
             if serverInfo.state == .connected {
-                Picker(selection: $selectedMode, label: Text("Screen Mode")) {
-                    Text("Cartesian").tag(ServerInfo.ScreenMode.cartesian)
-                    Text("Concentric").tag(ServerInfo.ScreenMode.concentric)
+                serverInfo.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
+                    HStack {
+                        Picker(selection: $selectedMode, label: Text("Screen Mode")) {
+                            Text("Cartesian").tag(0)
+                        }
+                        
+                        Image(systemName: NSImage.quickLookTemplateName)
+                            .overlay(TooltipView(endpoint.description).withCursor())
+                    }
                 }
             }
         }
