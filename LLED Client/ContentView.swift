@@ -39,7 +39,7 @@ struct ContentView: View {
                     .fixedSize()
                 
                 TextField("...", text: $serverInfo.urlString)
-                    .frame(minWidth: 100, minHeight: 100)
+                    .frame(minWidth: 100)
                 
                 stateView
                     .frame(width: 50)
