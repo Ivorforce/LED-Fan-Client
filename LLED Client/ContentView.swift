@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var serverInfo = ServerInfo()
+    @State var selectedMode = ServerInfo.ScreenMode.cartesian
 
     var stateView: some View {
         switch serverInfo.state {
@@ -45,6 +46,17 @@ struct ContentView: View {
                 
                 stateView
                     .frame(width: 50)
+            }
+            
+            Spacer()
+                .frame(height: 20)
+                .fixedSize()
+            
+            if serverInfo.state == .connected {
+                Picker(selection: $selectedMode, label: Text("Screen Mode")) {
+                    Text("Cartesian").tag(ServerInfo.ScreenMode.cartesian)
+                    Text("Concentric").tag(ServerInfo.ScreenMode.concentric)
+                }
             }
         }
             .padding()

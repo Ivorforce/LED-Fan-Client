@@ -13,6 +13,10 @@ class ServerInfo: ObservableObject {
         case invalidURL, noConnection, connecting, connected
     }
     
+    enum ScreenMode {
+        case cartesian, concentric
+    }
+    
     init() {
         connect()
     }
@@ -24,8 +28,10 @@ class ServerInfo: ObservableObject {
         }
     }
     
+    var serverInfo: [String: Any] = [:]
+    
     var url: URL? {
-        urlString != "" ? URL(string: "http://\(urlString)") : nil
+        urlString != "" ? URL(string: "http://\(urlString)/i") : nil
     }
 
     var state: State = .invalidURL {
@@ -61,6 +67,11 @@ class ServerInfo: ObservableObject {
     }
         
     func _interpret(info: [String: Any]) -> Bool {
-        return false
+        guard info.keys.contains("cartesian") else {
+            return false
+        }
+        
+        serverInfo = info;
+        return true
     }
 }
