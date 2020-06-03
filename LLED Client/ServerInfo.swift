@@ -8,34 +8,6 @@
 
 import Cocoa
 
-protocol Endpoint {
-    static var key: String { get }
-    static var name: String { get }
-    static func parse(_ dict: [String: Any]) -> Self?
-
-    var description: String { get }
-}
-
-struct Cartesian: Endpoint {
-    static var key: String { "cartesian" }
-    static var name: String { "Cartesian" }
-
-    static func parse(_ dict: [String : Any]) -> Self? {
-        guard let width = dict["width"] as? Int, let height = dict["height"] as? Int else {
-            return nil
-        }
-        
-        return Cartesian(width: width, height: height)
-    }
-    
-    let width: Int
-    let height: Int
-
-    var description: String {
-        "Size: \(width)x\(height)"
-    }
-}
-
 class ServerInfo: ObservableObject {
     enum State {
         case invalidURL, noConnection, connecting, connected
@@ -55,7 +27,7 @@ class ServerInfo: ObservableObject {
     var serverInfo: [String: Any] = [:]
     
     var url: URL? {
-        urlString != "" ? URL(string: "http://\(urlString)/i") : nil
+        urlString != "" ? URL(string: "http://\(urlString)") : nil
     }
 
     var state: State = .invalidURL {
@@ -65,7 +37,7 @@ class ServerInfo: ObservableObject {
     }
     
     func connect() {
-        guard let url = url else {
+        guard let url = url?.appendingPathComponent("i") else {
             state = .invalidURL
             return
         }
@@ -99,11 +71,15 @@ class ServerInfo: ObservableObject {
         return true
     }
     
-    func endpoint(mode: Endpoint.Type) -> Endpoint? {
-        guard let info = serverInfo[mode.key] as? [String: Any] else {
+    func endpoint(mode: ScreenMode.Type) -> Endpoint? {
+        guard
+            let info = serverInfo[mode.key] as? [String: Any],
+            let screenMode = mode.parse(info),
+            let url = url
+        else {
             return nil
         }
 
-        return mode.parse(info)
+        return Endpoint(screenMode: screenMode, address: url)
     }
 }

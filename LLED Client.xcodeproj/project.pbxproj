@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
+		80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F3248829B6006E218C /* VideoInterfaceView.swift */; };
+		80C309F624882C32006E218C /* ScreenMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F524882C32006E218C /* ScreenMode.swift */; };
+		80C309F824882C44006E218C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F724882C44006E218C /* Endpoint.swift */; };
 		80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F1F2485831400F47DB1 /* AppDelegate.swift */; };
 		80E68F222485831400F47DB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F212485831400F47DB1 /* ContentView.swift */; };
 		80E68F242485831700F47DB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F232485831700F47DB1 /* Assets.xcassets */; };
@@ -18,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		80C309F1248828D7006E218C /* ImageProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProviderView.swift; sourceTree = "<group>"; };
+		80C309F3248829B6006E218C /* VideoInterfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInterfaceView.swift; sourceTree = "<group>"; };
+		80C309F524882C32006E218C /* ScreenMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenMode.swift; sourceTree = "<group>"; };
+		80C309F724882C44006E218C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		80E68F1C2485831400F47DB1 /* LLED Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LLED Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E68F1F2485831400F47DB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E68F212485831400F47DB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,7 +71,11 @@
 			children = (
 				80E68F1F2485831400F47DB1 /* AppDelegate.swift */,
 				80E68F212485831400F47DB1 /* ContentView.swift */,
+				80C309F3248829B6006E218C /* VideoInterfaceView.swift */,
+				80C309F1248828D7006E218C /* ImageProviderView.swift */,
 				80E68F322485B2F900F47DB1 /* ServerInfo.swift */,
+				80C309F524882C32006E218C /* ScreenMode.swift */,
+				80C309F724882C44006E218C /* Endpoint.swift */,
 				80E68F342485B89200F47DB1 /* Foundation+LLED.swift */,
 				80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */,
 				80E68F232485831700F47DB1 /* Assets.xcassets */,
@@ -154,10 +166,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80C309F624882C32006E218C /* ScreenMode.swift in Sources */,
+				80C309F824882C44006E218C /* Endpoint.swift in Sources */,
 				80E68F222485831400F47DB1 /* ContentView.swift in Sources */,
 				80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */,
+				80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */,
 				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
 				80E68F332485B2F900F47DB1 /* ServerInfo.swift in Sources */,
+				80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */,
 				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

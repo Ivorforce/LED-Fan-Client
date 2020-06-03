@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    static let selectableTypes: [Endpoint.Type] = [
+    static let selectableTypes: [ScreenMode.Type] = [
         Cartesian.self
     ]
     
@@ -58,15 +58,20 @@ struct ContentView: View {
                 .fixedSize()
             
             if serverInfo.state == .connected {
-                serverInfo.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
-                    HStack {
-                        Picker(selection: $selectedMode, label: Text("Screen Mode")) {
-                            Text("Cartesian").tag(0)
-                        }
-                        
-                        Image(systemName: NSImage.quickLookTemplateName)
-                            .overlay(TooltipView(endpoint.description).withCursor())
+                HStack {
+                    Picker(selection: $selectedMode, label: Text("Screen Mode")) {
+                        Text("Cartesian").tag(0)
                     }
+                    
+                    serverInfo.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
+                        Image(systemName: NSImage.quickLookTemplateName)
+                            .overlay(TooltipView(endpoint.screenMode.description).withCursor())
+                    }
+                }
+
+                // FIXME Duplicated because of "dependency"
+                serverInfo.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
+                    VideoInterfaceView(endpoint: endpoint)
                 }
             }
         }
