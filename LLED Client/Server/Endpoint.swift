@@ -14,6 +14,7 @@ class Endpoint: ObservableObject {
     let address: String
 
     let artnetProvider = ArtnetProvider()
+    let capturer = CaptureScreen()
     
     var connection: NWConnection?
     var timer: Timer?
@@ -46,7 +47,7 @@ class Endpoint: ObservableObject {
                 case .ready:
                     print("State: Ready\n")
                     self.timer = Timer(timeInterval: .seconds(0.1), repeats: true) { _ in
-                        let image = NSImage() // TODO
+                        let image = self.capturer.grab()
                         let payload = self.artnetProvider.pack(payload: self.screenMode.pack(image: image))
                         self.connection?.send(content: payload, completion: NWConnection.SendCompletion.idempotent)
                     }

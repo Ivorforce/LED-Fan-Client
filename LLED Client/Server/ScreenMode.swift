@@ -35,7 +35,8 @@ struct Cartesian: ScreenMode {
     let height: Int
     
     func pack(image: NSImage) -> Data {
-        return Data() // TODO
+        let resized = image.resized(to: NSSize(width: width, height: height))!
+        return resized.toRGB()
     }
 
     var description: String {
