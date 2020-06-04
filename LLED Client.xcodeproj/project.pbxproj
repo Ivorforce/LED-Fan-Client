@@ -10,7 +10,7 @@
 		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
 		80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F3248829B6006E218C /* VideoInterfaceView.swift */; };
 		80C309F624882C32006E218C /* ScreenMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F524882C32006E218C /* ScreenMode.swift */; };
-		80C309F824882C44006E218C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F724882C44006E218C /* Endpoint.swift */; };
+		80C309F824882C44006E218C /* VideoEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F724882C44006E218C /* VideoEndpoint.swift */; };
 		80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309FC24882F74006E218C /* ArtnetProvider.swift */; };
 		80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0624883B5E006E218C /* CaptureScreen.m */; };
 		80C30A0924893CDC006E218C /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0824893CDC006E218C /* ServerView.swift */; };
@@ -19,7 +19,7 @@
 		80E68F242485831700F47DB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F232485831700F47DB1 /* Assets.xcassets */; };
 		80E68F272485831700F47DB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F262485831700F47DB1 /* Preview Assets.xcassets */; };
 		80E68F2A2485831700F47DB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F282485831700F47DB1 /* Main.storyboard */; };
-		80E68F332485B2F900F47DB1 /* ServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F322485B2F900F47DB1 /* ServerInfo.swift */; };
+		80E68F332485B2F900F47DB1 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F322485B2F900F47DB1 /* Server.swift */; };
 		80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F342485B89200F47DB1 /* Foundation+LLED.swift */; };
 		80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */; };
 /* End PBXBuildFile section */
@@ -28,7 +28,7 @@
 		80C309F1248828D7006E218C /* ImageProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProviderView.swift; sourceTree = "<group>"; };
 		80C309F3248829B6006E218C /* VideoInterfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInterfaceView.swift; sourceTree = "<group>"; };
 		80C309F524882C32006E218C /* ScreenMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenMode.swift; sourceTree = "<group>"; };
-		80C309F724882C44006E218C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		80C309F724882C44006E218C /* VideoEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEndpoint.swift; sourceTree = "<group>"; };
 		80C309FC24882F74006E218C /* ArtnetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtnetProvider.swift; sourceTree = "<group>"; };
 		80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LLED Client-Bridging-Header.h"; sourceTree = "<group>"; };
 		80C30A0524883B5E006E218C /* CaptureScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureScreen.h; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		80E68F292485831700F47DB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		80E68F2B2485831700F47DB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80E68F2C2485831700F47DB1 /* LLED_Client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LLED_Client.entitlements; sourceTree = "<group>"; };
-		80E68F322485B2F900F47DB1 /* ServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfo.swift; sourceTree = "<group>"; };
+		80E68F322485B2F900F47DB1 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		80E68F342485B89200F47DB1 /* Foundation+LLED.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+LLED.swift"; sourceTree = "<group>"; };
 		80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Ports.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,9 +72,9 @@
 		80C309FA24882E89006E218C /* Server */ = {
 			isa = PBXGroup;
 			children = (
-				80E68F322485B2F900F47DB1 /* ServerInfo.swift */,
+				80E68F322485B2F900F47DB1 /* Server.swift */,
 				80C309F524882C32006E218C /* ScreenMode.swift */,
-				80C309F724882C44006E218C /* Endpoint.swift */,
+				80C309F724882C44006E218C /* VideoEndpoint.swift */,
 				80C309FC24882F74006E218C /* ArtnetProvider.swift */,
 			);
 			path = Server;
@@ -213,13 +213,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				80C309F624882C32006E218C /* ScreenMode.swift in Sources */,
-				80C309F824882C44006E218C /* Endpoint.swift in Sources */,
+				80C309F824882C44006E218C /* VideoEndpoint.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
 				80E68F222485831400F47DB1 /* ContentView.swift in Sources */,
 				80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */,
 				80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */,
 				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
-				80E68F332485B2F900F47DB1 /* ServerInfo.swift in Sources */,
+				80E68F332485B2F900F47DB1 /* Server.swift in Sources */,
 				80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */,
 				80C30A0924893CDC006E218C /* ServerView.swift in Sources */,
 				80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */,

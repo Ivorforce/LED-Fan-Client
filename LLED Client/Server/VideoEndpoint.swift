@@ -9,9 +9,9 @@
 import Cocoa
 import Network
 
-class Endpoint: ObservableObject {
+class VideoEndpoint: ObservableObject {
     let screenMode: ScreenMode
-    let address: String
+    let server: Server
 
     let artnetProvider = ArtnetProvider()
     let capturer = CaptureScreen()
@@ -23,9 +23,9 @@ class Endpoint: ObservableObject {
         didSet { _flushTimer() }
     }
     
-    init(screenMode: ScreenMode, address: String) {
+    init(screenMode: ScreenMode, server: Server) {
         self.screenMode = screenMode
-        self.address = address
+        self.server = server
     }
     
     var isSending = false {
@@ -45,7 +45,7 @@ class Endpoint: ObservableObject {
             return
         }
 
-        connection = NWConnection(host: NWEndpoint.Host(address), port: NWEndpoint.Port(integerLiteral: ArtnetProvider.port), using: .udp)
+        connection = NWConnection(host: NWEndpoint.Host(server.urlString), port: NWEndpoint.Port(integerLiteral: ArtnetProvider.port), using: .udp)
         guard let connection = connection else {
             print("Failed to create connection")
             return

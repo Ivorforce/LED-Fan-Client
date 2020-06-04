@@ -15,11 +15,11 @@ struct ContentView: View {
     
     @State var selectedMode = 0
 
-    @ObservedObject var serverInfo: ServerInfo
+    @ObservedObject var serverInfo: Server
     let serverView: ServerView
     
     init() {
-        let serverInfo = ServerInfo()
+        let serverInfo = Server()
         self.serverInfo = serverInfo
         serverView = ServerView(serverInfo: serverInfo)
     }

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct VideoInterfaceView: View {
-    @ObservedObject var endpoint: Endpoint
+    @ObservedObject var endpoint: VideoEndpoint
     
     let imageProviderView = ImageProviderView()
     
@@ -37,6 +37,6 @@ struct VideoInterfaceView: View {
 
 struct VideoInterfaceView_Previews: PreviewProvider {
     static var previews: some View {
-        VideoInterfaceView(endpoint: Endpoint(screenMode: Cartesian(width: 20, height: 20), address: ""))
+        VideoInterfaceView(endpoint: VideoEndpoint(screenMode: Cartesian(width: 20, height: 20), server: Server()))
     }
 }

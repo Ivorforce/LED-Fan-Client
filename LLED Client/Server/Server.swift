@@ -79,6 +79,6 @@ class Server: ObservableObject {
             return nil
         }
 
-        return VideoEndpoint(screenMode: screenMode, address: urlString)
+        return VideoEndpoint(screenMode: screenMode, server: self)
     }
 }

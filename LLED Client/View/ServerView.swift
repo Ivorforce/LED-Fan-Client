@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ServerView: View {
-    @ObservedObject var serverInfo = ServerInfo()
+    @ObservedObject var serverInfo = Server()
 
     var stateView: some View {
         switch serverInfo.state {
