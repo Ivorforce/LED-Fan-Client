@@ -13,45 +13,20 @@ struct ContentView: View {
         Cartesian.self
     ]
     
-    @ObservedObject var serverInfo = ServerInfo()
-
     @State var selectedMode = 0
 
-    var stateView: some View {
-        switch serverInfo.state {
-        case .invalidURL:
-            return AnyView(Image(systemName: NSImage.statusUnavailableName))
-        case .noConnection:
-            return AnyView(Button(action: {
-                self.serverInfo.connect()
-            }) {
-                Image(systemName: NSImage.refreshTemplateName)
-            })
-        case .connecting:
-            return AnyView(ProgressIndicator(configuration: { view in
-                view.style = .spinning
-                view.controlSize = .small
-                view.startAnimation(self)
-            }))
-        case .connected:
-            return AnyView(Image(systemName: NSImage.statusAvailableName))
-        }
-    }
+    @ObservedObject var serverInfo: ServerInfo
+    let serverView: ServerView
     
+    init() {
+        let serverInfo = ServerInfo()
+        self.serverInfo = serverInfo
+        serverView = ServerView(serverInfo: serverInfo)
+    }
+
     var body: some View {
         VStack() {
-            HStack() {
-                Text("Server IP")
-                    .bold()
-                    .fixedSize()
-                    .frame(minWidth: 100)
-
-                TextField("...", text: $serverInfo.urlString)
-                    .frame(minWidth: 100)
-                
-                stateView
-                    .frame(width: 50)
-            }
+            serverView
             
             Spacer()
                 .frame(height: 20)

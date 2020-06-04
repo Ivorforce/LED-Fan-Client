@@ -13,6 +13,7 @@
 		80C309F824882C44006E218C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F724882C44006E218C /* Endpoint.swift */; };
 		80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309FC24882F74006E218C /* ArtnetProvider.swift */; };
 		80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0624883B5E006E218C /* CaptureScreen.m */; };
+		80C30A0924893CDC006E218C /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0824893CDC006E218C /* ServerView.swift */; };
 		80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F1F2485831400F47DB1 /* AppDelegate.swift */; };
 		80E68F222485831400F47DB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F212485831400F47DB1 /* ContentView.swift */; };
 		80E68F242485831700F47DB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F232485831700F47DB1 /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LLED Client-Bridging-Header.h"; sourceTree = "<group>"; };
 		80C30A0524883B5E006E218C /* CaptureScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureScreen.h; sourceTree = "<group>"; };
 		80C30A0624883B5E006E218C /* CaptureScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureScreen.m; sourceTree = "<group>"; };
+		80C30A0824893CDC006E218C /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		80E68F1C2485831400F47DB1 /* LLED Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LLED Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E68F1F2485831400F47DB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E68F212485831400F47DB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				80E68F212485831400F47DB1 /* ContentView.swift */,
 				80C309F3248829B6006E218C /* VideoInterfaceView.swift */,
 				80C309F1248828D7006E218C /* ImageProviderView.swift */,
+				80C30A0824893CDC006E218C /* ServerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
 				80E68F332485B2F900F47DB1 /* ServerInfo.swift in Sources */,
 				80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */,
+				80C30A0924893CDC006E218C /* ServerView.swift in Sources */,
 				80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */,
 				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,
 			);
