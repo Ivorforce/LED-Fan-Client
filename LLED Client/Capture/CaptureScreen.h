@@ -10,9 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CaptureScreen : NSObject
+@protocol ImageCapture <NSObject>
 
 - (NSImage *) grab;
+
+@end
+
+@interface CaptureScreen : NSObject <ImageCapture>
 
 @end
 

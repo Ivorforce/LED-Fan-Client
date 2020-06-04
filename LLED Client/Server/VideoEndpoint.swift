@@ -14,7 +14,7 @@ class VideoEndpoint: ObservableObject {
     let server: Server
 
     let artnetProvider = ArtnetProvider()
-    let capturer = CaptureScreen()
+    var capturer: ImageCapture = CaptureScreen()
     
     var connection: NWConnection?
     var timer: Timer?

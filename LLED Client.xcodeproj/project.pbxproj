@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4722489A62B00344940 /* CaptureSyphon.m */; };
 		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
 		80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F3248829B6006E218C /* VideoInterfaceView.swift */; };
 		80C309F624882C32006E218C /* ScreenMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F524882C32006E218C /* ScreenMode.swift */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8052B4712489A62B00344940 /* CaptureSyphon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureSyphon.h; sourceTree = "<group>"; };
+		8052B4722489A62B00344940 /* CaptureSyphon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureSyphon.m; sourceTree = "<group>"; };
 		80C309F1248828D7006E218C /* ImageProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProviderView.swift; sourceTree = "<group>"; };
 		80C309F3248829B6006E218C /* VideoInterfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInterfaceView.swift; sourceTree = "<group>"; };
 		80C309F524882C32006E218C /* ScreenMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenMode.swift; sourceTree = "<group>"; };
@@ -65,9 +68,9 @@
 			isa = PBXGroup;
 			children = (
 				80E68F212485831400F47DB1 /* ContentView.swift */,
+				80C30A0824893CDC006E218C /* ServerView.swift */,
 				80C309F3248829B6006E218C /* VideoInterfaceView.swift */,
 				80C309F1248828D7006E218C /* ImageProviderView.swift */,
-				80C30A0824893CDC006E218C /* ServerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -98,6 +101,8 @@
 			children = (
 				80C30A0524883B5E006E218C /* CaptureScreen.h */,
 				80C30A0624883B5E006E218C /* CaptureScreen.m */,
+				8052B4712489A62B00344940 /* CaptureSyphon.h */,
+				8052B4722489A62B00344940 /* CaptureSyphon.m */,
 				80C30A0C24895758006E218C /* NSImage+LLED.h */,
 				80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */,
 			);
@@ -220,6 +225,7 @@
 				80C309F624882C32006E218C /* ScreenMode.swift in Sources */,
 				80C309F824882C44006E218C /* VideoEndpoint.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
+				8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */,
 				80E68F222485831400F47DB1 /* ContentView.swift in Sources */,
 				80C30A0B24894C81006E218C /* REST.swift in Sources */,
 				80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */,
