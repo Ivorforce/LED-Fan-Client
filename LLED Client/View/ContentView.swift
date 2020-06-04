@@ -35,7 +35,9 @@ struct ContentView: View {
             if server.state == .connected {
                 HStack {
                     Picker(selection: $selectedMode, label: Text("Screen Mode")) {
-                        Text("Cartesian").tag(0)
+                        ForEach(0 ..< Self.selectableTypes.count) { i in
+                            Text(Self.selectableTypes[i].name).tag(i)
+                        }
                     }
                     
                     server.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
