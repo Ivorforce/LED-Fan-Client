@@ -29,6 +29,14 @@ class Server: ObservableObject {
     var url: URL? {
         urlString != "" ? URL(string: "http://\(urlString)") : nil
     }
+    
+    func rest(_ paths: [String]) -> REST? {
+        guard var url = self.url else {
+            return nil
+        }
+        for path in paths { url.appendPathComponent(path) }
+        return REST(url)
+    }
 
     var state: State = .invalidURL {
         willSet {
@@ -84,7 +92,11 @@ class Server: ObservableObject {
     
     var rotationSpeed: Double = 0.0 {
         didSet {
-            (url?.appendingPathComponent("speed")).map(REST.init)?.set(["speed-control": rotationSpeed])
+            rest(["speed"])?.setVariable(["speed-control": rotationSpeed])
         }
     }
+    
+    func reboot() { rest(["reboot"])?.post() }
+    func ping() { rest(["ping"])?.post() }
+    func update() { rest(["update"])?.post() }
 }

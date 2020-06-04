@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct ServerView: View {
-    @ObservedObject var serverInfo = Server()
+    @ObservedObject var server = Server()
 
     var stateView: some View {
-        switch serverInfo.state {
+        switch server.state {
         case .invalidURL, .noConnection:
             return AnyView(Image(systemName: NSImage.statusUnavailableName))
         case .connecting:
@@ -31,17 +31,16 @@ struct ServerView: View {
             HStack() {
                 Text("Server IP")
                     .bold()
-                    .fixedSize()
-                    .frame(minWidth: 100)
+                    .frame(width: 100)
 
-                TextField("...", text: $serverInfo.urlString)
+                TextField("...", text: $server.urlString)
                     .frame(minWidth: 100)
                 
                 HStack {
                     stateView
 
                     Button(action: {
-                        self.serverInfo.connect()
+                        self.server.connect()
                     }) {
                         Image(systemName: NSImage.refreshTemplateName)
                     }
@@ -50,13 +49,29 @@ struct ServerView: View {
             }
             
             HStack {
-                Text("Speed")
-                    .fixedSize()
-                    .frame(minWidth: 100)
-
-                Slider(value: $serverInfo.rotationSpeed, in: -1...1)
+                Text("Actions")
+                    .frame(width: 100)
                 
-                Button(action: { self.serverInfo.rotationSpeed = 0 }) {
+                Button(action: { self.server.reboot() }) {
+                    Text("Reboot")
+                }.frame(maxWidth: .infinity)
+
+                Button(action: { self.server.ping() }) {
+                    Text("Ping")
+                }.frame(maxWidth: .infinity)
+
+                Button(action: { self.server.update() }) {
+                    Text("Update")
+                }.frame(maxWidth: .infinity)
+            }
+            
+            HStack {
+                Text("Speed")
+                    .frame(width: 100)
+
+                Slider(value: $server.rotationSpeed, in: -1...1)
+                
+                Button(action: { self.server.rotationSpeed = 0 }) {
                     Text("Stop")
                 }
             }

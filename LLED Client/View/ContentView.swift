@@ -15,13 +15,13 @@ struct ContentView: View {
     
     @State var selectedMode = 0
 
-    @ObservedObject var serverInfo: Server
+    @ObservedObject var server: Server
     let serverView: ServerView
     
     init() {
         let serverInfo = Server()
-        self.serverInfo = serverInfo
-        serverView = ServerView(serverInfo: serverInfo)
+        self.server = serverInfo
+        serverView = ServerView(server: serverInfo)
     }
 
     var body: some View {
@@ -32,20 +32,20 @@ struct ContentView: View {
                 .frame(height: 20)
                 .fixedSize()
             
-            if serverInfo.state == .connected {
+            if server.state == .connected {
                 HStack {
                     Picker(selection: $selectedMode, label: Text("Screen Mode")) {
                         Text("Cartesian").tag(0)
                     }
                     
-                    serverInfo.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
+                    server.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
                         Image(systemName: NSImage.quickLookTemplateName)
                             .overlay(TooltipView(endpoint.screenMode.description).withCursor())
                     }
                 }
 
                 // FIXME Duplicated because of "dependency"
-                serverInfo.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
+                server.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
                     VideoInterfaceView(endpoint: endpoint)
                 }
             }

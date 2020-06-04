@@ -15,14 +15,19 @@ class REST {
         baseURL = base
     }
     
-    func get(handler: (String?) -> Void) {
-        let request = URLRequest(url: baseURL.appendingPathComponent("get"))
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+    func get(handler: @escaping (String?) -> Void = { _ in }) {
+        let request = URLRequest(url: baseURL)
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { [handler] data, response, error in
+            data.map { handler(String(data: $0, encoding: .utf8)) }
         })
         task.resume()
     }
+    
+    func getVariable(handler: @escaping (String?) -> Void) {
+        REST(baseURL.appendingPathComponent("get")).get(handler: handler)
+    }
 
-    func set(_ parameters: [String: Any]) {
+    func post(_ parameters: [String: Any] = [:]) {
         var request = URLRequest(url: baseURL.appendingPathComponent("set"))
         request.httpMethod = "POST"
 
@@ -33,5 +38,9 @@ class REST {
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
         })
         task.resume()
+    }
+
+    func setVariable(_ parameters: [String: Any]) {
+        return REST(baseURL.appendingPathComponent("set")).post(parameters)
     }
 }
