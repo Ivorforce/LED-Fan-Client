@@ -8,32 +8,16 @@
 
 import SwiftUI
 
-class CaptureMethodProvider: ObservableObject {
-    enum Method: Int {
-        case screen, syphon
-    }
-
-    @Published var selectedMode = Method.screen {
-        didSet {
-            self.objectWillChange.send()
-
-            switch selectedMode {
-            case .screen:
-                capturer = CaptureScreen()
-            case .syphon:
-                capturer = CaptureSyphon()
-            }
-        }
-    }
-    
-    @Published var capturer: ImageCapture? = nil
-}
-
 struct ImageProviderView: View {
-    @ObservedObject var captureProvider = CaptureMethodProvider()
-
+    static let captureMethods = [
+        CaptureScreen(),
+        CaptureSyphon()
+    ]
+    
+    @State var capturer: ImageCapture = Self.captureMethods[0]
+    
     var methodView: some View {
-        switch captureProvider.capturer {
+        switch capturer {
         case is CaptureSyphon:
             return EmptyView()
         case is CaptureScreen:
@@ -45,9 +29,10 @@ struct ImageProviderView: View {
 
     var body: some View {
         VStack {
-            Picker(selection: $captureProvider.selectedMode, label: Text("Capture Method")) {
-                Text("Screen").tag(CaptureMethodProvider.Method.screen)
-                Text("Syphon").tag(CaptureMethodProvider.Method.syphon)
+            Picker(selection: $capturer, label: Text("Capture Method")) {
+                ForEach(Self.captureMethods, id: \.description) { method in
+                    Text(method.description).tag(method)
+                }
             }
             
             methodView

@@ -7,16 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "ImageCapture.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol ImageCapture <NSObject>
-
-- (NSImage *) grab;
-
-@end
-
-@interface CaptureScreen : NSObject <ImageCapture>
+@interface CaptureScreen : ImageCapture
 
 @end
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4722489A62B00344940 /* CaptureSyphon.m */; };
+		8052B4762489B04F00344940 /* ImageCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4752489B04F00344940 /* ImageCapture.m */; };
 		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
 		80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F3248829B6006E218C /* VideoInterfaceView.swift */; };
 		80C309F624882C32006E218C /* ScreenMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F524882C32006E218C /* ScreenMode.swift */; };
@@ -29,6 +30,8 @@
 /* Begin PBXFileReference section */
 		8052B4712489A62B00344940 /* CaptureSyphon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureSyphon.h; sourceTree = "<group>"; };
 		8052B4722489A62B00344940 /* CaptureSyphon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureSyphon.m; sourceTree = "<group>"; };
+		8052B4742489B04F00344940 /* ImageCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageCapture.h; sourceTree = "<group>"; };
+		8052B4752489B04F00344940 /* ImageCapture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageCapture.m; sourceTree = "<group>"; };
 		80C309F1248828D7006E218C /* ImageProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProviderView.swift; sourceTree = "<group>"; };
 		80C309F3248829B6006E218C /* VideoInterfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInterfaceView.swift; sourceTree = "<group>"; };
 		80C309F524882C32006E218C /* ScreenMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenMode.swift; sourceTree = "<group>"; };
@@ -99,6 +102,8 @@
 		80C309FF24883AC1006E218C /* Capture */ = {
 			isa = PBXGroup;
 			children = (
+				8052B4742489B04F00344940 /* ImageCapture.h */,
+				8052B4752489B04F00344940 /* ImageCapture.m */,
 				80C30A0524883B5E006E218C /* CaptureScreen.h */,
 				80C30A0624883B5E006E218C /* CaptureScreen.m */,
 				8052B4712489A62B00344940 /* CaptureSyphon.h */,
@@ -235,6 +240,7 @@
 				80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */,
 				80C30A0924893CDC006E218C /* ServerView.swift in Sources */,
 				80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */,
+				8052B4762489B04F00344940 /* ImageCapture.m in Sources */,
 				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
