@@ -12,7 +12,18 @@ class Server: ObservableObject {
     enum State {
         case invalidURL, noConnection, connecting, connected
     }
+    
+    enum Mode: Int {
+        case cartesian
         
+        var type: ScreenMode.Type {
+            switch self {
+            case .cartesian:
+                return Cartesian.self
+            }
+        }
+    }
+    
     init() {
         connect()
     }
@@ -77,6 +88,10 @@ class Server: ObservableObject {
         
         serverInfo = info;
         return true
+    }
+    
+    var endpoints: [Mode] {
+        return [.cartesian]
     }
     
     func endpoint(mode: ScreenMode.Type) -> VideoEndpoint? {

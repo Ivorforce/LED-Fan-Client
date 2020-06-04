@@ -9,11 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    static let selectableTypes: [ScreenMode.Type] = [
-        Cartesian.self
-    ]
-    
-    @State var selectedMode = 0
+    @State var selectedScreenMode = Server.Mode.cartesian
 
     @ObservedObject var server: Server
     let serverView: ServerView
@@ -34,20 +30,20 @@ struct ContentView: View {
             
             if server.state == .connected {
                 HStack {
-                    Picker(selection: $selectedMode, label: Text("Screen Mode")) {
-                        ForEach(0 ..< Self.selectableTypes.count) { i in
-                            Text(Self.selectableTypes[i].name).tag(i)
+                    Picker(selection: $selectedScreenMode, label: Text("Screen Mode")) {
+                        ForEach(server.endpoints, id: \.self) { mode in
+                            Text(mode.type.name).tag(mode)
                         }
                     }
                     
-                    server.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
+                    server.endpoint(mode: selectedScreenMode.type).map { endpoint in
                         Image(systemName: NSImage.quickLookTemplateName)
                             .overlay(TooltipView(endpoint.screenMode.description).withCursor())
                     }
                 }
 
                 // FIXME Duplicated because of "dependency"
-                server.endpoint(mode: Self.selectableTypes[selectedMode]).map { endpoint in
+                server.endpoint(mode: selectedScreenMode.type).map { endpoint in
                     VideoInterfaceView(endpoint: endpoint)
                 }
             }
