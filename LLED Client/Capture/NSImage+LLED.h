@@ -26,26 +26,27 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     NSBitmapImageRep *bmp = (NSBitmapImageRep *)rep;
+    int samplesPerPixel = [bmp samplesPerPixel];
     
-    if ([bmp samplesPerPixel] == 3) {
+    if (samplesPerPixel == 3) {
         // RGB Already
         int size = [bmp pixelsWide] * [bmp pixelsHigh] * 3;
         return [NSData dataWithBytes:(const void *)[bmp bitmapData] length:sizeof(unsigned char)*size];
     }
 
     // Gotta Convert
-    return nil;
-    //    unsigned char *data = [bmp bitmapData];
-//    NSMutableData *pixels = [[NSMutableData alloc] init];
-//
-//    for (int x = 0; x < bmp.pixelsWide; x++) {
-//        for (int y = 0; y < bmp.pixelsHigh; y++) {
-//            [pixels appendBytes: data length: 3];
-//            data += 3;
-//        }
-//    }
-//
-//    return nil;
+    
+    unsigned char *data = [bmp bitmapData];
+    NSMutableData *pixels = [[NSMutableData alloc] init];
+
+    for (int x = 0; x < bmp.pixelsWide; x++) {
+        for (int y = 0; y < bmp.pixelsHigh; y++) {
+            [pixels appendBytes: data length: 3];
+            data += samplesPerPixel;
+        }
+    }
+
+    return pixels;
 }
 
 @end
