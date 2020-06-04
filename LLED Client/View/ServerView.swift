@@ -25,7 +25,9 @@ struct ServerView: View {
             return AnyView(Image(systemName: NSImage.statusAvailableName))
         }
     }
-
+    
+    var isConnected: Bool { server.state == .connected }
+    
     var body: some View {
         VStack {
             HStack() {
@@ -54,15 +56,21 @@ struct ServerView: View {
                 
                 Button(action: { self.server.reboot() }) {
                     Text("Reboot")
-                }.frame(maxWidth: .infinity)
+                }
+                    .frame(maxWidth: .infinity)
+                    .disabled(!isConnected)
 
                 Button(action: { self.server.ping() }) {
                     Text("Ping")
-                }.frame(maxWidth: .infinity)
+                }
+                    .frame(maxWidth: .infinity)
+                    .disabled(!isConnected)
 
                 Button(action: { self.server.update() }) {
                     Text("Update")
-                }.frame(maxWidth: .infinity)
+                }
+                    .frame(maxWidth: .infinity)
+                    .disabled(!isConnected)
             }
             
             HStack {
@@ -70,10 +78,12 @@ struct ServerView: View {
                     .frame(width: 100)
 
                 Slider(value: $server.rotationSpeed, in: -1...1)
-                
+                    .disabled(!isConnected)
+
                 Button(action: { self.server.rotationSpeed = 0 }) {
                     Text("Stop")
                 }
+                    .disabled(!isConnected)
             }
         }
     }
