@@ -27,25 +27,39 @@ struct ServerView: View {
     }
 
     var body: some View {
-        HStack() {
-            Text("Server IP")
-                .bold()
-                .fixedSize()
-                .frame(minWidth: 100)
+        VStack {
+            HStack() {
+                Text("Server IP")
+                    .bold()
+                    .fixedSize()
+                    .frame(minWidth: 100)
 
-            TextField("...", text: $serverInfo.urlString)
-                .frame(minWidth: 100)
+                TextField("...", text: $serverInfo.urlString)
+                    .frame(minWidth: 100)
+                
+                HStack {
+                    stateView
+
+                    Button(action: {
+                        self.serverInfo.connect()
+                    }) {
+                        Image(systemName: NSImage.refreshTemplateName)
+                    }
+                }
+                    .frame(width: 80)
+            }
             
             HStack {
-                stateView
+                Text("Speed")
+                    .fixedSize()
+                    .frame(minWidth: 100)
 
-                Button(action: {
-                    self.serverInfo.connect()
-                }) {
-                    Image(systemName: NSImage.refreshTemplateName)
+                Slider(value: $serverInfo.rotationSpeed, in: -1...1)
+                
+                Button(action: { self.serverInfo.rotationSpeed = 0 }) {
+                    Text("Stop")
                 }
             }
-                .frame(width: 80)
         }
     }
 }

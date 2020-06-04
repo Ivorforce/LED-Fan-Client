@@ -81,4 +81,10 @@ class Server: ObservableObject {
 
         return VideoEndpoint(screenMode: screenMode, server: self)
     }
+    
+    var rotationSpeed: Double = 0.0 {
+        didSet {
+            (url?.appendingPathComponent("speed")).map(REST.init)?.set(["speed-control": rotationSpeed])
+        }
+    }
 }

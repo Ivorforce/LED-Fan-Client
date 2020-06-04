@@ -14,6 +14,7 @@
 		80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309FC24882F74006E218C /* ArtnetProvider.swift */; };
 		80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0624883B5E006E218C /* CaptureScreen.m */; };
 		80C30A0924893CDC006E218C /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0824893CDC006E218C /* ServerView.swift */; };
+		80C30A0B24894C81006E218C /* REST.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0A24894C81006E218C /* REST.swift */; };
 		80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F1F2485831400F47DB1 /* AppDelegate.swift */; };
 		80E68F222485831400F47DB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F212485831400F47DB1 /* ContentView.swift */; };
 		80E68F242485831700F47DB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F232485831700F47DB1 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		80C30A0524883B5E006E218C /* CaptureScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureScreen.h; sourceTree = "<group>"; };
 		80C30A0624883B5E006E218C /* CaptureScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureScreen.m; sourceTree = "<group>"; };
 		80C30A0824893CDC006E218C /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
+		80C30A0A24894C81006E218C /* REST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REST.swift; sourceTree = "<group>"; };
 		80E68F1C2485831400F47DB1 /* LLED Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LLED Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E68F1F2485831400F47DB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E68F212485831400F47DB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				80C309F524882C32006E218C /* ScreenMode.swift */,
 				80C309F724882C44006E218C /* VideoEndpoint.swift */,
 				80C309FC24882F74006E218C /* ArtnetProvider.swift */,
+				80C30A0A24894C81006E218C /* REST.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -94,6 +97,7 @@
 			children = (
 				80C30A0524883B5E006E218C /* CaptureScreen.h */,
 				80C30A0624883B5E006E218C /* CaptureScreen.m */,
+				80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */,
 			);
 			path = Capture;
 			sourceTree = "<group>";
@@ -122,7 +126,6 @@
 				80C309FA24882E89006E218C /* Server */,
 				80C309FF24883AC1006E218C /* Capture */,
 				80C309FB24882E90006E218C /* Extensions */,
-				80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */,
 				80E68F232485831700F47DB1 /* Assets.xcassets */,
 				80E68F282485831700F47DB1 /* Main.storyboard */,
 				80E68F2B2485831700F47DB1 /* Info.plist */,
@@ -216,6 +219,7 @@
 				80C309F824882C44006E218C /* VideoEndpoint.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
 				80E68F222485831400F47DB1 /* ContentView.swift in Sources */,
+				80C30A0B24894C81006E218C /* REST.swift in Sources */,
 				80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */,
 				80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */,
 				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
