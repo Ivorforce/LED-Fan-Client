@@ -94,10 +94,12 @@ class Server: ObservableObject {
         return [.cartesian]
     }
     
-    func endpoint(mode: ScreenMode.Type) -> VideoEndpoint? {
+    func endpoint(mode: Mode) -> VideoEndpoint? {
+        let type = mode.type
+        
         guard
-            let info = serverInfo[mode.key] as? [String: Any],
-            let screenMode = mode.parse(info)
+            let info = serverInfo[type.key] as? [String: Any],
+            let screenMode = type.parse(info)
         else {
             return nil
         }

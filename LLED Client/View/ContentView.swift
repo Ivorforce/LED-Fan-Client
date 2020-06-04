@@ -36,14 +36,14 @@ struct ContentView: View {
                         }
                     }
                     
-                    server.endpoint(mode: selectedScreenMode.type).map { endpoint in
+                    server.endpoint(mode: selectedScreenMode).map { endpoint in
                         Image(systemName: NSImage.quickLookTemplateName)
                             .overlay(TooltipView(endpoint.screenMode.description).withCursor())
                     }
                 }
 
                 // FIXME Duplicated because of "dependency"
-                server.endpoint(mode: selectedScreenMode.type).map { endpoint in
+                server.endpoint(mode: selectedScreenMode).map { endpoint in
                     VideoInterfaceView(endpoint: endpoint)
                 }
             }
