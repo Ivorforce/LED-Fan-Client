@@ -13,15 +13,24 @@ struct VideoInterfaceView: View {
     
     let imageProviderView = ImageProviderView()
     
+    @State var fpsString: String = ""
+    
     var body: some View {
         VStack {
             imageProviderView
             
-            Toggle(isOn: $endpoint.isSending) {
-                Text("Send to Server")
+            HStack {
+                TextField("30", text: Binding(
+                    get: { String(self.endpoint.fps) },
+                    set: { self.endpoint.fps = Double($0) ?? 30 }
+                ))
+                
+                Toggle(isOn: $endpoint.isSending) {
+                    Text("Send to Server")
+                }
+                    .disabled(!imageProviderView.isReady)
+                    .padding()
             }
-                .disabled(!imageProviderView.isReady)
-                .padding()
         }
     }
 }
