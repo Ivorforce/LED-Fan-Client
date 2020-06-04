@@ -12,16 +12,14 @@ struct VideoInterfaceView: View {
     @ObservedObject var endpoint: VideoEndpoint
     
     let imageProviderView = ImageProviderView()
-    
-    @State var fpsString: String = ""
-    
+        
     var body: some View {
         VStack {
             imageProviderView
             
             HStack {
                 TextField("30", text: Binding(
-                    get: { String(self.endpoint.fps) },
+                    get: { self.endpoint.fps != 30 ? String(self.endpoint.fps) : "" },
                     set: { self.endpoint.fps = Double($0) ?? 30 }
                 ))
                 

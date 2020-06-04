@@ -3,3 +3,4 @@
 //
 
 #import "CaptureScreen.h"
+#import "NSImage+LLED.h"

@@ -36,6 +36,7 @@
 		80C30A0624883B5E006E218C /* CaptureScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureScreen.m; sourceTree = "<group>"; };
 		80C30A0824893CDC006E218C /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		80C30A0A24894C81006E218C /* REST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REST.swift; sourceTree = "<group>"; };
+		80C30A0C24895758006E218C /* NSImage+LLED.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSImage+LLED.h"; sourceTree = "<group>"; };
 		80E68F1C2485831400F47DB1 /* LLED Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LLED Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E68F1F2485831400F47DB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E68F212485831400F47DB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 			children = (
 				80C30A0524883B5E006E218C /* CaptureScreen.h */,
 				80C30A0624883B5E006E218C /* CaptureScreen.m */,
+				80C30A0C24895758006E218C /* NSImage+LLED.h */,
 				80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */,
 			);
 			path = Capture;
