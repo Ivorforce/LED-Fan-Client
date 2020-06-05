@@ -70,7 +70,6 @@ class VideoEndpoint: ObservableObject {
             return
         }
         
-        print(connection)
         timer = Timer(timeInterval: .seconds(1.0 / fps), repeats: true) { _ in
             let image = self.capturer.grab()
             let payload = self.screenMode.pack(image: image)

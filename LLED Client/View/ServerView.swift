@@ -10,6 +10,9 @@ import SwiftUI
 
 struct ServerView: View {
     @ObservedObject var server = Server()
+    
+    @State var isShowingLog = false
+    @State var log = ""
 
     var stateView: some View {
         switch server.state {
@@ -48,6 +51,16 @@ struct ServerView: View {
                     }
                 }
                     .frame(width: 80)
+                
+                Image(systemName: NSImage.quickLookTemplateName)
+                    .onHover { isHovering in
+                        self.isShowingLog = isHovering
+                        self.server.rest(["log"])?.get { self.log = $0 ?? "" }
+                }
+                    .popover(isPresented: $isShowingLog, arrowEdge: .trailing) {
+                        Text(self.log)
+                            .truncationMode(.head)
+                    }
             }
             
             HStack {
