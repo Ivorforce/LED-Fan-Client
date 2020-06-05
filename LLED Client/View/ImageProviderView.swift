@@ -15,7 +15,8 @@ struct ImageProviderView: View {
     ]
     
     @State var capturer: ImageCapture = Self.captureMethods[0]
-    
+    @State var showPreview = false
+        
     var methodView: some View {
         switch capturer {
         case is CaptureSyphon:
@@ -29,10 +30,21 @@ struct ImageProviderView: View {
 
     var body: some View {
         VStack {
-            Picker(selection: $capturer, label: Text("Capture Method")) {
-                ForEach(Self.captureMethods, id: \.description) { method in
-                    Text(method.name()).tag(method)
+            HStack {
+                Picker(selection: $capturer, label: Text("Capture Method")) {
+                    ForEach(Self.captureMethods, id: \.description) { method in
+                        Text(method.name()).tag(method)
+                    }
                 }
+                
+                Image(systemName: NSImage.quickLookTemplateName)
+                    .onHover { isHovering in self.showPreview = isHovering }
+                    .popover(isPresented: $showPreview, arrowEdge: .trailing) {
+                        Image(nsImage: self.capturer.grab()) // TODO Show live
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 200, maxHeight: 200)
+                    }
             }
             
             methodView

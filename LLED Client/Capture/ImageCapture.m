@@ -10,6 +10,10 @@
 
 @implementation ImageCapture
 
+- (NSString *)name {
+    return @"Unknown Capture";
+}
+
 - (NSImage *)grab {
     return nil;
 }
