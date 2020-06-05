@@ -34,7 +34,7 @@ class ArtnetProvider {
     }()
 
     func packOne(payload: Data, offset: Int = 0) -> Data {
-        var packet = Data()
+        var packet = Data(capacity: _header.count + 6 + payload.count)
         
         packet.append(_header)
 //        # 12 - sequence (int 8), NULL for not implemented
