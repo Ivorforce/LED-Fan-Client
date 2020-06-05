@@ -55,7 +55,7 @@ class ArtnetProvider {
     
     func pack(payload: Data) -> [Data] {
         let packets = payload.split(maxCount: 512).enumerated().map { self.packOne(payload: $1, offset: $0) }
-        sequence += 1
+        sequence = sequence.addingReportingOverflow(1).partialValue
         return packets
     }
 }
