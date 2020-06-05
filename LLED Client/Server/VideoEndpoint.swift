@@ -41,7 +41,7 @@ class VideoEndpoint: ObservableObject {
         if !isSending {
             connection?.cancel()
             connection = nil
-            timer = nil
+            _flushTimer()
 
             return
         }
@@ -66,6 +66,7 @@ class VideoEndpoint: ObservableObject {
     
     func _flushTimer() {
         guard let connection = connection, connection.state == .ready else {
+            timer?.invalidate()
             timer = nil
             return
         }
