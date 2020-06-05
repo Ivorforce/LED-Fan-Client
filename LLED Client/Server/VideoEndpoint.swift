@@ -82,4 +82,9 @@ class VideoEndpoint: ObservableObject {
         // We're in an operation queue, scheduledTimer silently doesn't work
         RunLoop.main.add(timer!, forMode: .common)
     }
+    
+    deinit {
+        timer?.invalidate()
+        connection?.cancel()
+    }
 }
