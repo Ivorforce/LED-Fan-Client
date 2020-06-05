@@ -116,5 +116,5 @@ class Server: ObservableObject {
     
     func reboot() { rest(["reboot"])?.post() }
     func ping() { rest(["ping"])?.post() }
-    func update() { rest(["update"])?.post() }
+    func update() { rest(["checkupdate"])?.post() }
 }
