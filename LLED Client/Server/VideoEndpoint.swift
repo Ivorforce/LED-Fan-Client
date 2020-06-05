@@ -10,10 +10,13 @@ import Cocoa
 import Network
 
 class VideoEndpoint: ObservableObject {
-    let screenMode: ScreenMode
-    let server: Server
+    weak var server: Server?
 
-    let artnetProvider: ArtnetProvider
+    var screenMode: ScreenMode? = nil {
+        didSet { artnetProvider.net = screenMode?.net ?? 0 }
+    }
+
+    let artnetProvider = ArtnetProvider()
     var capturer: ImageCapture = CaptureScreen()
     
     var connection: NWConnection?
@@ -22,14 +25,7 @@ class VideoEndpoint: ObservableObject {
     var fps: Double = 30 {
         didSet { _flushTimer() }
     }
-    
-    init(screenMode: ScreenMode, server: Server) {
-        self.screenMode = screenMode
-        self.server = server
-        self.artnetProvider = ArtnetProvider()
-        self.artnetProvider.net = screenMode.net
-    }
-    
+        
     var isSending = false {
         didSet {
             self.objectWillChange.send()
@@ -38,7 +34,7 @@ class VideoEndpoint: ObservableObject {
     }
     
     func _connect() {
-        if !isSending {
+        guard let server = server, isSending else {
             connection?.cancel()
             connection = nil
             _flushTimer()
@@ -72,8 +68,12 @@ class VideoEndpoint: ObservableObject {
         }
         
         timer = Timer(timeInterval: .seconds(1.0 / fps), repeats: true) { _ in
+            guard let screenMode = self.screenMode else {
+                return
+            }
+
             let image = self.capturer.grab()
-            let payload = self.screenMode.pack(image: image)
+            let payload = screenMode.pack(image: image)
             let packets = self.artnetProvider.pack(payload: payload)
             for packet in packets {
                 connection.send(content: packet, completion: NWConnection.SendCompletion.idempotent)

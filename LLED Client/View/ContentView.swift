@@ -9,17 +9,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var selectedScreenMode = Server.Mode.cartesian
-
     @ObservedObject var server: Server
     let serverView: ServerView
     
+    let videoEndpointView: VideoInterfaceView
+
     @State var isShowingDescription = false
     
     init() {
         let serverInfo = Server()
         self.server = serverInfo
         serverView = ServerView(server: serverInfo)
+        videoEndpointView = VideoInterfaceView(endpoint: serverInfo.videoEndpoint)
     }
 
     var body: some View {
@@ -32,26 +33,21 @@ struct ContentView: View {
             
             if server.state == .connected {
                 HStack {
-                    Picker(selection: $selectedScreenMode, label: Text("Screen Mode")) {
+                    Picker(selection: $server.endpoint, label: Text("Screen Mode")) {
                         ForEach(server.endpoints, id: \.self) { mode in
-                            Text(mode.type.name).tag(mode)
+                            Text(mode.type.name).tag(Optional.some(mode))
                         }
                     }
                     
-                    server.endpoint(mode: selectedScreenMode).map { endpoint in
-                        Image(systemName: NSImage.quickLookTemplateName)
-                            .onHover { isHovering in self.isShowingDescription = isHovering }
-                            .popover(isPresented: $isShowingDescription, arrowEdge: .trailing) {
-                                Text(endpoint.screenMode.description)
-                                    .padding()
-                            }
-                    }
+                    Image(systemName: NSImage.quickLookTemplateName)
+                        .onHover { isHovering in self.isShowingDescription = isHovering && self.server.videoEndpoint.screenMode != nil }
+                        .popover(isPresented: $isShowingDescription, arrowEdge: .trailing) {
+                            Text(self.server.videoEndpoint.screenMode?.description ?? "")
+                                .padding()
+                        }
                 }
 
-                // FIXME Duplicated because of "dependency"
-                server.endpoint(mode: selectedScreenMode).map { endpoint in
-                    VideoInterfaceView(endpoint: endpoint)
-                }
+                videoEndpointView
             }
         }
             .padding()

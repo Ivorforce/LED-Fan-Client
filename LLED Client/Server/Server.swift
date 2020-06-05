@@ -25,6 +25,8 @@ class Server: ObservableObject {
     }
     
     init() {
+        videoEndpoint = .init()
+        videoEndpoint.server = self
         connect()
     }
     
@@ -36,6 +38,7 @@ class Server: ObservableObject {
     }
     
     var serverInfo: [String: Any] = [:]
+    var videoEndpoint: VideoEndpoint
     
     var url: URL? {
         urlString != "" ? URL(string: "http://\(urlString)") : nil
@@ -87,6 +90,7 @@ class Server: ObservableObject {
         }
         
         serverInfo = info;
+        _flushEndpoint()
         return true
     }
     
@@ -94,17 +98,20 @@ class Server: ObservableObject {
         return [.cartesian]
     }
     
-    func endpoint(mode: Mode) -> VideoEndpoint? {
-        let type = mode.type
-        
-        guard
-            let info = serverInfo[type.key] as? [String: Any],
-            let screenMode = type.parse(info)
-        else {
-            return nil
+    var endpoint: Mode? = .cartesian {
+        didSet {
+            self.objectWillChange.send()
+            _flushEndpoint()
         }
-
-        return VideoEndpoint(screenMode: screenMode, server: self)
+    }
+    
+    func _flushEndpoint() {
+        guard let type = endpoint?.type, let info = serverInfo[type.key] as? [String: Any], let mode = type.parse(info) else {
+            videoEndpoint.screenMode = nil
+            return
+        }
+        
+        videoEndpoint.screenMode = mode
     }
     
     var rotationSpeed: Double = 0.0 {

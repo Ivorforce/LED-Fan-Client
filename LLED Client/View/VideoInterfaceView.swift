@@ -45,8 +45,8 @@ struct VideoInterfaceView: View {
     }
 }
 
-struct VideoInterfaceView_Previews: PreviewProvider {
-    static var previews: some View {
-        VideoInterfaceView(endpoint: VideoEndpoint(screenMode: Cartesian(net: 0, width: 20, height: 20), server: Server()))
-    }
-}
+//struct VideoInterfaceView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VideoInterfaceView(endpoint: VideoEndpoint(screenMode: Cartesian(net: 0, width: 20, height: 20), server: Server()))
+//    }
+//}
