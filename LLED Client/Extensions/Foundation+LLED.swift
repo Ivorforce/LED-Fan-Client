@@ -70,3 +70,17 @@ extension CharacterSet {
         return allowed
     }()
 }
+
+extension Data {
+    func split(maxCount: Int) -> [Data] {
+        withUnsafeBytes { ptrR in
+            let ptr = UnsafeMutableRawPointer(mutating: ptrR.baseAddress)!
+
+            return (0 ... (count / maxCount)).map { i in
+                let pos = i * maxCount
+                let subCount = Swift.min(count - pos, maxCount)
+                return Data(bytesNoCopy: ptr + pos, count: subCount, deallocator: Data.Deallocator.none)
+            }
+        }
+    }
+}

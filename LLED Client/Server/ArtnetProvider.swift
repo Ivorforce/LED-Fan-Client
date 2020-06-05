@@ -17,10 +17,10 @@ class ArtnetProvider {
     var subnet: Int = 0
     var universe: Int = 0
 
-    func pack(payload: Data, offset: Int = 0) -> Data {
+    func packOne(payload: Data, offset: Int = 0) -> Data {
         var packet = Data()
         
-        packet.append("Art-Net".data(using: .utf8)!)
+        packet.append("Art-Net".data(using: .ascii)!)
         packet.append(0x00)
         
 //        # 8 - opcode (2 x 8 low byte first)
@@ -51,5 +51,11 @@ class ArtnetProvider {
         packet.append(payload)
 
         return packet
+    }
+    
+    func pack(payload: Data) -> [Data] {
+        let packets = payload.split(maxCount: 512).enumerated().map { self.packOne(payload: $1, offset: $0) }
+        sequence += 1
+        return packets
     }
 }

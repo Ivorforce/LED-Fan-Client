@@ -74,8 +74,10 @@ class VideoEndpoint: ObservableObject {
         timer = Timer(timeInterval: .seconds(1.0 / fps), repeats: true) { _ in
             let image = self.capturer.grab()
             let payload = self.screenMode.pack(image: image)
-            let packet = self.artnetProvider.pack(payload: payload)
-            connection.send(content: packet, completion: NWConnection.SendCompletion.idempotent)
+            let packets = self.artnetProvider.pack(payload: payload)
+            for packet in packets {
+                connection.send(content: packet, completion: NWConnection.SendCompletion.idempotent)
+            }
         }
         // We're in an operation queue, scheduledTimer silently doesn't work
         RunLoop.main.add(timer!, forMode: .common)
