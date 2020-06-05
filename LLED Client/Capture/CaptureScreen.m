@@ -36,7 +36,7 @@
         );
     }
     
-    CGImageRef cgImage = CGWindowListCreateImage(screenRect, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageDefault);
+    CGImageRef cgImage = CGWindowListCreateImage(screenRect, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageNominalResolution);
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
     CGImageRelease(cgImage);
     
