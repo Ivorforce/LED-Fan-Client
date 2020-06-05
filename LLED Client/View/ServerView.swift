@@ -36,7 +36,7 @@ struct ServerView: View {
             HStack() {
                 Text("Server IP")
                     .bold()
-                    .frame(width: 100)
+                    .frame(width: 100, alignment: .leading)
 
                 TextField("...", text: $server.urlString)
                     .frame(minWidth: 100)

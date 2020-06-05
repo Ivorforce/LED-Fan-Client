@@ -31,7 +31,9 @@ struct ImageProviderView: View {
     var body: some View {
         VStack {
             HStack {
-                Picker(selection: $capturer, label: Text("Capture Method")) {
+                Picker(selection: $capturer, label:
+                    Text("Capture Method").frame(width: 150, alignment: .leading)
+                ) {
                     ForEach(Self.captureMethods, id: \.description) { method in
                         Text(method.name()).tag(method)
                     }

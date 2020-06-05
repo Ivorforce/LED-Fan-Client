@@ -33,7 +33,9 @@ struct ContentView: View {
             
             if server.state == .connected {
                 HStack {
-                    Picker(selection: $server.endpoint, label: Text("Screen Mode")) {
+                    Picker(selection: $server.endpoint, label:
+                        Text("Screen Mode").frame(width: 150, alignment: .leading)
+                    ) {
                         ForEach(server.endpoints, id: \.self) { mode in
                             Text(mode.type.name).tag(Optional.some(mode))
                         }
