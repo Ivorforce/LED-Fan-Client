@@ -46,9 +46,9 @@ struct ContentView: View {
                                 .padding()
                         }
                 }
-
-                videoEndpointView
             }
+            
+            videoEndpointView
         }
             .padding()
     }
