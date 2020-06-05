@@ -109,6 +109,7 @@ class Server: ObservableObject {
     
     var rotationSpeed: Double = 0.0 {
         didSet {
+            self.objectWillChange.send()
             rest(["speed"])?.setVariable(["speed-control": rotationSpeed])
         }
     }
