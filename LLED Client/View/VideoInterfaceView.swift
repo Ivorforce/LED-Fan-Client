@@ -39,7 +39,7 @@ struct VideoInterfaceView: View {
                     view.startAnimation(self)
                     view.isHidden = !self.endpoint.isSending
                 })
-                    .frame(width: 50, height: 50)
+                    .frame(width: 20, height: 20)
             }
         }
     }
