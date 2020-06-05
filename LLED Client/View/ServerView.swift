@@ -54,7 +54,7 @@ struct ServerView: View {
                 
                 Image(systemName: NSImage.quickLookTemplateName)
                     .onHover { isHovering in
-                        self.isShowingLog = isHovering
+                        self.isShowingLog = isHovering && self.isConnected
                         self.server.rest(["log"])?.get { self.log = $0 ?? "" }
                 }
                     .popover(isPresented: $isShowingLog, arrowEdge: .trailing) {
