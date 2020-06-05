@@ -8,6 +8,55 @@
 
 import SwiftUI
 
+extension CaptureSyphon : ObservableObject {
+    var observedCaptureID : String {
+        set {
+            captureID = newValue
+            self.objectWillChange.send()
+        }
+        get { captureID }
+    }
+}
+
+struct CaptureSyphonView: View {
+    @ObservedObject var syphon: CaptureSyphon
+    
+    var body: some View {
+                    guard let servers = SyphonServerDirectory.shared()?.servers as? [[String: Any]] else {
+            return AnyView(Text("Failed to connect to Syphon"))
+        }
+        
+        guard !servers.isEmpty else {
+            return AnyView(Text("No servers found!"))
+        }
+        
+        var serverDict: [String: [String: Any]] = [:]
+        for server in servers {
+            if let serverID = server[SyphonServerDescriptionUUIDKey] as? String {
+                serverDict[serverID] = server
+            }
+        }
+        
+        let picker = Picker(selection: $syphon.observedCaptureID, label:
+            Text("Syphonable").frame(width: 150, alignment: .leading)
+        ) {
+            ForEach(serverDict.keys.sorted(), id: \.self) { serverID in
+                HStack {
+                    (serverDict[serverID]?[SyphonServerDescriptionIconKey] as? NSImage).map {
+                        Image(nsImage: $0)
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                    }
+                    Text(serverDict[serverID]?[SyphonServerDescriptionNameKey] as? String ?? "Unknown Syphonable")
+                }
+                    .tag(serverID)
+            }
+        }
+        
+        return AnyView(picker)
+    }
+}
+
 struct ImageProviderView: View {
     static let captureMethods = [
         CaptureScreen(),
@@ -16,13 +65,19 @@ struct ImageProviderView: View {
     
     @State var capturer: ImageCapture = Self.captureMethods[0]
     @State var showPreview = false
-        
+    
+    let captureSyphonView: CaptureSyphonView
+    
+    init() {
+        captureSyphonView = CaptureSyphonView(syphon: Self.captureMethods[1] as! CaptureSyphon)
+    }
+            
     var methodView: some View {
         switch capturer {
         case is CaptureSyphon:
-            return EmptyView()
+            return AnyView(captureSyphonView)
         case is CaptureScreen:
-            return EmptyView()
+            return AnyView(EmptyView())
         default:
             fatalError()
         }

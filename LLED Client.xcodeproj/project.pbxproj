@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		804BF623248A4D9100528016 /* NSImage+LLED.m in Sources */ = {isa = PBXBuildFile; fileRef = 804BF622248A4D9100528016 /* NSImage+LLED.m */; };
+		804BF627248AA21800528016 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804BF625248AA20700528016 /* Syphon.framework */; };
+		804BF628248AA21800528016 /* Syphon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 804BF625248AA20700528016 /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4722489A62B00344940 /* CaptureSyphon.m */; };
 		8052B4762489B04F00344940 /* ImageCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4752489B04F00344940 /* ImageCapture.m */; };
 		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
@@ -28,8 +30,23 @@
 		80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		804BF629248AA21800528016 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				804BF628248AA21800528016 /* Syphon.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		804BF622248A4D9100528016 /* NSImage+LLED.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSImage+LLED.m"; sourceTree = "<group>"; };
+		804BF625248AA20700528016 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		8052B4712489A62B00344940 /* CaptureSyphon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureSyphon.h; sourceTree = "<group>"; };
 		8052B4722489A62B00344940 /* CaptureSyphon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureSyphon.m; sourceTree = "<group>"; };
 		8052B4742489B04F00344940 /* ImageCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageCapture.h; sourceTree = "<group>"; };
@@ -63,12 +80,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				804BF627248AA21800528016 /* Syphon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		804BF624248AA1F000528016 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				804BF625248AA20700528016 /* Syphon.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		80C309F924882E7D006E218C /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +162,7 @@
 		80E68F1E2485831400F47DB1 /* LLED Client */ = {
 			isa = PBXGroup;
 			children = (
+				804BF624248AA1F000528016 /* Frameworks */,
 				80E68F1F2485831400F47DB1 /* AppDelegate.swift */,
 				80C309F924882E7D006E218C /* View */,
 				80C309FA24882E89006E218C /* Server */,
@@ -168,6 +195,7 @@
 				80E68F182485831400F47DB1 /* Sources */,
 				80E68F192485831400F47DB1 /* Frameworks */,
 				80E68F1A2485831400F47DB1 /* Resources */,
+				804BF629248AA21800528016 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -388,6 +416,11 @@
 				DEVELOPMENT_TEAM = 5GU22J823J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LLED\\ Client",
+					"$(PROJECT_DIR)/LLED\\ Client/Frameworks",
+				);
 				INFOPLIST_FILE = "LLED Client/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -414,6 +447,11 @@
 				DEVELOPMENT_TEAM = 5GU22J823J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LLED\\ Client",
+					"$(PROJECT_DIR)/LLED\\ Client/Frameworks",
+				);
 				INFOPLIST_FILE = "LLED Client/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

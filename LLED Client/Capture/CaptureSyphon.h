@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CaptureSyphon : ImageCapture
 
+@property (nonatomic, retain) NSString *captureID;
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END
