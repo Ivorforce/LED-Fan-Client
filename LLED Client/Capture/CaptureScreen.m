@@ -10,12 +10,31 @@
 
 @implementation CaptureScreen
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.enforceSquare = YES;
+    }
+    return self;
+}
+
 - (NSString *)name {
     return @"Capture Screen";
 }
 
 - (NSImage *)grab {
     NSRect screenRect = [[NSScreen mainScreen] frame];
+    
+    if (self.enforceSquare) {
+        CGFloat size = MIN(screenRect.size.width, screenRect.size.height);
+        screenRect = NSMakeRect(
+            screenRect.origin.x + (screenRect.size.width - size) / 2,
+            screenRect.origin.y + (screenRect.size.height - size) / 2,
+            size,
+            size
+        );
+    }
     
     CGImageRef cgImage = CGWindowListCreateImage(screenRect, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageDefault);
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];

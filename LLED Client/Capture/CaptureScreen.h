@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CaptureScreen : ImageCapture
 
+@property (nonatomic) bool enforceSquare;
+
 @end
 
 NS_ASSUME_NONNULL_END
