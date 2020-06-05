@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		804BF623248A4D9100528016 /* NSImage+LLED.m in Sources */ = {isa = PBXBuildFile; fileRef = 804BF622248A4D9100528016 /* NSImage+LLED.m */; };
 		8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4722489A62B00344940 /* CaptureSyphon.m */; };
 		8052B4762489B04F00344940 /* ImageCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4752489B04F00344940 /* ImageCapture.m */; };
 		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		804BF622248A4D9100528016 /* NSImage+LLED.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSImage+LLED.m"; sourceTree = "<group>"; };
 		8052B4712489A62B00344940 /* CaptureSyphon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureSyphon.h; sourceTree = "<group>"; };
 		8052B4722489A62B00344940 /* CaptureSyphon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureSyphon.m; sourceTree = "<group>"; };
 		8052B4742489B04F00344940 /* ImageCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageCapture.h; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				8052B4712489A62B00344940 /* CaptureSyphon.h */,
 				8052B4722489A62B00344940 /* CaptureSyphon.m */,
 				80C30A0C24895758006E218C /* NSImage+LLED.h */,
+				804BF622248A4D9100528016 /* NSImage+LLED.m */,
 				80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */,
 			);
 			path = Capture;
@@ -236,6 +239,7 @@
 				80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */,
 				80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */,
 				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
+				804BF623248A4D9100528016 /* NSImage+LLED.m in Sources */,
 				80E68F332485B2F900F47DB1 /* Server.swift in Sources */,
 				80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */,
 				80C30A0924893CDC006E218C /* ServerView.swift in Sources */,
