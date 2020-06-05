@@ -55,7 +55,7 @@ class ArtnetProvider {
         packet.append(contentsOf: totalUniverse.bytes[0...1])
 
 //        # 16 - packet size (2 x 8 high byte first)
-        packet.append(contentsOf: payload.count.bigEndian.bytes[0...1])
+        packet.append(contentsOf: payload.count.bytes[0...1].reversed())
         packet.append(payload)
 
         return packet
