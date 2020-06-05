@@ -15,6 +15,7 @@ protocol ScreenMode {
     static func parse(_ dict: [String: Any]) -> Self?
 
     var description: String { get }
+    var net: Int { get }
 
     func pack(image: NSImage) -> Data
 }
@@ -24,12 +25,18 @@ struct Cartesian: ScreenMode {
     static var name: String { "Cartesian" }
 
     static func parse(_ dict: [String : Any]) -> Self? {
-        guard let width = dict["width"] as? Int, let height = dict["height"] as? Int else {
+        guard
+            let width = dict["width"] as? Int,
+            let height = dict["height"] as? Int,
+            let net = dict["net"] as? Int
+        else {
             return nil
         }
         
-        return Cartesian(width: width, height: height)
+        return Cartesian(net: net, width: width, height: height)
     }
+    
+    let net: Int
     
     let width: Int
     let height: Int

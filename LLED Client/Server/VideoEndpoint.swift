@@ -13,7 +13,7 @@ class VideoEndpoint: ObservableObject {
     let screenMode: ScreenMode
     let server: Server
 
-    let artnetProvider = ArtnetProvider()
+    let artnetProvider: ArtnetProvider
     var capturer: ImageCapture = CaptureScreen()
     
     var connection: NWConnection?
@@ -26,6 +26,8 @@ class VideoEndpoint: ObservableObject {
     init(screenMode: ScreenMode, server: Server) {
         self.screenMode = screenMode
         self.server = server
+        self.artnetProvider = ArtnetProvider()
+        self.artnetProvider.net = screenMode.net
     }
     
     var isSending = false {
@@ -63,11 +65,12 @@ class VideoEndpoint: ObservableObject {
     }
     
     func _flushTimer() {
-        guard let connection = self.connection, connection.state == .ready else {
+        guard let connection = connection, connection.state == .ready else {
             timer = nil
             return
         }
         
+        print(connection)
         timer = Timer(timeInterval: .seconds(1.0 / fps), repeats: true) { _ in
             let image = self.capturer.grab()
             let payload = self.screenMode.pack(image: image)
