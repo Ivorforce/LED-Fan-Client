@@ -43,6 +43,7 @@ struct ContentView: View {
                             .onHover { isHovering in self.isShowingDescription = isHovering }
                             .popover(isPresented: $isShowingDescription, arrowEdge: .trailing) {
                                 Text(endpoint.screenMode.description)
+                                    .padding()
                             }
                     }
                 }

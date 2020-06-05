@@ -55,11 +55,23 @@ struct ServerView: View {
                 Image(systemName: NSImage.quickLookTemplateName)
                     .onHover { isHovering in
                         self.isShowingLog = isHovering && self.isConnected
-                        self.server.rest(["log"])?.get { self.log = $0 ?? "" }
+                        if isHovering {
+                            self.log = ""
+                            self.server.rest(["log"])?.get { self.log = $0 ?? "" }
+                        }
                 }
                     .popover(isPresented: $isShowingLog, arrowEdge: .trailing) {
-                        Text(self.log)
-                            .truncationMode(.head)
+                        if !self.log.isEmpty {
+                            Text(self.log)
+                                .fixedSize()
+                                .padding()
+                        }
+                        else {
+                            ProgressIndicator { view in
+                                view.style = .spinning
+                                view.startAnimation(self)
+                            }.padding()
+                        }
                     }
             }
             

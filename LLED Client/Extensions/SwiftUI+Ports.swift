@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProgressIndicator: NSViewRepresentable {
     typealias TheNSView = NSProgressIndicator
-    var configuration = { (view: TheNSView) in }
+    var configuration: (TheNSView) -> Void = { _ in }
 
     func makeNSView(context: NSViewRepresentableContext<ProgressIndicator>) -> NSProgressIndicator {
         TheNSView()
