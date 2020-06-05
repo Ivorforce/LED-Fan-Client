@@ -16,8 +16,8 @@ class ArtnetProvider {
     var net: Int = 0
     var subnet: Int = 0
     var universe: Int = 0
-
-    func packOne(payload: Data, offset: Int = 0) -> Data {
+    
+    let _header: Data = {
         var packet = Data()
         
         packet.append("Art-Net".data(using: .ascii)!)
@@ -29,6 +29,14 @@ class ArtnetProvider {
 //        # 10 - prototocol version (2 x 8 high byte first)
         packet.append(0x00)
         packet.append(14)
+        
+        return packet
+    }()
+
+    func packOne(payload: Data, offset: Int = 0) -> Data {
+        var packet = Data()
+        
+        packet.append(_header)
 //        # 12 - sequence (int 8), NULL for not implemented
         packet.append(sequence)
 //        # 13 - physical port (int 8)
