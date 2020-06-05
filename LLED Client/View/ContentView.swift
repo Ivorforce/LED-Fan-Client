@@ -14,6 +14,8 @@ struct ContentView: View {
     @ObservedObject var server: Server
     let serverView: ServerView
     
+    @State var isShowingDescription = false
+    
     init() {
         let serverInfo = Server()
         self.server = serverInfo
@@ -38,7 +40,10 @@ struct ContentView: View {
                     
                     server.endpoint(mode: selectedScreenMode).map { endpoint in
                         Image(systemName: NSImage.quickLookTemplateName)
-                            .overlay(TooltipView(endpoint.screenMode.description).withCursor())
+                            .onHover { isHovering in self.isShowingDescription = isHovering }
+                            .popover(isPresented: $isShowingDescription, arrowEdge: .trailing) {
+                                Text(endpoint.screenMode.description)
+                            }
                     }
                 }
 
