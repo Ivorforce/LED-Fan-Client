@@ -7,15 +7,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Syphon/Syphon.h>
 #import "ImageCapture.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CaptureSyphon : ImageCapture
+@interface CaptureSyphon : ImageCapture {
+    NSDictionary *currentDescription;
+    NSMutableData *textureBuffer;
+
+    NSImage *currentTexture;
+}
 
 @property (nonatomic, retain) NSString *captureID;
 
-
+@property (nonatomic, retain) SyphonClient *syphon;
 
 @end
 
