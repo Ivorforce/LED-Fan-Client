@@ -10,6 +10,10 @@
 
 @implementation CaptureSyphon
 
+- (NSString *)name {
+    return @"Capture Syphon";
+}
+
 - (NSImage *)grab {
     return [NSImage new];
 }

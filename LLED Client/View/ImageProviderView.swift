@@ -31,7 +31,7 @@ struct ImageProviderView: View {
         VStack {
             Picker(selection: $capturer, label: Text("Capture Method")) {
                 ForEach(Self.captureMethods, id: \.description) { method in
-                    Text(method.description).tag(method)
+                    Text(method.name()).tag(method)
                 }
             }
             

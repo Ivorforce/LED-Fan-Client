@@ -10,6 +10,10 @@
 
 @implementation CaptureScreen
 
+- (NSString *)name {
+    return @"Capture Screen";
+}
+
 - (NSImage *)grab {
     NSRect screenRect = [[NSScreen mainScreen] frame];
     

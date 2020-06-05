@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ImageCapture : NSObject
 
+- (NSString *) name;
 - (NSImage *) grab;
 
 @end
