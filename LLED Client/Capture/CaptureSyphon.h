@@ -14,8 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CaptureSyphon : ImageCapture {
     NSDictionary *currentDescription;
-    NSMutableData *textureBuffer;
 
+    NSOpenGLContext *oglContext;
+    NSMutableData *textureBuffer;
     NSImage *currentTexture;
 }
 

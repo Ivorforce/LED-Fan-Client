@@ -54,18 +54,18 @@
     
     NSOpenGLPixelFormatAttribute attributes[] =
     {
-        NSOpenGLPFAPixelBuffer,
-        NSOpenGLPFANoRecovery,
-        NSOpenGLPFAAccelerated,
-        NSOpenGLPFADepthSize, 24,
+//        NSOpenGLPFAPixelBuffer,
+//        NSOpenGLPFANoRecovery,
+//        NSOpenGLPFAAccelerated,
+//        NSOpenGLPFADepthSize, 24,
         (NSOpenGLPixelFormatAttribute) 0
     };
     
     NSOpenGLPixelFormat *format = [[NSOpenGLPixelFormat alloc] initWithAttributes: attributes];
-    NSOpenGLContext *context = [[NSOpenGLContext alloc] initWithFormat:format shareContext:nil];
+    oglContext = [[NSOpenGLContext alloc] initWithFormat:format shareContext:nil];
 
     [self setSyphon: [[SyphonClient alloc] initWithServerDescription:description
-                                                       context:[context CGLContextObj]
+                                                       context:[oglContext CGLContextObj]
                                                        options:nil newFrameHandler:^(SyphonClient *client) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self downloadCurrentTexture];
@@ -75,25 +75,56 @@
 
 -(void)downloadCurrentTexture {
     SyphonImage *frame = [_syphon newFrameImage];
-    NSSize imageSize = frame.textureSize;
 
     int samplesPerPixel = 3;
-    int width = imageSize.width;
-    int height = imageSize.height;
+    int width = frame.textureSize.width;
+    int height = frame.textureSize.height;
 
     NSUInteger expectedBufferSize = width * height * samplesPerPixel;
     if ([textureBuffer length] != expectedBufferSize) {
         textureBuffer = [[NSMutableData alloc] initWithLength: expectedBufferSize];
     }
     
-    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, textureBuffer.mutableBytes);
+    [oglContext makeCurrentContext];
+    glBindTexture(GL_TEXTURE_RECTANGLE, frame.textureName);
+    
+    glGetTexImage(GL_TEXTURE_RECTANGLE, 0, GL_RGB, GL_UNSIGNED_BYTE, textureBuffer.mutableBytes);
+    
+    // For FBO
+//    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, textureBuffer.mutableBytes);
+    
     GLenum error = glGetError();
     if (error) {
         NSLog(@"%u", error);
     }
+    
+    const char* bytes = (const char*)[textureBuffer bytes];
+    NSUInteger i = [textureBuffer length] - 1;
+    while (bytes[i] == 0)
+        i--;
 
+    NSLog(@"%lu of %lu (%lu)", (unsigned long)i, (unsigned long)expectedBufferSize, [textureBuffer length]);
     NSLog(@"%@", textureBuffer);
-    currentTexture = [[NSImage alloc] initWithData: textureBuffer];
+
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, [textureBuffer bytes], expectedBufferSize, NULL);
+    size_t bitsPerComponent = 8;
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
+    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+
+    CGImageRef iref = CGImageCreate(width,
+                                    height,
+                                    bitsPerComponent,
+                                    bitsPerComponent * samplesPerPixel, // bits per pixel
+                                    samplesPerPixel * width, // bytes per row
+                                    colorSpaceRef,
+                                    bitmapInfo,
+                                    provider,   // data provider
+                                    NULL,       // decode
+                                    YES,        // should interpolate
+                                    renderingIntent);
+
+    currentTexture = [[NSImage alloc] initWithCGImage:iref size:frame.textureSize];
 }
 
 - (NSImage *)grab {
