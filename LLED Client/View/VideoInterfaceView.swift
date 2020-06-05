@@ -22,12 +22,24 @@ struct VideoInterfaceView: View {
                     get: { self.endpoint.fps != 30 ? String(self.endpoint.fps) : "" },
                     set: { self.endpoint.fps = Double($0) ?? 30 }
                 ))
+                    .frame(minWidth: 100)
                 
-                Toggle(isOn: $endpoint.isSending) {
-                    Text("Send to Server")
+                Button(action: {
+                    self.endpoint.isSending.toggle()
+                }) {
+                    Text(self.endpoint.isSending ? "Stop Streaming" : "Stream")
+                        .frame(width: 200)
                 }
                     .disabled(!imageProviderView.isReady)
                     .padding()
+                
+                ProgressIndicator(configuration: { view in
+                    view.style = .spinning
+                    view.controlSize = .small
+                    view.startAnimation(self)
+                    view.isHidden = !self.endpoint.isSending
+                })
+                    .frame(width: 50, height: 50)
             }
         }
     }
