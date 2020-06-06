@@ -13,6 +13,10 @@
 		804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804BF62A248ADFDA00528016 /* Syphon+LLED.swift */; };
 		8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4722489A62B00344940 /* CaptureSyphon.m */; };
 		8052B4762489B04F00344940 /* ImageCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4752489B04F00344940 /* ImageCapture.m */; };
+		80B76F23248BB22100442A55 /* OpenGL+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F22248BB22100442A55 /* OpenGL+Texture.swift */; };
+		80B76F27248BD64600442A55 /* default.fs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F26248BD64600442A55 /* default.fs */; };
+		80B76F29248BD64F00442A55 /* default.vs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F28248BD64F00442A55 /* default.vs */; };
+		80B76F2B248BD6A700442A55 /* OpenGL+Shader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */; };
 		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
 		80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F3248829B6006E218C /* VideoInterfaceView.swift */; };
 		80C309F624882C32006E218C /* ScreenMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F524882C32006E218C /* ScreenMode.swift */; };
@@ -53,6 +57,10 @@
 		8052B4722489A62B00344940 /* CaptureSyphon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureSyphon.m; sourceTree = "<group>"; };
 		8052B4742489B04F00344940 /* ImageCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageCapture.h; sourceTree = "<group>"; };
 		8052B4752489B04F00344940 /* ImageCapture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageCapture.m; sourceTree = "<group>"; };
+		80B76F22248BB22100442A55 /* OpenGL+Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenGL+Texture.swift"; sourceTree = "<group>"; };
+		80B76F26248BD64600442A55 /* default.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = default.fs; sourceTree = "<group>"; };
+		80B76F28248BD64F00442A55 /* default.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = default.vs; sourceTree = "<group>"; };
+		80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenGL+Shader.swift"; sourceTree = "<group>"; };
 		80C309F1248828D7006E218C /* ImageProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProviderView.swift; sourceTree = "<group>"; };
 		80C309F3248829B6006E218C /* VideoInterfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInterfaceView.swift; sourceTree = "<group>"; };
 		80C309F524882C32006E218C /* ScreenMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenMode.swift; sourceTree = "<group>"; };
@@ -97,6 +105,15 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
+		80B76F25248BD61B00442A55 /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				80B76F26248BD64600442A55 /* default.fs */,
+				80B76F28248BD64F00442A55 /* default.vs */,
+			);
+			path = Shader;
+			sourceTree = "<group>";
+		};
 		80C309F924882E7D006E218C /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +143,8 @@
 				80E68F342485B89200F47DB1 /* Foundation+LLED.swift */,
 				80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */,
 				804BF62A248ADFDA00528016 /* Syphon+LLED.swift */,
+				80B76F22248BB22100442A55 /* OpenGL+Texture.swift */,
+				80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -171,8 +190,9 @@
 				80C309FA24882E89006E218C /* Server */,
 				80C309FF24883AC1006E218C /* Capture */,
 				80C309FB24882E90006E218C /* Extensions */,
-				80E68F232485831700F47DB1 /* Assets.xcassets */,
+				80B76F25248BD61B00442A55 /* Shader */,
 				80E68F282485831700F47DB1 /* Main.storyboard */,
+				80E68F232485831700F47DB1 /* Assets.xcassets */,
 				80E68F2B2485831700F47DB1 /* Info.plist */,
 				80E68F2C2485831700F47DB1 /* LLED_Client.entitlements */,
 				80E68F252485831700F47DB1 /* Preview Content */,
@@ -250,6 +270,8 @@
 			files = (
 				80E68F2A2485831700F47DB1 /* Main.storyboard in Resources */,
 				80E68F272485831700F47DB1 /* Preview Assets.xcassets in Resources */,
+				80B76F27248BD64600442A55 /* default.fs in Resources */,
+				80B76F29248BD64F00442A55 /* default.vs in Resources */,
 				80E68F242485831700F47DB1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,7 +286,6 @@
 				80C309F624882C32006E218C /* ScreenMode.swift in Sources */,
 				80C309F824882C44006E218C /* VideoEndpoint.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
-				8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */,
 				80E68F222485831400F47DB1 /* ContentView.swift in Sources */,
 				804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */,
 				80C30A0B24894C81006E218C /* REST.swift in Sources */,
@@ -273,10 +294,13 @@
 				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
 				804BF623248A4D9100528016 /* NSImage+LLED.m in Sources */,
 				80E68F332485B2F900F47DB1 /* Server.swift in Sources */,
+				80B76F23248BB22100442A55 /* OpenGL+Texture.swift in Sources */,
 				80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */,
 				80C30A0924893CDC006E218C /* ServerView.swift in Sources */,
 				80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */,
+				80B76F2B248BD6A700442A55 /* OpenGL+Shader.swift in Sources */,
 				8052B4762489B04F00344940 /* ImageCapture.m in Sources */,
+				8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */,
 				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

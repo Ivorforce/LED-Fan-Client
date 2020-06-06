@@ -7,3 +7,5 @@
 #import "CaptureScreen.h"
 #import "CaptureSyphon.h"
 #import "NSImage+LLED.h"
+
+#import <OpenGL/gl.h>

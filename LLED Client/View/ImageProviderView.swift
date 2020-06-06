@@ -21,6 +21,17 @@ extension CaptureSyphon : ObservableObject {
 struct CaptureSyphonView: View {
     @ObservedObject var syphon: CaptureSyphon
     
+    static func syphonableName(dict: [String: Any]) -> String {
+        if let name = dict[SyphonServerDescriptionNameKey] as? String, !name.isEmpty {
+            return name
+        }
+        if let appName = dict[SyphonServerDescriptionAppNameKey] as? String, !appName.isEmpty {
+            return appName
+        }
+        
+        return dict[SyphonServerDescriptionUUIDKey] as? String ?? "Unknown Syphonable"
+    }
+    
     var body: some View {
                     guard let servers = SyphonServerDirectory.shared()?.servers as? [[String: Any]] else {
             return AnyView(Text("Failed to connect to Syphon"))
@@ -47,7 +58,7 @@ struct CaptureSyphonView: View {
                             .resizable()
                             .frame(width: 18, height: 18)
                     }
-                    Text(serverDict[serverID]?[SyphonServerDescriptionNameKey] as? String ?? "Unknown Syphonable")
+                    Text(Self.syphonableName(dict: serverDict[serverID]!))
                 }
                     .tag(serverID)
             }
