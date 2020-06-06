@@ -11,6 +11,7 @@ import Foundation
 import OpenGL
 import GLKit
 
+@available(*, deprecated, message: "OpenGL deprecated")
 class SyphonScreen : ImageCapture, ObservableObject {
     var captureID: String = "" {
         didSet {

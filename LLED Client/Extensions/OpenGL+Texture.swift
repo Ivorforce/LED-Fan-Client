@@ -10,8 +10,8 @@ import Foundation
 
 import OpenGL
 
-@objc
-class PingPongFramebuffer: NSObject {
+@available(*, deprecated, message: "OpenGL deprecated")
+@objc class PingPongFramebuffer: NSObject {
     let buffers: [Framebuffer]
 
     var targetIndex = 0
@@ -61,8 +61,8 @@ class PingPongFramebuffer: NSObject {
     }
 }
 
-@objc
-class Framebuffer: NSObject {
+@available(*, deprecated, message: "OpenGL deprecated")
+@objc class Framebuffer: NSObject {
     @objc
     let texture = DynamicTexture()
     @objc
@@ -112,8 +112,8 @@ class Framebuffer: NSObject {
     }
 }
 
-@objc
-class DynamicTexture: NSObject {
+@available(*, deprecated, message: "OpenGL deprecated")
+@objc class DynamicTexture: NSObject {
     @objc
     var textureID: GLuint = 0
     @objc

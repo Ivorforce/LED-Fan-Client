@@ -10,6 +10,9 @@
 
 #import <OpenGL/gl3.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 @implementation OpenGLC
 
 + (BOOL)checkCompiled:(GLuint)obj {
@@ -49,3 +52,5 @@
 }
 
 @end
+
+#pragma clang diagnostic pop
