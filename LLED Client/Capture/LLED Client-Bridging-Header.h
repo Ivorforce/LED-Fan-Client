@@ -4,7 +4,6 @@
 
 #import <Syphon/Syphon.h>
 
-#import "CaptureScreen.h"
 #import "NSImage+LLED.h"
 #import "OpenGL+ObjC.h"
 

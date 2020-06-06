@@ -228,9 +228,7 @@ class SyphonScreen : ImageCapture, ObservableObject {
         currentTexture = NSImage(cgImage: cgImage, size: frame.textureSize)
     }
     
-    override func name() -> String {
-        "Capture Syphon"
-    }
+    override var name: String { "Capture Syphon" }
     
     override func grab() -> NSImage {
         currentTexture ?? NSImage()

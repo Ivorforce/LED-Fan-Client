@@ -60,7 +60,7 @@ struct CaptureSyphonView: View {
 
 struct ImageProviderView: View {
     static let captureMethods = [
-        CaptureScreen(),
+        MonitorScreen(),
         SyphonScreen()
     ]
     
@@ -77,7 +77,7 @@ struct ImageProviderView: View {
         switch capturer {
         case is SyphonScreen:
             return AnyView(captureSyphonView)
-        case is CaptureScreen:
+        case is MonitorScreen:
             return AnyView(EmptyView())
         default:
             fatalError()
@@ -91,7 +91,7 @@ struct ImageProviderView: View {
                     Text("Capture Method").frame(width: 150, alignment: .leading)
                 ) {
                     ForEach(Self.captureMethods, id: \.description) { method in
-                        Text(method.name()).tag(method)
+                        Text(method.name).tag(method)
                     }
                 }
                 
