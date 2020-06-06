@@ -17,7 +17,9 @@ class VideoEndpoint: ObservableObject {
     }
 
     let artnetProvider = ArtnetProvider()
-    var capturer: ImageCapture = MonitorScreen()
+    var capturer: ImageCapture = ImageProviderView.captureMethods[0] {
+        didSet { objectWillChange.send() }
+    }
     
     var connection: NWConnection?
     var timer: Timer?

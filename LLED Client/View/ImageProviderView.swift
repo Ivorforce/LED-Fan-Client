@@ -64,6 +64,8 @@ struct ImageProviderView: View {
         SyphonScreen()
     ]
     
+    @State var _redrawTrigger: Bool = false
+    
     @Binding var capturer: ImageCapture
     @State var showPreview = false
     
@@ -88,7 +90,11 @@ struct ImageProviderView: View {
     var body: some View {
         VStack {
             HStack {
-                Picker(selection: $capturer, label:
+                // TODO For some reason, the binding itself doesn't cause a redraw
+                Picker(selection: Binding<ImageCapture>(
+                    get: { self.capturer },
+                    set: { self.capturer = $0; self._redrawTrigger.toggle() }
+                ), label:
                     Text("Capture Method").frame(width: 150, alignment: .leading)
                 ) {
                     ForEach(Self.captureMethods, id: \.description) { method in

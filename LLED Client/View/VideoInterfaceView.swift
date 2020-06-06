@@ -41,7 +41,7 @@ struct VideoInterfaceView: View {
                     Text(self.endpoint.isSending ? "Stop Streaming" : "Stream")
                         .frame(width: 200)
                 }
-                    .disabled(!imageProviderView.isReady || endpoint.server?.state != .connected)
+                    .disabled(!imageProviderView.isReady || server.state != .connected)
                     .padding()
                 
                 ProgressIndicator(configuration: { view in
