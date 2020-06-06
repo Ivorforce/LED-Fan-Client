@@ -11,12 +11,14 @@
 		804BF627248AA21800528016 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804BF625248AA20700528016 /* Syphon.framework */; };
 		804BF628248AA21800528016 /* Syphon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 804BF625248AA20700528016 /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804BF62A248ADFDA00528016 /* Syphon+LLED.swift */; };
-		8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4722489A62B00344940 /* CaptureSyphon.m */; };
 		8052B4762489B04F00344940 /* ImageCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052B4752489B04F00344940 /* ImageCapture.m */; };
 		80B76F23248BB22100442A55 /* OpenGL+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F22248BB22100442A55 /* OpenGL+Texture.swift */; };
 		80B76F27248BD64600442A55 /* default.fs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F26248BD64600442A55 /* default.fs */; };
 		80B76F29248BD64F00442A55 /* default.vs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F28248BD64F00442A55 /* default.vs */; };
 		80B76F2B248BD6A700442A55 /* OpenGL+Shader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */; };
+		80B76F2D248C1E7D00442A55 /* SyphonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F2C248C1E7D00442A55 /* SyphonScreen.swift */; };
+		80B76F2F248C23F800442A55 /* OpenGL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F2E248C23F800442A55 /* OpenGL.swift */; };
+		80B76F33248C31AB00442A55 /* OpenGL+ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F32248C31AB00442A55 /* OpenGL+ObjC.m */; };
 		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
 		80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F3248829B6006E218C /* VideoInterfaceView.swift */; };
 		80C309F624882C32006E218C /* ScreenMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F524882C32006E218C /* ScreenMode.swift */; };
@@ -53,14 +55,16 @@
 		804BF622248A4D9100528016 /* NSImage+LLED.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSImage+LLED.m"; sourceTree = "<group>"; };
 		804BF625248AA20700528016 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		804BF62A248ADFDA00528016 /* Syphon+LLED.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Syphon+LLED.swift"; sourceTree = "<group>"; };
-		8052B4712489A62B00344940 /* CaptureSyphon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureSyphon.h; sourceTree = "<group>"; };
-		8052B4722489A62B00344940 /* CaptureSyphon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureSyphon.m; sourceTree = "<group>"; };
 		8052B4742489B04F00344940 /* ImageCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageCapture.h; sourceTree = "<group>"; };
 		8052B4752489B04F00344940 /* ImageCapture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageCapture.m; sourceTree = "<group>"; };
 		80B76F22248BB22100442A55 /* OpenGL+Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenGL+Texture.swift"; sourceTree = "<group>"; };
 		80B76F26248BD64600442A55 /* default.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = default.fs; sourceTree = "<group>"; };
 		80B76F28248BD64F00442A55 /* default.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = default.vs; sourceTree = "<group>"; };
 		80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenGL+Shader.swift"; sourceTree = "<group>"; };
+		80B76F2C248C1E7D00442A55 /* SyphonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyphonScreen.swift; sourceTree = "<group>"; };
+		80B76F2E248C23F800442A55 /* OpenGL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGL.swift; sourceTree = "<group>"; };
+		80B76F31248C31AB00442A55 /* OpenGL+ObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenGL+ObjC.h"; sourceTree = "<group>"; };
+		80B76F32248C31AB00442A55 /* OpenGL+ObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "OpenGL+ObjC.m"; sourceTree = "<group>"; };
 		80C309F1248828D7006E218C /* ImageProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProviderView.swift; sourceTree = "<group>"; };
 		80C309F3248829B6006E218C /* VideoInterfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInterfaceView.swift; sourceTree = "<group>"; };
 		80C309F524882C32006E218C /* ScreenMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenMode.swift; sourceTree = "<group>"; };
@@ -143,6 +147,9 @@
 				80E68F342485B89200F47DB1 /* Foundation+LLED.swift */,
 				80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */,
 				804BF62A248ADFDA00528016 /* Syphon+LLED.swift */,
+				80B76F2E248C23F800442A55 /* OpenGL.swift */,
+				80B76F31248C31AB00442A55 /* OpenGL+ObjC.h */,
+				80B76F32248C31AB00442A55 /* OpenGL+ObjC.m */,
 				80B76F22248BB22100442A55 /* OpenGL+Texture.swift */,
 				80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */,
 			);
@@ -156,8 +163,7 @@
 				8052B4752489B04F00344940 /* ImageCapture.m */,
 				80C30A0524883B5E006E218C /* CaptureScreen.h */,
 				80C30A0624883B5E006E218C /* CaptureScreen.m */,
-				8052B4712489A62B00344940 /* CaptureSyphon.h */,
-				8052B4722489A62B00344940 /* CaptureSyphon.m */,
+				80B76F2C248C1E7D00442A55 /* SyphonScreen.swift */,
 				80C30A0C24895758006E218C /* NSImage+LLED.h */,
 				804BF622248A4D9100528016 /* NSImage+LLED.m */,
 				80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */,
@@ -284,15 +290,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				80C309F624882C32006E218C /* ScreenMode.swift in Sources */,
+				80B76F2F248C23F800442A55 /* OpenGL.swift in Sources */,
 				80C309F824882C44006E218C /* VideoEndpoint.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
 				80E68F222485831400F47DB1 /* ContentView.swift in Sources */,
 				804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */,
+				80B76F33248C31AB00442A55 /* OpenGL+ObjC.m in Sources */,
 				80C30A0B24894C81006E218C /* REST.swift in Sources */,
 				80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */,
 				80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */,
 				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
 				804BF623248A4D9100528016 /* NSImage+LLED.m in Sources */,
+				80B76F2D248C1E7D00442A55 /* SyphonScreen.swift in Sources */,
 				80E68F332485B2F900F47DB1 /* Server.swift in Sources */,
 				80B76F23248BB22100442A55 /* OpenGL+Texture.swift in Sources */,
 				80C30A0724883B5E006E218C /* CaptureScreen.m in Sources */,
@@ -300,7 +309,6 @@
 				80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */,
 				80B76F2B248BD6A700442A55 /* OpenGL+Shader.swift in Sources */,
 				8052B4762489B04F00344940 /* ImageCapture.m in Sources */,
-				8052B4732489A62B00344940 /* CaptureSyphon.m in Sources */,
 				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

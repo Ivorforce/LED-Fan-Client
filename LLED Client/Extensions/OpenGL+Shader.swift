@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import OpenGL
+import GLKit
+import GLUT
 
 @objc(OpenGLShader) class Shader: NSObject {
     var programID: GLuint? = nil
@@ -35,7 +38,7 @@ import Foundation
         case attribute
         case uniform
     }
-    
+
     @objc
     func compile(vertexResource: String, ofType vertexType: String = "vs", fragmentResource: String, ofType fragmentType: String = "fs") throws {
         guard let vertexPath = Bundle.main.path(forResource: vertexResource, ofType: vertexType),
@@ -57,7 +60,7 @@ import Foundation
         glShaderSource(vs, 1, &vss, nil)
         glCompileShader(vs)
         
-        guard CaptureSyphon.checkCompiled(vs) else {
+        guard OpenGLC.checkCompiled(vs) else {
             throw CompileFailure.vertexCompile
         }
         defer { glDeleteShader(vs) }
@@ -66,7 +69,7 @@ import Foundation
         glShaderSource(fs, 1, &fss, nil)
         glCompileShader(fs)
         
-        guard CaptureSyphon.checkCompiled(fs) else {
+        guard OpenGLC.checkCompiled(fs) else {
             throw CompileFailure.fragmentCompile
         }
         defer { glDeleteShader(fs) }
@@ -77,19 +80,19 @@ import Foundation
         glAttachShader(programID, fs)
         glLinkProgram(programID)
         
-        guard CaptureSyphon.checkGLError("Shader Link Error"), CaptureSyphon.checkLinked(programID) else {
+        guard !OpenGL.checkErrors(context: "Shader Link Error"), OpenGLC.checkLinked(programID) else {
             throw CompileFailure.link
         }
     }
     
     func checkAttributeError() throws {
-        guard CaptureSyphon.checkGLError("Attribute Error") else {
+        guard !OpenGL.checkErrors(context: "Attribute Error") else {
             throw CompileFailure.attribute
         }
     }
 
     func checkUniformError() throws {
-        guard CaptureSyphon.checkGLError("Uniform Error") else {
+        guard !OpenGL.checkErrors(context: "Uniform Error") else {
             throw CompileFailure.uniform
         }
     }
@@ -144,7 +147,7 @@ class DefaultShader: Shader {
         
         _position = find(attribute: "position")
         glEnableVertexAttribArray(GLuint(_position.rawValue))
-        CaptureSyphon.checkGLError("Vertex Attrib Array")
+        OpenGL.checkErrors(context: "Vertex Attrib Array")
         glVertexAttribPointer(GLuint(_position.rawValue), 4, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<GLfloat>.size * 4), nil)
         try checkAttributeError()
 

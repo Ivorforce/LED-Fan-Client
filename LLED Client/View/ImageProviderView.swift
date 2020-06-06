@@ -8,18 +8,8 @@
 
 import SwiftUI
 
-extension CaptureSyphon : ObservableObject {
-    var observedCaptureID : String {
-        set {
-            captureID = newValue
-            self.objectWillChange.send()
-        }
-        get { captureID }
-    }
-}
-
 struct CaptureSyphonView: View {
-    @ObservedObject var syphon: CaptureSyphon
+    @ObservedObject var syphon: SyphonScreen
     
     static func syphonableName(dict: [String: Any]) -> String {
         if let name = dict[SyphonServerDescriptionNameKey] as? String, !name.isEmpty {
@@ -48,7 +38,7 @@ struct CaptureSyphonView: View {
             }
         }
         
-        let picker = Picker(selection: $syphon.observedCaptureID, label:
+        let picker = Picker(selection: $syphon.captureID, label:
             Text("Syphonable").frame(width: 150, alignment: .leading)
         ) {
             ForEach(serverDict.keys.sorted(), id: \.self) { serverID in
@@ -71,7 +61,7 @@ struct CaptureSyphonView: View {
 struct ImageProviderView: View {
     static let captureMethods = [
         CaptureScreen(),
-        CaptureSyphon()
+        SyphonScreen()
     ]
     
     @State var capturer: ImageCapture = Self.captureMethods[0]
@@ -80,12 +70,12 @@ struct ImageProviderView: View {
     let captureSyphonView: CaptureSyphonView
     
     init() {
-        captureSyphonView = CaptureSyphonView(syphon: Self.captureMethods[1] as! CaptureSyphon)
+        captureSyphonView = CaptureSyphonView(syphon: Self.captureMethods[1] as! SyphonScreen)
     }
             
     var methodView: some View {
         switch capturer {
-        case is CaptureSyphon:
+        case is SyphonScreen:
             return AnyView(captureSyphonView)
         case is CaptureScreen:
             return AnyView(EmptyView())
