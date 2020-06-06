@@ -64,12 +64,13 @@ struct ImageProviderView: View {
         SyphonScreen()
     ]
     
-    @State var capturer: ImageCapture = Self.captureMethods[0]
+    @Binding var capturer: ImageCapture
     @State var showPreview = false
     
     let captureSyphonView: CaptureSyphonView
     
-    init() {
+    init(capturer: Binding<ImageCapture>) {
+        _capturer = capturer
         captureSyphonView = CaptureSyphonView(syphon: Self.captureMethods[1] as! SyphonScreen)
     }
             
@@ -114,8 +115,8 @@ struct ImageProviderView: View {
     }
 }
 
-struct ImageProviderView_Previews: PreviewProvider {
-    static var previews: some View {
-        ImageProviderView()
-    }
-}
+//struct ImageProviderView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ImageProviderView()
+//    }
+//}

@@ -20,7 +20,7 @@ struct ContentView: View {
         let serverInfo = Server()
         self.server = serverInfo
         serverView = ServerView(server: serverInfo)
-        videoEndpointView = VideoInterfaceView(endpoint: serverInfo.videoEndpoint)
+        videoEndpointView = VideoInterfaceView(endpoint: serverInfo.videoEndpoint)!
     }
 
     var body: some View {

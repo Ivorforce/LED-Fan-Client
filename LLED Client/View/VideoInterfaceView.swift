@@ -9,10 +9,21 @@
 import SwiftUI
 
 struct VideoInterfaceView: View {
+    @ObservedObject var server: Server
     @ObservedObject var endpoint: VideoEndpoint
-    
-    let imageProviderView = ImageProviderView()
-        
+
+    var _imageProviderView: ImageProviderView! = nil
+    var imageProviderView: ImageProviderView { _imageProviderView }
+
+    init?(endpoint: VideoEndpoint) {
+        guard let server = endpoint.server else {
+            return nil
+        }
+        self.server = server
+        self.endpoint = endpoint
+        _imageProviderView = ImageProviderView(capturer: $endpoint.capturer)
+    }
+            
     var body: some View {
         VStack {
             imageProviderView
@@ -30,7 +41,7 @@ struct VideoInterfaceView: View {
                     Text(self.endpoint.isSending ? "Stop Streaming" : "Stream")
                         .frame(width: 200)
                 }
-                    .disabled(!imageProviderView.isReady)
+                    .disabled(!imageProviderView.isReady || endpoint.server?.state != .connected)
                     .padding()
                 
                 ProgressIndicator(configuration: { view in
