@@ -283,6 +283,9 @@
     
     if(mTextureName)
         glDeleteTextures(1, &mTextureName);
+    
+    if (mFramebufferName)
+        glDeleteFramebuffers(1, &mFramebufferName);
 }
  
  
