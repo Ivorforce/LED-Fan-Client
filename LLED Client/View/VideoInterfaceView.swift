@@ -29,6 +29,10 @@ struct VideoInterfaceView: View {
             imageProviderView
             
             HStack {
+                Text("FPS")
+                    .fixedSize()
+                    .frame(width: 50, alignment: .leading)
+                
                 TextField("30", text: Binding(
                     get: { self.endpoint.fps != 30 ? String(self.endpoint.fps) : "" },
                     set: { self.endpoint.fps = Double($0) ?? 30 }
