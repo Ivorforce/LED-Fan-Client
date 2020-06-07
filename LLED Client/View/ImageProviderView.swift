@@ -95,7 +95,8 @@ struct ImageCapturePreview: View {
 struct ImageProviderView: View {
     static let captureMethods = [
         MonitorScreen(),
-        SyphonScreen()
+        SyphonScreen(),
+        MonitorScreenOGL()
     ]
     
     @State var _redrawTrigger: Bool = false
@@ -114,10 +115,8 @@ struct ImageProviderView: View {
         switch capturer {
         case is SyphonScreen:
             return AnyView(captureSyphonView)
-        case is MonitorScreen:
-            return AnyView(EmptyView())
         default:
-            fatalError()
+            return AnyView(EmptyView())
         }
     }
 

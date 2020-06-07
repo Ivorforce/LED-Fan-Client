@@ -5,6 +5,9 @@
 #import <Syphon/Syphon.h>
 
 #import "NSImage+LLED.h"
+
 #import "OpenGL+ObjC.h"
 
 #import <OpenGL/gl.h>
+
+#import "FrameReader.h"

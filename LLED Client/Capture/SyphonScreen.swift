@@ -45,11 +45,11 @@ class SyphonScreen : OpenGLScreen {
         // Clean up, then re-setup
         stop()
         
-        createOpenGLContext()
-        guard let oglContext = oglContext else {
+        guard let oglContext = Self.createOpenGLContext(attributes: Self.defaultPixelFormatAttributes()) else {
             return // Can't render.....
         }
         
+        self.oglContext = oglContext
         oglContext.makeCurrentContext()
         
         syphon = SyphonClient(serverDescription: description, context: oglContext.cglContextObj, options: nil) { syphon in
@@ -58,7 +58,7 @@ class SyphonScreen : OpenGLScreen {
     }
             
     func downloadCurrentTexture() {
-        guard let syphon = syphon, let frame = syphon.newFrameImage(), let oglContext = oglContext else {
+        guard let syphon = syphon, let frame = syphon.newFrameImage() else {
             currentTexture = nil
             return
         }

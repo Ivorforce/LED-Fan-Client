@@ -34,30 +34,31 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         currentTexture = nil
     }
     
-    func createOpenGLContext() {
-        let glPFAttributes:[NSOpenGLPixelFormatAttribute] = [
-            .init(NSOpenGLPFAOpenGLProfile), .init(NSOpenGLProfileVersion3_2Core),
-            .init(NSOpenGLPFAColorSize), .init(24),
-            .init(NSOpenGLPFAAlphaSize), .init(8),
-            .init(NSOpenGLPFADoubleBuffer),
-            .init(NSOpenGLPFAAccelerated),
-            .init(NSOpenGLPFANoRecovery),
-            .init(0)
+    static func defaultPixelFormatAttributes() -> [Int] {
+        return [
+            NSOpenGLPFAOpenGLProfile, .init(NSOpenGLProfileVersion3_2Core),
+            NSOpenGLPFAColorSize, 24,
+            NSOpenGLPFAAlphaSize, 8,
+            NSOpenGLPFADoubleBuffer,
+            NSOpenGLPFAAccelerated,
+            NSOpenGLPFANoRecovery
         ]
+    }
+    
+    static func createOpenGLContext(attributes: [Int]) -> NSOpenGLContext? {
+        let typedAttributes = attributes.map { NSOpenGLPixelFormatAttribute($0) } + [.init(0)]
         
-        guard let format = NSOpenGLPixelFormat(attributes: glPFAttributes) else {
+        guard let format = NSOpenGLPixelFormat(attributes: typedAttributes) else {
             print("Failed to set up pixel format")
-            stop()
-            return
+            return nil
         }
         
         guard let oglContext = NSOpenGLContext(format: format, share: nil) else {
             print("Failed to set up OpenGL context")
-            stop()
-            return
+            return nil
         }
         
-        self.oglContext = oglContext
+        return oglContext
     }
     
     func drawFullScreenRect() {
