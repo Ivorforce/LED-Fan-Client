@@ -10,6 +10,9 @@
  
 #import "FrameReader.h"
  
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 #pragma mark ---------- Private Methods ----------
  
 @interface FrameReader (PrivateReaderMethods)
@@ -107,6 +110,27 @@
  
 #pragma mark ---------- Initialization/Cleanup ----------
  
++ (NSOpenGLContext *)fullScreenOGLContext {
+   NSOpenGLPixelFormatAttribute attributes[] = {
+           NSOpenGLPFAFullScreen,
+           NSOpenGLPFAScreenMask,
+               CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay),
+           (NSOpenGLPixelFormatAttribute) 0
+   };
+
+   NSOpenGLPixelFormat* mGLPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attributes];
+   NSAssert( mGLPixelFormat != nil, @"No Full-Screen Renderer");
+   if (!mGLPixelFormat) return nil;
+
+   //Create OpenGL context used to render
+   NSOpenGLContext *mGLContext = [[NSOpenGLContext alloc] initWithFormat:mGLPixelFormat shareContext:nil];
+   NSAssert( mGLContext != nil, @"NSOpenGLContext initialization failure");
+   [mGLContext makeCurrentContext];
+   [mGLContext setFullScreen];
+    
+    return mGLContext;
+}
+
 - (id) init
 {
     //Make sure client goes through designated initializer
@@ -372,3 +396,5 @@
 
  
 @end
+
+#pragma clang diagnostic pop

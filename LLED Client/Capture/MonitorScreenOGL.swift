@@ -21,7 +21,7 @@ class MonitorScreenOGL : OpenGLScreen {
         // Clean up, then re-setup
         stop()
         
-        guard let oglContext = Self.createOpenGLContext(attributes: Self.defaultPixelFormatAttributes()) else {
+        guard let oglContext = FrameReader.fullScreenOGLContext() else {
             return // Can't render.....
         }
         

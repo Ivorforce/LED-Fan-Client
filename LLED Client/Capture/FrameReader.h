@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import <Quartz/Quartz.h>
   
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 @interface FrameReader : NSObject
 {
 @private
@@ -22,11 +25,13 @@
     unsigned                mBufferRowBytes; 
 }
  
++ (NSOpenGLContext *)fullScreenOGLContext;
+
 - (id)initWithOpenGLContext:(NSOpenGLContext*)context pixelsWide:(unsigned)width pixelsHigh:(unsigned)height;
 - (BOOL)readScreenAsyncBegin;
 - (CVPixelBufferRef)readScreenAsyncFinish;
 - (void)readScreenAsyncOnSeparateThread;
-- (NSTimeInterval)bufferReadTime;
-- (void)setBufferReadTime:(NSTimeInterval)aStartTime;
  
 @end
+
+#pragma clang diagnostic pop
