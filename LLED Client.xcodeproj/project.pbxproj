@@ -20,6 +20,7 @@
 		80B76F33248C31AB00442A55 /* OpenGL+ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F32248C31AB00442A55 /* OpenGL+ObjC.m */; };
 		80B76F35248C361B00442A55 /* ImageCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F34248C361B00442A55 /* ImageCapture.swift */; };
 		80B76F37248C36D600442A55 /* MonitorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F36248C36D600442A55 /* MonitorScreen.swift */; };
+		80B76F39248D3A4C00442A55 /* OpenGLScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F38248D3A4B00442A55 /* OpenGLScreen.swift */; };
 		80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F1248828D7006E218C /* ImageProviderView.swift */; };
 		80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F3248829B6006E218C /* VideoInterfaceView.swift */; };
 		80C309F624882C32006E218C /* ScreenMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309F524882C32006E218C /* ScreenMode.swift */; };
@@ -65,6 +66,7 @@
 		80B76F32248C31AB00442A55 /* OpenGL+ObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "OpenGL+ObjC.m"; sourceTree = "<group>"; };
 		80B76F34248C361B00442A55 /* ImageCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCapture.swift; sourceTree = "<group>"; };
 		80B76F36248C36D600442A55 /* MonitorScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorScreen.swift; sourceTree = "<group>"; };
+		80B76F38248D3A4B00442A55 /* OpenGLScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGLScreen.swift; sourceTree = "<group>"; };
 		80C309F1248828D7006E218C /* ImageProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProviderView.swift; sourceTree = "<group>"; };
 		80C309F3248829B6006E218C /* VideoInterfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInterfaceView.swift; sourceTree = "<group>"; };
 		80C309F524882C32006E218C /* ScreenMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenMode.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				80B76F34248C361B00442A55 /* ImageCapture.swift */,
 				80B76F36248C36D600442A55 /* MonitorScreen.swift */,
+				80B76F38248D3A4B00442A55 /* OpenGLScreen.swift */,
 				80B76F2C248C1E7D00442A55 /* SyphonScreen.swift */,
 				80C30A0C24895758006E218C /* NSImage+LLED.h */,
 				804BF622248A4D9100528016 /* NSImage+LLED.m */,
@@ -295,6 +298,7 @@
 				80B76F33248C31AB00442A55 /* OpenGL+ObjC.m in Sources */,
 				80C30A0B24894C81006E218C /* REST.swift in Sources */,
 				80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */,
+				80B76F39248D3A4C00442A55 /* OpenGLScreen.swift in Sources */,
 				80C309F2248828D7006E218C /* ImageProviderView.swift in Sources */,
 				80E68F372485B9B800F47DB1 /* SwiftUI+Ports.swift in Sources */,
 				804BF623248A4D9100528016 /* NSImage+LLED.m in Sources */,
