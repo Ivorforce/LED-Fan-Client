@@ -148,7 +148,7 @@ class DefaultShader: Shader {
         _position = find(attribute: "position")
         glEnableVertexAttribArray(GLuint(_position.rawValue))
         OpenGL.checkErrors(context: "Vertex Attrib Array")
-        glVertexAttribPointer(GLuint(_position.rawValue), 4, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<GLfloat>.size * 4), nil)
+        glVertexAttribPointer(GLuint(_position.rawValue), 2, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<GLfloat>.size * 2), nil)
         try checkAttributeError()
 
         guImage = find(uniform: "image").rawValue

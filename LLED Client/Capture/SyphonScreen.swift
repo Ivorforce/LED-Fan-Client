@@ -113,10 +113,10 @@ class SyphonScreen : ImageCapture, ObservableObject {
         OpenGL.checkErrors(context: "Vertex Buffer Generation")
         
         let vertexData: [GLfloat] = [
-            -1, -1, 0, 1,
-            -1,  1, 0, 1,
-            1,  1, 0, 1,
-            1, -1, 0, 1
+            -1, -1,
+            -1,  1,
+            1,  1,
+            1, -1,
         ]
 
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)

@@ -1,11 +1,11 @@
 #version 150
 
-in vec4 position;
+in vec2 position;
 
 out vec2 texCoord;
 
 void main (void)
 {
-    gl_Position = position;
-    texCoord = (position.xy + 1) / 2;
+    gl_Position = vec4(position, 0, 1);
+    texCoord = (position + 1) / 2;
 }
