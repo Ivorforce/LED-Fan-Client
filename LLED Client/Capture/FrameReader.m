@@ -7,7 +7,8 @@
 //
 
 #import <OpenGL/CGLMacro.h>
- 
+#import <VideoToolbox/VideoToolbox.h>
+
 #import "FrameReader.h"
  
 #pragma clang diagnostic push
@@ -137,6 +138,10 @@
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
+
+- (NSSize)size {
+    return NSMakeSize(mWidth, mHeight);
+}
  
 // Initialize a FrameReader object -- given an OpenGL context, screen
 // width & height values and a QueueController object
@@ -246,6 +251,17 @@
             CGLUnlockContext(cgl_ctx); // Thread unlock
             return nil;
         }
+        
+        glGenFramebuffers(1, &mFramebufferName);
+        glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferName);
+        
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_RECTANGLE_ARB, mTextureName, 0);
+        
+        GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        if (status != GL_FRAMEBUFFER_COMPLETE) {
+            NSLog(@"Invalid framebuffer status: 0x%04X", status);
+        }
+
         CGLUnlockContext(cgl_ctx); // Thread unlock
     }
     
@@ -310,6 +326,11 @@
     // asynchronous DMA transfer to system memory the next time
     // a flush call is made. The CPU doesn't wait for this
     // call to complete.
+    
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, mFramebufferName);
+
+    GLint bind;
+    glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &bind);
     glCopyTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, 0, 0, 0, 0, mWidth, mHeight);
  
     //Check for OpenGL errors
@@ -342,7 +363,7 @@
 // will copy the texture from AGP memory to system
 // memory --  Note this call will wait (block) until
 // the transfer has completed.
--(CVPixelBufferRef)readScreenAsyncFinish
+-(NSImage *)readScreenAsyncFinish
 {
     //IMPORTANT: We use the macros provided by <OpenGL/CGLMacro.h> which provide better performances and allows us not to bother with making sure the current context is valid
     CGLContextObj   cgl_ctx = [mGlContext CGLContextObj];
@@ -384,14 +405,13 @@
     // flip buffer contents to use a coordinate system that QuickTime expects
     [self flipBufferContents];
  
-    if (theError == GL_NO_ERROR)
-    {
-        return (mPixelBuffer);
-    }
-    else
-    {
+    CGImageRef *ref;
+    VTCreateCGImageFromCVPixelBuffer(mPixelBuffer, NULL, &ref);
+    
+    if (theError != GL_NO_ERROR)
         return (NULL);
-    }
+    
+    return [[NSImage alloc] initWithCGImage:ref size:[self size]];
 }
 
  

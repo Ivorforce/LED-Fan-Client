@@ -17,21 +17,24 @@
 @private
     NSOpenGLContext*            mGlContext;
     unsigned                mWidth, mHeight;
+    unsigned long           mFramebufferName;
     unsigned long           mTextureName;
- 
+
     CVPixelBufferPoolRef        mBufferPool;
     CVPixelBufferRef            mPixelBuffer;
     unsigned char*          mBaseAddress;
-    unsigned                mBufferRowBytes; 
+    unsigned                mBufferRowBytes;
 }
  
 + (NSOpenGLContext *)fullScreenOGLContext;
 
 - (id)initWithOpenGLContext:(NSOpenGLContext*)context pixelsWide:(unsigned)width pixelsHigh:(unsigned)height;
 - (BOOL)readScreenAsyncBegin;
-- (CVPixelBufferRef)readScreenAsyncFinish;
+- (NSImage *)readScreenAsyncFinish;
 - (void)readScreenAsyncOnSeparateThread;
  
+- (NSSize) size;
+
 @end
 
 #pragma clang diagnostic pop

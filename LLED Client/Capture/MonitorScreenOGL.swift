@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import VideoToolbox
 
 @available(*, deprecated, message: "OpenGL deprecated")
 class MonitorScreenOGL : OpenGLScreen {
@@ -42,10 +43,9 @@ class MonitorScreenOGL : OpenGLScreen {
             return NSImage()
         }
         frameReader.readScreenAsyncOnSeparateThread()
-        let pixels = frameReader.readScreenAsyncFinish()
-        print(pixels)
-        
-        return NSImage()
+        let img = frameReader.readScreenAsyncFinish() ?? NSImage()
+        print(img)
+        return img
     }
         
     override var name: String { "Capture Screen (OGL)" }
