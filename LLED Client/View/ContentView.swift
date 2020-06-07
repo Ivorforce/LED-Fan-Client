@@ -31,25 +31,24 @@ struct ContentView: View {
                 .frame(height: 20)
                 .fixedSize()
             
-            if server.state == .connected {
-                HStack {
-                    Picker(selection: $server.endpoint, label:
-                        Text("Screen Mode").frame(width: 150, alignment: .leading)
-                    ) {
-                        ForEach(server.endpoints, id: \.self) { mode in
-                            Text(mode.type.name).tag(Optional.some(mode))
-                        }
+            HStack {
+                Picker(selection: $server.endpoint, label:
+                    Text("Screen Mode").frame(width: 150, alignment: .leading)
+                ) {
+                    ForEach(server.endpoints, id: \.self) { mode in
+                        Text(mode.type.name).tag(Optional.some(mode))
                     }
-                    
-                    Image(systemName: NSImage.quickLookTemplateName)
-                        .onHover { isHovering in self.isShowingDescription = isHovering && self.server.videoEndpoint.screenMode != nil }
-                        .popover(isPresented: $isShowingDescription, arrowEdge: .trailing) {
-                            Text(self.server.videoEndpoint.screenMode?.description ?? "")
-                                .padding()
-                        }
                 }
+                    .disabled(server.state != .connected)
+                
+                Image(systemName: NSImage.quickLookTemplateName)
+                    .onHover { isHovering in self.isShowingDescription = isHovering && self.server.videoEndpoint.screenMode != nil }
+                    .popover(isPresented: $isShowingDescription, arrowEdge: .trailing) {
+                        Text(self.server.videoEndpoint.screenMode?.description ?? "")
+                            .padding()
+                    }
             }
-            
+
             videoEndpointView
         }
             .padding()
