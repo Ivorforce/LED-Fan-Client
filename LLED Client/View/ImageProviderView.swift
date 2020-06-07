@@ -58,6 +58,40 @@ struct CaptureSyphonView: View {
     }
 }
 
+class CaptureObserver : ObservableObject {
+    var capturer: ImageCapture
+    var image: NSImage = NSImage() {
+        didSet { objectWillChange.send() }
+    }
+    
+    var timer: Timer?
+    
+    init(capturer: ImageCapture) {
+        self.capturer = capturer
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            self.image = self.capturer.grab()
+        }
+    }
+    
+    deinit {
+        timer?.invalidate()
+    }
+}
+
+struct ImageCapturePreview: View {
+    @ObservedObject var observer : CaptureObserver
+    
+    init(capturer: ImageCapture) {
+        observer = CaptureObserver(capturer: capturer)
+    }
+    
+    var body: some View {
+        Image(nsImage: observer.image)
+            .resizable()
+            .scaledToFit()
+    }
+}
+
 struct ImageProviderView: View {
     static let captureMethods = [
         MonitorScreen(),
@@ -105,9 +139,7 @@ struct ImageProviderView: View {
                 Image(systemName: NSImage.quickLookTemplateName)
                     .onHover { isHovering in self.showPreview = isHovering }
                     .popover(isPresented: $showPreview, arrowEdge: .trailing) {
-                        Image(nsImage: self.capturer.grab()) // TODO Show live
-                            .resizable()
-                            .scaledToFit()
+                        ImageCapturePreview(capturer: self.capturer)
                             .frame(maxWidth: 200, maxHeight: 200)
                     }
             }
