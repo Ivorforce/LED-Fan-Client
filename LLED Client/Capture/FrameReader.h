@@ -17,7 +17,6 @@
 @private
     NSOpenGLContext*            mGlContext;
     unsigned                mWidth, mHeight;
-    unsigned long           mFramebufferName;
     unsigned long           mTextureName;
 
     CVPixelBufferPoolRef        mBufferPool;
@@ -32,7 +31,9 @@
 - (BOOL)readScreenAsyncBegin;
 - (NSImage *)readScreenAsyncFinish;
 - (void)readScreenAsyncOnSeparateThread;
- 
+
+- (NSImage *)readScreenSync;
+
 - (NSSize) size;
 
 @end

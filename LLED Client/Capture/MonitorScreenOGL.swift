@@ -42,10 +42,9 @@ class MonitorScreenOGL : OpenGLScreen {
             print("No frame reader")
             return NSImage()
         }
-        frameReader.readScreenAsyncOnSeparateThread()
-        let img = frameReader.readScreenAsyncFinish() ?? NSImage()
-        print(img)
-        return img
+        return frameReader.readScreenSync() ?? NSImage()
+//        frameReader.readScreenAsyncOnSeparateThread()
+//        return frameReader.readScreenAsyncFinish() ?? NSImage()
     }
         
     override var name: String { "Capture Screen (OGL)" }

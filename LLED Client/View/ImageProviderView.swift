@@ -94,9 +94,8 @@ struct ImageCapturePreview: View {
 
 struct ImageProviderView: View {
     static let captureMethods = [
-        MonitorScreen(),
-        SyphonScreen(),
-        MonitorScreenOGL()
+        MonitorScreenAVFoundation(),
+        SyphonScreen()
     ]
     
     @State var _redrawTrigger: Bool = false

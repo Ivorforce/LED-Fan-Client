@@ -15,6 +15,7 @@
     NSImageRep *rep = [[self representations] objectAtIndex: 0];
 
     if (![rep isKindOfClass: [NSBitmapImageRep class]]) {
+        NSLog(@"Unsupported Image Format for RGB!");
         return nil;
     }
     

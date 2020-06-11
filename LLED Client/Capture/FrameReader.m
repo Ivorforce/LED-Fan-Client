@@ -19,6 +19,7 @@
 @interface FrameReader (PrivateReaderMethods)
 //- (void)readScreenAsyncSynchronized:(id)param;
 - (void)flipBufferContents;
+- (NSImage *)readImageFromBuffer;
 @end
  
 @implementation FrameReader (PrivateReaderMethods)
@@ -115,7 +116,7 @@
    NSOpenGLPixelFormatAttribute attributes[] = {
            NSOpenGLPFAFullScreen,
            NSOpenGLPFAScreenMask,
-               CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay),
+           CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay),
            (NSOpenGLPixelFormatAttribute) 0
    };
 
@@ -252,16 +253,6 @@
             return nil;
         }
         
-        glGenFramebuffers(1, &mFramebufferName);
-        glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferName);
-        
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_RECTANGLE_ARB, mTextureName, 0);
-        
-        GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-        if (status != GL_FRAMEBUFFER_COMPLETE) {
-            NSLog(@"Invalid framebuffer status: 0x%04X", status);
-        }
-
         CGLUnlockContext(cgl_ctx); // Thread unlock
     }
     
@@ -282,10 +273,7 @@
         CVPixelBufferRelease(mPixelBuffer);
     
     if(mTextureName)
-        glDeleteTextures(1, &mTextureName);
-    
-    if (mFramebufferName)
-        glDeleteFramebuffers(1, &mFramebufferName);
+        glDeleteTextures(1, &mTextureName);    
 }
  
  
@@ -322,6 +310,8 @@
     //Use our rectangle texture target
     glBindTexture(GL_TEXTURE_RECTANGLE_ARB, mTextureName);
     
+//    glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
     // glCopyTexSubImage2D replaces a rectangular portion of a
     // two-dimensional texture image with pixels from the current
     // GL_READ_BUFFER (rather than from main memory, as
@@ -330,11 +320,7 @@
     // a flush call is made. The CPU doesn't wait for this
     // call to complete.
     
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, mFramebufferName);
-
-    GLint bind;
-    glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &bind);
-    glCopyTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, 0, 0, 0, 0, mWidth, mHeight);
+//    glCopyTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, 0, 0, 0, 0, mWidth, mHeight);
  
     //Check for OpenGL errors
     theError = glGetError();
@@ -406,17 +392,54 @@
     CGLUnlockContext(cgl_ctx);
  
     // flip buffer contents to use a coordinate system that QuickTime expects
-    [self flipBufferContents];
+//    [self flipBufferContents];
  
-    CGImageRef *ref;
-    VTCreateCGImageFromCVPixelBuffer(mPixelBuffer, NULL, &ref);
+    if (theError != GL_NO_ERROR)
+        return (NULL);
+
+    return [self readImageFromBuffer];
+}
+
+- (NSImage *)readScreenSync {
+    CGLContextObj   cgl_ctx = [mGlContext CGLContextObj];
+    CGLLockContext(cgl_ctx);
+    GLenum          theError = GL_NO_ERROR;
+
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+    theError = glGetError();
+    if(theError != GL_NO_ERROR) {
+        NSLog(@"OpenGL glBindBuffer failed (error 0x%04X)", theError);
+    }
+
+    glReadPixels(0, 0, mWidth, mHeight, GL_RGB, GL_UNSIGNED_BYTE, mBaseAddress);
+
+    theError = glGetError();
+    if(theError != GL_NO_ERROR) {
+        NSLog(@"OpenGL glReadPixels failed (error 0x%04X)", theError);
+    }
+
+    CGLUnlockContext(cgl_ctx);
     
     if (theError != GL_NO_ERROR)
         return (NULL);
-    
-    return [[NSImage alloc] initWithCGImage:ref size:[self size]];
+
+    return [self readImageFromBuffer];
 }
 
+- (NSImage *)readImageFromBuffer {
+    for (int i = 0; i < 100; i++) {
+        printf("%d", mBaseAddress[i]);
+    }
+    printf("\n");
+    
+    CIImage *image = [[CIImage alloc] initWithCVPixelBuffer:mPixelBuffer];
+    NSCIImageRep *rep = [NSCIImageRep imageRepWithCIImage:image];
+    NSImage *nsImage = [[NSImage alloc] initWithSize:rep.size];
+    [nsImage addRepresentation:rep];
+    
+    NSLog(@"Image: %@", nsImage);
+    return nsImage;
+}
  
 @end
 

@@ -18,7 +18,11 @@ class VideoEndpoint: ObservableObject {
 
     let artnetProvider = ArtnetProvider()
     var capturer: ImageCapture = ImageProviderView.captureMethods[0] {
-        didSet { objectWillChange.send() }
+        didSet {
+            objectWillChange.send()
+            oldValue.stop()
+            capturer.start()
+        }
     }
     
     var connection: NWConnection?
@@ -33,6 +37,10 @@ class VideoEndpoint: ObservableObject {
             self.objectWillChange.send()
             _connect()
         }
+    }
+    
+    init() {
+        capturer.start()
     }
     
     func _connect() {
@@ -62,7 +70,7 @@ class VideoEndpoint: ObservableObject {
         connection.start(queue: .global())
     }
     
-    func _flushTimer() {
+    func _flushTimer() {        
         guard let connection = connection, connection.state == .ready else {
             timer?.invalidate()
             timer = nil

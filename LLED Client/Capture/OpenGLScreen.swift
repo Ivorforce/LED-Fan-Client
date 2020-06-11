@@ -23,7 +23,7 @@ class OpenGLScreen : ImageCapture, ObservableObject {
     var textureBuffer: Data = Data()
     var currentTexture: NSImage?
     
-    func stop() {
+    override func stop() {
         oglContext = nil
         shader = nil
         fbo = nil

@@ -13,4 +13,7 @@ class ImageCapture: NSObject {
     var name: String { return "Unknown Capture Device" }
     
     func grab() -> NSImage { return NSImage() }
+    
+    func start() {}
+    func stop() {}
 }
