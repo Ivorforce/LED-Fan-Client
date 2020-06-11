@@ -129,7 +129,7 @@ struct ImageProviderView: View {
                 ), label:
                     Text("Capture Method").frame(width: 150, alignment: .leading)
                 ) {
-                    ForEach(Self.captureMethods, id: \.description) { method in
+                    ForEach(Self.captureMethods, id: \.name) { method in
                         Text(method.name).tag(method)
                     }
                 }

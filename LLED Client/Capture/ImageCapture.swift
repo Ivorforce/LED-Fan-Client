@@ -8,7 +8,6 @@
 
 import Foundation
 
-@objc
 class ImageCapture: NSObject {
     var name: String { return "Unknown Capture Device" }
     
