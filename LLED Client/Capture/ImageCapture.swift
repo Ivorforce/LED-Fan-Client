@@ -22,7 +22,7 @@ class ActiveImageCapture: ImageCapture {
     
     override func start() {
         timer = Timer.scheduledTimer(withTimeInterval: .seconds(1 / 30), repeats: true) { _ in
-            self.imageResource.push(self.grab())
+            self.imageResource.push(self.grab(), force: true)
         }
     }
     
