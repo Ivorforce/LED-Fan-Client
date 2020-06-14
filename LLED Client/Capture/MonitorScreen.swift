@@ -22,13 +22,7 @@ class MonitorScreen : ActiveImageCapture {
         var rect = screen.frame
         
         if enforceSquare {
-            let size = min(rect.size.width, rect.size.height)
-            rect = NSRect(
-                x: rect.minX + (rect.size.width - size) / 2,
-                y: rect.minY + (rect.size.height - size) / 2,
-                width: size,
-                height: size
-            )
+            rect = rect.centeredSquare()
         }
         
         guard let cgImage = CGWindowListCreateImage(rect, .optionOnScreenOnly, .zero, .nominalResolution) else {

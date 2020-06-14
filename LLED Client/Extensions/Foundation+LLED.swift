@@ -84,3 +84,15 @@ extension Data {
         }
     }
 }
+
+extension NSRect {
+    func centeredSquare() -> NSRect {
+        let side = min(size.width, size.height)
+        return NSRect(
+            x: minX + (size.width - side) / 2,
+            y: minY + (size.height - side) / 2,
+            width: side,
+            height: side
+        )
+    }
+}

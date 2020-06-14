@@ -30,6 +30,9 @@ class MonitorScreenAVFoundation : ImageCapture {
             return
         }
         input.minFrameDuration = .init(seconds: 1, preferredTimescale: 30)
+        if enforceSquare {
+            input.cropRect = NSScreen.main!.frame.centeredSquare()
+        }
         session.addInput(input)
         
         let output = AVCaptureVideoDataOutput()
