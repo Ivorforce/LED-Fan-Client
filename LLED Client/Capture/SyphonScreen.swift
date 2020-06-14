@@ -53,6 +53,7 @@ class SyphonScreen : OpenGLScreen {
         oglContext.makeCurrentContext()
         
         syphon = SyphonClient(serverDescription: description, context: oglContext.cglContextObj, options: nil) { syphon in
+            print("Frame")
             self.downloadCurrentTexture()
         }
     }

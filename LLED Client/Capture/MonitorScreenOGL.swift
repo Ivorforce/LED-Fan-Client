@@ -37,15 +37,15 @@ class MonitorScreenOGL : OpenGLScreen {
         frameReader = FrameReader(openGLContext: oglContext, pixelsWide: UInt32(size.width), pixelsHigh: UInt32(size.height))
     }
     
-    override func grab() -> NSImage {
-        guard let frameReader = frameReader else {
-            print("No frame reader")
-            return NSImage()
-        }
-        return frameReader.readScreenSync() ?? NSImage()
-//        frameReader.readScreenAsyncOnSeparateThread()
-//        return frameReader.readScreenAsyncFinish() ?? NSImage()
-    }
+//    override func grab() -> NSImage {
+//        guard let frameReader = frameReader else {
+//            print("No frame reader")
+//            return NSImage()
+//        }
+//        return frameReader.readScreenSync() ?? NSImage()
+////        frameReader.readScreenAsyncOnSeparateThread()
+////        return frameReader.readScreenAsyncFinish() ?? NSImage()
+//    }
         
     override var name: String { "Capture Screen (OGL)" }
 }

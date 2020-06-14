@@ -12,7 +12,7 @@ import OpenGL
 import GLKit
 
 @available(*, deprecated, message: "OpenGL deprecated")
-class OpenGLScreen : ActiveImageCapture, ObservableObject {    
+class OpenGLScreen : ImageCapture, ObservableObject {    
     var oglContext: NSOpenGLContext?
 
     var shader: DefaultShader?
