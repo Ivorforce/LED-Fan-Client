@@ -69,7 +69,7 @@ class CaptureObserver : ObservableObject {
     init(capturer: ImageCapture) {
         self.capturer = capturer
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-            self.image = self.capturer.grab()
+            self.image = self.capturer.imageResource.peek() ?? NSImage()
         }
     }
     
@@ -135,7 +135,7 @@ struct ImageProviderView: View {
                 }
                 
                 Image(systemName: NSImage.quickLookTemplateName)
-                    .onHover { isHovering in self.showPreview = isHovering }
+                    .onHover { self.showPreview = $0 }
                     .popover(isPresented: $showPreview, arrowEdge: .trailing) {
                         ImageCapturePreview(capturer: self.capturer)
                             .frame(maxWidth: 200, maxHeight: 200)

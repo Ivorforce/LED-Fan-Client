@@ -59,7 +59,6 @@ class SyphonScreen : OpenGLScreen {
             
     func downloadCurrentTexture() {
         guard let syphon = syphon, let frame = syphon.newFrameImage() else {
-            currentTexture = nil
             return
         }
         

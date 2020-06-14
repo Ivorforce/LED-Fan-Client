@@ -16,9 +16,7 @@ class MonitorScreenAVFoundation : ImageCapture {
     var enforceSquare: Bool = true
     
     var captureSession: AVCaptureSession?
-    
-    var currentImage: NSImage = NSImage()
-    
+        
     override init() {
         
     }
@@ -46,10 +44,6 @@ class MonitorScreenAVFoundation : ImageCapture {
     override func stop() {
         captureSession?.stopRunning()
         captureSession = nil
-    }
-    
-    override func grab() -> NSImage {
-        return currentImage
     }
 }
 
@@ -85,6 +79,7 @@ extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegat
             return
         }
 
-        currentImage = NSImage(cgImage: cgImage, size: NSSize(width: width, height: height))
+        let image = NSImage(cgImage: cgImage, size: NSSize(width: width, height: height))
+        _ = self.imageResource.push(image, force: true)
     }
 }

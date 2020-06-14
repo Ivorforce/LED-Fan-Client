@@ -82,7 +82,7 @@ class VideoEndpoint: ObservableObject {
                 return
             }
 
-            let image = self.capturer.grab()
+            let image = self.capturer.imageResource.pop()
             let payload = screenMode.pack(image: image)
             let packets = self.artnetProvider.pack(payload: payload)
             for packet in packets {

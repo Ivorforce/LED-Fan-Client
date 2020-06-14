@@ -35,7 +35,10 @@ struct VideoInterfaceView: View {
                 
                 TextField("30", text: Binding(
                     get: { self.endpoint.fps != 30 ? String(self.endpoint.fps) : "" },
-                    set: { self.endpoint.fps = Double($0) ?? 30 }
+                    set: {
+                        let fps = Double($0) ?? 30
+                        self.endpoint.fps = fps < 100 && fps > 0 ? fps : 30
+                    }
                 ))
                     .frame(minWidth: 100)
                 

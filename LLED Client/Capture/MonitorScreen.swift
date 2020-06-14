@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class MonitorScreen : ImageCapture {
+class MonitorScreen : ActiveImageCapture {
     override var name: String { "Capture Screen" }
     
     var enforceSquare: Bool = true

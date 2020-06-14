@@ -12,7 +12,7 @@ import OpenGL
 import GLKit
 
 @available(*, deprecated, message: "OpenGL deprecated")
-class OpenGLScreen : ImageCapture, ObservableObject {    
+class OpenGLScreen : ActiveImageCapture, ObservableObject {    
     var oglContext: NSOpenGLContext?
 
     var shader: DefaultShader?
@@ -21,7 +21,6 @@ class OpenGLScreen : ImageCapture, ObservableObject {
     var vertexBuffer: GLuint = 0
 
     var textureBuffer: Data = Data()
-    var currentTexture: NSImage?
     
     override func stop() {
         oglContext = nil
@@ -30,8 +29,6 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         
         vertexArrayObject = 0
         vertexBuffer = 0
-        
-        currentTexture = nil
     }
     
     static func defaultPixelFormatAttributes() -> [Int] {
@@ -96,7 +93,6 @@ class OpenGLScreen : ImageCapture, ObservableObject {
     
     func downloadTexture(textureID: GLuint, type: GLenum, textureSize: NSSize) {
         guard let oglContext = oglContext else {
-            currentTexture = nil
             return
         }
         
@@ -195,10 +191,6 @@ class OpenGLScreen : ImageCapture, ObservableObject {
             return
         }
         
-        currentTexture = NSImage(cgImage: cgImage, size: textureSize)
-    }
-    
-    override func grab() -> NSImage {
-        currentTexture ?? NSImage()
+        imageResource.push(NSImage(cgImage: cgImage, size: textureSize))
     }
 }
