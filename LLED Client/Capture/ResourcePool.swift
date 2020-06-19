@@ -34,7 +34,7 @@ class ResourcePool<Resource>: ObservableObject {
                         
             let resource = self.resource
             
-            self._start()
+            self._start(delay: delay)
             self.timer = AsyncTimer.scheduledTimer(withTimeInterval: delay) {
                 guard let resource = resource.pop(timeout: .now() + delay) else {
                     return
@@ -47,7 +47,7 @@ class ResourcePool<Resource>: ObservableObject {
         }
     }
     
-    func _start() {
+    func _start(delay: TimeInterval) {
         
     }
     

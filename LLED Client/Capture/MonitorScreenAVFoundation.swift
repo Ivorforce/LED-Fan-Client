@@ -21,7 +21,7 @@ class MonitorScreenAVFoundation : ImageCapture {
         
     }
     
-    override func start() {
+    override func start(delay: TimeInterval) {
         let session = AVCaptureSession()
         session.sessionPreset = .low
         
@@ -29,7 +29,7 @@ class MonitorScreenAVFoundation : ImageCapture {
             print("Failed to create AVF screen input!")
             return
         }
-        input.minFrameDuration = .init(seconds: 1, preferredTimescale: 30)
+        input.minFrameDuration = .init(seconds: delay, preferredTimescale: 1)
         if enforceSquare {
             input.cropRect = NSScreen.main!.frame.centeredSquare()
         }

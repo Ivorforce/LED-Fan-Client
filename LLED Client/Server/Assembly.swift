@@ -30,8 +30,8 @@ class ImagePool: ResourcePool<NSImage> {
         super.init(capturer.imageResource)
     }
     
-    override func _start() {
-        capturer.start()
+    override func _start(delay: TimeInterval) {
+        capturer.start(delay: delay)
     }
     
     override func _stop() {

@@ -13,15 +13,15 @@ class ImageCapture: NSObject {
     
     var imageResource = BufferedResource<NSImage>(limit: 2)
     
-    func start() {}
+    func start(delay: TimeInterval) {}
     func stop() {}
 }
 
 class ActiveImageCapture: ImageCapture {
     var timer: Timer?
     
-    override func start() {
-        timer = Timer.scheduledTimer(withTimeInterval: .seconds(1 / 30), repeats: true) { _ in
+    override func start(delay: TimeInterval) {
+        timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: true) { _ in
             self.imageResource.push(self.grab(), force: true)
         }
     }
