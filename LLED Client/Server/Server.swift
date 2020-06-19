@@ -125,6 +125,12 @@ class Server: ObservableObject {
     func reboot() { rest(["reboot"])?.post() }
     func ping() { rest(["ping"])?.post() }
     func update() { rest(["checkupdate"])?.post() }
+
+    func pair(ssid: String, password: String) { rest(["wifi/connect"])?.post([
+        "ssid": ssid,
+        "password": password
+    ]) }
+    func pair() { pair(ssid: "", password: "") }
 }
 
 extension Server: Hashable {

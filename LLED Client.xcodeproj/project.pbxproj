@@ -18,6 +18,7 @@
 		8099F0B9249CEACC0022FA49 /* ServerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B8249CEACC0022FA49 /* ServerAssembly.swift */; };
 		8099F0BB249CEDC70022FA49 /* ServerAssemblyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0BA249CEDC70022FA49 /* ServerAssemblyView.swift */; };
 		8099F0BE249D194A0022FA49 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 8099F0BD249D194A0022FA49 /* CocoaAsyncSocket */; };
+		8099F0C0249D2F590022FA49 /* TimedBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0BF249D2F590022FA49 /* TimedBool.swift */; };
 		80B76F23248BB22100442A55 /* OpenGL+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F22248BB22100442A55 /* OpenGL+Texture.swift */; };
 		80B76F27248BD64600442A55 /* default.fs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F26248BD64600442A55 /* default.fs */; };
 		80B76F29248BD64F00442A55 /* default.vs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F28248BD64F00442A55 /* default.vs */; };
@@ -72,6 +73,7 @@
 		8099F0B4249CDE100022FA49 /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
 		8099F0B8249CEACC0022FA49 /* ServerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAssembly.swift; sourceTree = "<group>"; };
 		8099F0BA249CEDC70022FA49 /* ServerAssemblyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAssemblyView.swift; sourceTree = "<group>"; };
+		8099F0BF249D2F590022FA49 /* TimedBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedBool.swift; sourceTree = "<group>"; };
 		80B76F22248BB22100442A55 /* OpenGL+Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenGL+Texture.swift"; sourceTree = "<group>"; };
 		80B76F26248BD64600442A55 /* default.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = default.fs; sourceTree = "<group>"; };
 		80B76F28248BD64F00442A55 /* default.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = default.vs; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */,
 				80B76F412496BFD900442A55 /* BufferedResource.swift */,
 				8099F0B2249CD9FB0022FA49 /* Thread.swift */,
+				8099F0BF249D2F590022FA49 /* TimedBool.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
 				804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */,
 				8099F0AF249CCDAA0022FA49 /* AssemblyView.swift in Sources */,
+				8099F0C0249D2F590022FA49 /* TimedBool.swift in Sources */,
 				80B76F33248C31AB00442A55 /* OpenGL+ObjC.m in Sources */,
 				80B76F422496BFD900442A55 /* BufferedResource.swift in Sources */,
 				80C30A0B24894C81006E218C /* REST.swift in Sources */,

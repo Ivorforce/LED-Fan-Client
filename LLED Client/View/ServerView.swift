@@ -8,11 +8,54 @@
 
 import SwiftUI
 
+struct ServerWifiView: View {
+    @ObservedObject var server = Server()
+
+    @State var ssid: String = ""
+    @State var password: String = ""
+    
+    @ObservedObject var isConnecting = TimedBool()
+
+    var body: some View {
+        VStack {
+            Button(action: {
+                self.server.pair()
+                self.isConnecting.activate(for: .seconds(2))
+            }) {
+                Text("Pair")
+            }
+                .disabled(server.state != .connected || self.isConnecting.value)
+
+            HStack {
+                TextField("SSID", text: $ssid)
+                SecureField("Password", text: $password)
+                
+                Button(action: {
+                    self.server.pair(ssid: self.ssid, password: self.password)
+                    self.isConnecting.activate(for: .seconds(2))
+                }) {
+                    Text("Connect")
+                }
+                    .disabled(server.state != .connected || ssid.isEmpty || password.isEmpty || self.isConnecting.value)
+            }
+        }
+    }
+}
+
 struct ServerView: View {
     @ObservedObject var server = Server()
     
     @State var isShowingLog = false
     @State var log = ""
+
+    @ObservedObject var isActioning = TimedBool()
+
+    init(server: Server) {
+        self.server = server
+        self.wifiView = ServerWifiView(server: server)
+    }
+    
+    let wifiView: ServerWifiView
 
     var stateView: some View {
         switch server.state {
@@ -79,23 +122,32 @@ struct ServerView: View {
                 Text("Actions")
                     .frame(width: 100)
                 
-                Button(action: { self.server.reboot() }) {
+                Button(action: {
+                    self.server.reboot()
+                    self.isActioning.activate(for: .seconds(2))
+                }) {
                     Text("Reboot")
                 }
                     .frame(maxWidth: .infinity)
-                    .disabled(!isConnected)
+                    .disabled(!isConnected || isActioning.value)
 
-                Button(action: { self.server.ping() }) {
+                Button(action: {
+                    self.server.ping()
+                    self.isActioning.activate(for: .seconds(2))
+                }) {
                     Text("Ping")
                 }
                     .frame(maxWidth: .infinity)
-                    .disabled(!isConnected)
+                    .disabled(!isConnected || isActioning.value)
 
-                Button(action: { self.server.update() }) {
+                Button(action: {
+                    self.server.update()
+                    self.isActioning.activate(for: .seconds(2))
+                }) {
                     Text("Update")
                 }
                     .frame(maxWidth: .infinity)
-                    .disabled(!isConnected)
+                    .disabled(!isConnected || isActioning.value)
             }
             
             HStack {
@@ -110,12 +162,18 @@ struct ServerView: View {
                 }
                     .disabled(!isConnected)
             }
+            
+            Text("WiFi")
+                .bold()
+                .frame(width: 100)
+
+            wifiView
         }
     }
 }
-
-struct ServerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ServerView()
-    }
-}
+//
+//struct ServerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ServerView()
+//    }
+//}
