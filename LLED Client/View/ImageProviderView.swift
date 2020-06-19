@@ -23,7 +23,7 @@ struct CaptureSyphonView: View {
     }
     
     var body: some View {
-                    guard let servers = SyphonServerDirectory.shared()?.servers as? [[String: Any]] else {
+        guard let servers = SyphonServerDirectory.shared()?.servers as? [[String: Any]] else {
             return AnyView(Text("Failed to connect to Syphon"))
         }
         
@@ -58,35 +58,16 @@ struct CaptureSyphonView: View {
     }
 }
 
-class CaptureObserver : ObservableObject {
-    var capturer: ImageCapture
-    var image: NSImage = NSImage() {
-        didSet { objectWillChange.send() }
-    }
-    
-    var timer: Timer?
-    
-    init(capturer: ImageCapture) {
-        self.capturer = capturer
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-            self.image = self.capturer.imageResource.peek() ?? NSImage()
-        }
-    }
-    
-    deinit {
-        timer?.invalidate()
-    }
-}
-
 struct ImageCapturePreview: View {
-    @ObservedObject var observer : CaptureObserver
-    
-    init(capturer: ImageCapture) {
-        observer = CaptureObserver(capturer: capturer)
+    // TODO Observation never stops
+    @ObservedObject var image: ResourcePool<NSImage>.State
+        
+    init(pool: ResourcePool<NSImage>) {
+        image = pool.observedState(delay: .seconds(0.1))
     }
     
     var body: some View {
-        Image(nsImage: observer.image)
+        Image(nsImage: image.state ?? NSImage())
             .resizable()
             .scaledToFit()
     }
@@ -97,21 +78,19 @@ struct ImageProviderView: View {
         MonitorScreenAVFoundation(),
         SyphonScreen()
     ]
-    
-    @State var _redrawTrigger: Bool = false
-    
-    @Binding var capturer: ImageCapture
+        
+    @ObservedObject var pool: ImagePool
     @State var showPreview = false
     
     let captureSyphonView: CaptureSyphonView
     
-    init(capturer: Binding<ImageCapture>) {
-        _capturer = capturer
+    init(pool: ImagePool) {
+        self.pool = pool
         captureSyphonView = CaptureSyphonView(syphon: Self.captureMethods[1] as! SyphonScreen)
     }
             
     var methodView: some View {
-        switch capturer {
+        switch pool.capturer {
         case is SyphonScreen:
             return AnyView(captureSyphonView)
         default:
@@ -123,10 +102,7 @@ struct ImageProviderView: View {
         VStack {
             HStack {
                 // TODO For some reason, the binding itself doesn't cause a redraw
-                Picker(selection: Binding<ImageCapture>(
-                    get: { self.capturer },
-                    set: { self.capturer = $0; self._redrawTrigger.toggle() }
-                ), label:
+                Picker(selection: $pool.capturer, label:
                     Text("Capture Method").frame(width: 150, alignment: .leading)
                 ) {
                     ForEach(Self.captureMethods, id: \.name) { method in
@@ -137,7 +113,7 @@ struct ImageProviderView: View {
                 Image(systemName: NSImage.quickLookTemplateName)
                     .onHover { self.showPreview = $0 }
                     .popover(isPresented: $showPreview, arrowEdge: .trailing) {
-                        ImageCapturePreview(capturer: self.capturer)
+                        ImageCapturePreview(pool: self.pool)
                             .frame(maxWidth: 200, maxHeight: 200)
                     }
             }

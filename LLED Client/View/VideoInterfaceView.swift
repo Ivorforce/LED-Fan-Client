@@ -21,7 +21,7 @@ struct VideoInterfaceView: View {
         }
         self.server = server
         self.endpoint = endpoint
-        _imageProviderView = ImageProviderView(capturer: $endpoint.capturer)
+//        _imageProviderView = ImageProviderView(capturer: $endpoint.capturer)
     }
             
     var body: some View {
