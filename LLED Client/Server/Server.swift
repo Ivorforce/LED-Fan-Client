@@ -67,18 +67,18 @@ class Server: ObservableObject {
         
         state = .connecting
 
-        let task = URLSession.shared.dataTask(with: url) { [unowned self] (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
             DispatchQueue.main.sync {
                 guard
                     let data = data,
                     let json =  try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                    self._interpret(info: json)
+                    self?._interpret(info: json) ?? false
                 else {
-                    self.state = .noConnection
+                    self?.state = .noConnection
                     return
                 }
                 
-                self.state = .connected
+                self?.state = .connected
             }
         }
 

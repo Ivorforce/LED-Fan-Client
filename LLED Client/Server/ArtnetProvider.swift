@@ -91,4 +91,35 @@ class ArtnetProvider {
         
         return packet
     }
+        
+    struct ArtpollReply {
+        let host: String
+        let port: Int
+        
+        let longname: String
+    }
+    
+    static func readPacket(_ data: Data) -> Any? {
+        let id = String(data: data[0 ..< 7], encoding: .utf8)
+        
+        guard id == "Art-Net" else {
+            return nil
+        }
+        
+        // Artpoll Reply
+        if data[8] == 0x00 && data[9] == 0x21 {
+            let ipData = data[10 ..< 14]
+            let ip = ipData.map { String($0) }.joined(separator: ".")
+            let port = Int(data: data[15...16])
+            
+//            let shortname = data[26..<44]
+            guard let longname = String(data: data[44..<64], encoding: .utf8), longname.contains("LLED Fan") else {
+                return nil
+            }
+            
+            return ArtpollReply(host: ip, port: port, longname: longname)
+        }
+        
+        return nil
+    }
 }

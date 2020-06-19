@@ -22,7 +22,7 @@ struct AssemblyView: View {
         serversView = ServerAssemblyView(assembly: assembly.servers)
         connectionView = VideoConnectionView(endpoint: VideoConnection(assembly: assembly))
         
-        assembly.servers.scan.start()
+        assembly.servers.scan()
     }
     
     var body: some View {

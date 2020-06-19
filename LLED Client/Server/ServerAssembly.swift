@@ -7,40 +7,58 @@
 //
 
 import Foundation
-import Network
+import CocoaAsyncSocket
 
-class ArtpollTask: DataBackgroundTask {
-    var completion: ([String]) -> Void
+class ArtpollTask: NSObject, ObservableObject, GCDAsyncUdpSocketDelegate, GCDAsyncSocketDelegate {
+    enum State {
+        case done, inProgress
+    }
+
+    var receiveHost: (ArtnetProvider.ArtpollReply) -> Void
+    var socket : GCDAsyncUdpSocket!
     
-    init(completion: @escaping ([String]) -> Void) {
-        self.completion = completion
+    var state: State = .done {
+        didSet { objectWillChange.send() }
     }
     
-    override func createConnection() -> NWConnection? {
-        return ArtnetProvider.connection(host: "255.255.255.255")
+    init(receiveHost: @escaping (ArtnetProvider.ArtpollReply) -> Void) {
+        self.receiveHost = receiveHost
     }
-    
-    override func execute(on connection: NWConnection) {
-        completion(["192.168.2.135"]) //TODO Remove when actual reply works, lol
+
+    func start() {
+        let socket = GCDAsyncUdpSocket(delegate: self, delegateQueue: DispatchQueue.main)
+        self.socket = socket
         
-        print("Send!")
-        connection.send(content: ArtnetProvider.artpoll(), completion: .idempotent)
-        connection.receiveMessage { (data, context, someBool, error) in
-            self.connection?.cancel()
-            print("Recv!")
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let data = data else {
-                print("No Data")
-                return
-            }
-            
-            print(data)
+        do {
+            try socket.bind(toPort: ArtnetProvider.port)
+            try socket.beginReceiving()
+            try socket.enableBroadcast(true)
+        } catch {
+            print(error)
+            socket.close()
+            return
         }
+        
+        state = .inProgress
+
+        socket.send(ArtnetProvider.artpoll(), toHost: "255.255.255.255", port: ArtnetProvider.port, withTimeout: 1000, tag: 0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+            // Time out here at the latest
+            self.state = .done
+            socket.close()
+        }
+    }
+    
+    func udpSocket(_ sock: GCDAsyncUdpSocket, didReceive data: Data, fromAddress address: Data, withFilterContext filterContext: Any?) {
+        guard let reply = ArtnetProvider.readPacket(data) as? ArtnetProvider.ArtpollReply else {
+            return
+        }
+        
+        receiveHost(reply)
+    }
+    
+    func cancel() {
+        socket.close()
     }
 }
 
@@ -48,14 +66,25 @@ class ServerAssembly: ObservableObject {
     var available: [Server] = [] {
         didSet { objectWillChange.send() }
     }
-    
-    var scan: ReadyTask!
+        
+    var artpoll: ArtpollTask!
     
     init() {
-        scan = ReadyTask(task: ArtpollTask() { servers in
-            DispatchQueue.main.async {
-                self.available = servers.map { Server(address: $0) }
+        self.artpoll = ArtpollTask { artpoll in
+            guard !self.available.contains(where: { $0.urlString == artpoll.host }) else {
+                return
             }
-        })
+            
+            self.available.append(Server(address: artpoll.host))
+        }
+    }
+    
+    func scan() {
+        guard artpoll.state == .done else {
+            return
+        }
+        
+        available = []
+        artpoll.start()
     }
 }

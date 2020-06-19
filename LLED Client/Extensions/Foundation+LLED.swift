@@ -24,6 +24,11 @@ extension Int {
     var bytes : [UInt8] {
         return withUnsafeBytes(of: self, Array.init)
     }
+    
+    init(data: Data) {
+        self = 0
+        (data as NSData).getBytes(&self, length: data.count)
+    }
 }
 
 extension NSImage {

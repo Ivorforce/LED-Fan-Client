@@ -8,18 +8,16 @@
 
 import SwiftUI
 
-extension ReadyTask {
-    var stateView: some View {
-        switch state {
-        case .failure, .none:
-            return AnyView(Image(systemName: NSImage.statusUnavailableName))
+extension ServerAssembly {
+    var artpollStateView: some View {
+        switch artpoll.state {
         case .inProgress:
             return AnyView(ProgressIndicator(configuration: { view in
                 view.style = .spinning
                 view.controlSize = .small
                 view.startAnimation(self)
             }))
-        case .success:
+        case .done:
             return AnyView(Image(systemName: NSImage.statusAvailableName))
         }
     }
@@ -48,11 +46,11 @@ struct MiniatureServerView: View {
 
 struct ServerAssemblyView: View {
     @ObservedObject var assembly: ServerAssembly
-    @ObservedObject var scan: ReadyTask
+    @ObservedObject var scan: ArtpollTask
     
     init(assembly: ServerAssembly) {
         self.assembly = assembly
-        self.scan = assembly.scan
+        self.scan = assembly.artpoll
     }
     
     var body: some View {
@@ -65,8 +63,9 @@ struct ServerAssemblyView: View {
                 }) {
                     Image(systemName: NSImage.refreshTemplateName)
                 }
+                    .disabled(scan.state == .inProgress)
                 
-                scan.stateView
+                assembly.artpollStateView
             }
             
             ForEach(assembly.available, id: \.urlString) { server in

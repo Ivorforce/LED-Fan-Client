@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		8099F0B5249CDE100022FA49 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B4249CDE100022FA49 /* Assembly.swift */; };
 		8099F0B9249CEACC0022FA49 /* ServerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B8249CEACC0022FA49 /* ServerAssembly.swift */; };
 		8099F0BB249CEDC70022FA49 /* ServerAssemblyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0BA249CEDC70022FA49 /* ServerAssemblyView.swift */; };
+		8099F0BE249D194A0022FA49 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 8099F0BD249D194A0022FA49 /* CocoaAsyncSocket */; };
 		80B76F23248BB22100442A55 /* OpenGL+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F22248BB22100442A55 /* OpenGL+Texture.swift */; };
 		80B76F27248BD64600442A55 /* default.fs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F26248BD64600442A55 /* default.fs */; };
 		80B76F29248BD64F00442A55 /* default.vs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F28248BD64F00442A55 /* default.vs */; };
@@ -113,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8099F0BE249D194A0022FA49 /* CocoaAsyncSocket in Frameworks */,
 				804BF627248AA21800528016 /* Syphon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +261,9 @@
 			dependencies = (
 			);
 			name = "LLED Client";
+			packageProductDependencies = (
+				8099F0BD249D194A0022FA49 /* CocoaAsyncSocket */,
+			);
 			productName = "LLED Client";
 			productReference = 80E68F1C2485831400F47DB1 /* LLED Client.app */;
 			productType = "com.apple.product-type.application";
@@ -288,6 +293,9 @@
 				Base,
 			);
 			mainGroup = 80E68F132485831400F47DB1;
+			packageReferences = (
+				8099F0BC249D194A0022FA49 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
+			);
 			productRefGroup = 80E68F1D2485831400F47DB1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -561,6 +569,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8099F0BC249D194A0022FA49 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/robbiehanson/CocoaAsyncSocket";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.6.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8099F0BD249D194A0022FA49 /* CocoaAsyncSocket */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8099F0BC249D194A0022FA49 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;
+			productName = CocoaAsyncSocket;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 80E68F142485831400F47DB1 /* Project object */;
 }
