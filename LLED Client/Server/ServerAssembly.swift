@@ -86,6 +86,5 @@ class ServerAssembly: ObservableObject {
         
         available = []
         artpoll.start()
-        print(available)
     }
 }
