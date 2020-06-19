@@ -59,7 +59,7 @@ struct ServerAssemblyView: View {
                 Text("Servers").frame(width: 150, alignment: .leading)
                 Spacer()
                 Button(action: {
-                    self.scan.start()
+                    self.assembly.scan()
                 }) {
                     Image(systemName: NSImage.refreshTemplateName)
                 }

@@ -64,7 +64,7 @@ class ArtpollTask: NSObject, ObservableObject, GCDAsyncUdpSocketDelegate, GCDAsy
 
 class ServerAssembly: ObservableObject {
     var available: [Server] = [] {
-        didSet { objectWillChange.send() }
+        willSet { objectWillChange.send() }
     }
         
     var artpoll: ArtpollTask!
@@ -86,5 +86,6 @@ class ServerAssembly: ObservableObject {
         
         available = []
         artpoll.start()
+        print(available)
     }
 }
