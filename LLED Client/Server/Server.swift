@@ -26,9 +26,7 @@ class Server: ObservableObject {
     
     init(address: String = "") {
         urlString = address
-        
-        videoEndpoint = .init()
-        videoEndpoint.server = self
+
         connect()
     }
     
@@ -39,7 +37,9 @@ class Server: ObservableObject {
     }
     
     var serverInfo: [String: Any] = [:]
-    var videoEndpoint: VideoEndpoint
+    var screenMode: ScreenMode?
+    
+    let artnet = ArtnetProvider()
     
     var url: URL? {
         urlString != "" ? URL(string: "http://\(urlString)") : nil
@@ -108,11 +108,11 @@ class Server: ObservableObject {
     
     func _flushEndpoint() {
         guard let type = endpoint?.type, let info = serverInfo[type.key] as? [String: Any], let mode = type.parse(info) else {
-            videoEndpoint.screenMode = nil
+            screenMode = nil
             return
         }
         
-        videoEndpoint.screenMode = mode
+        screenMode = mode
     }
     
     var rotationSpeed: Double = 0.0 {
@@ -125,4 +125,14 @@ class Server: ObservableObject {
     func reboot() { rest(["reboot"])?.post() }
     func ping() { rest(["ping"])?.post() }
     func update() { rest(["checkupdate"])?.post() }
+}
+
+extension Server: Hashable {
+    static func == (lhs: Server, rhs: Server) -> Bool {
+        return lhs.urlString == rhs.urlString
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(urlString)
+    }
 }

@@ -10,8 +10,7 @@ import Cocoa
 import Network
 
 class VideoConnection: ObservableObject {
-    let servers: ServerAssembly
-    let pool: ImagePool
+    let assembly: Assembly
     
     var connections: [Server: NWConnection] = [:]
     
@@ -24,9 +23,8 @@ class VideoConnection: ObservableObject {
     
     var observerToken: ResourcePool<NSImage>.ObservationToken?
     
-    init(servers: ServerAssembly, pool: ImagePool) {
-        self.servers = servers
-        self.pool = pool
+    init(assembly: Assembly) {
+        self.assembly = assembly
     }
     
     func _flush() {
@@ -41,7 +39,7 @@ class VideoConnection: ObservableObject {
 
         connections = [:]
         
-        for server in servers.available {
+        for server in assembly.servers.available {
             guard let connection = ArtnetProvider.connection(host: server.urlString) else {
                 print("Lost connection to server: \(server)")
                 continue
@@ -51,7 +49,7 @@ class VideoConnection: ObservableObject {
             connections[server] = connection
         }
         
-        observerToken = pool.observe(delay: .seconds(1 / fps)) { image in
+        observerToken = assembly.pool.observe(delay: .seconds(1 / fps)) { image in
             for (server, connection) in self.connections {
                 guard let screenMode = server.screenMode else {
                     print("Lost screen mode for server \(server)")

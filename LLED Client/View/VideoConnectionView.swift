@@ -13,7 +13,7 @@ struct VideoConnectionView: View {
     @ObservedObject var endpoint: VideoConnection
 
     init(endpoint: VideoConnection) {
-        self.assembly = endpoint.servers
+        self.assembly = endpoint.assembly.servers
         self.endpoint = endpoint
     }
             

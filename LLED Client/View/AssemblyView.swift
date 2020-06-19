@@ -13,12 +13,14 @@ struct AssemblyView: View {
 
     let imageProviderView: ImageProviderView
     let serversView: ServerAssemblyView
+    let connectionView: VideoConnectionView
 
     init() {
         let assembly = Assembly(capturer: ImageProviderView.captureMethods[0])
         self.assembly = assembly
         imageProviderView = ImageProviderView(pool: assembly.pool)
         serversView = ServerAssemblyView(assembly: assembly.servers)
+        connectionView = VideoConnectionView(endpoint: VideoConnection(assembly: assembly))
         
         assembly.servers.scan.start()
     }
@@ -27,6 +29,7 @@ struct AssemblyView: View {
         VStack {
             imageProviderView
             serversView
+            connectionView
         }.padding()
     }
 }
