@@ -24,15 +24,16 @@ class Server: ObservableObject {
         }
     }
     
-    init() {
+    init(address: String = "") {
+        urlString = address
+        
         videoEndpoint = .init()
         videoEndpoint.server = self
         connect()
     }
     
-    var urlString: String = UserDefaults.standard.string(forKey: "server") ?? "" {
+    var urlString: String {
         didSet {
-            UserDefaults.standard.set(urlString, forKey: "server")
             connect()
         }
     }

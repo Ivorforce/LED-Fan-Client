@@ -11,17 +11,22 @@ import SwiftUI
 struct AssemblyView: View {
     @ObservedObject var assembly: Assembly
 
-    var _imageProviderView: ImageProviderView! = nil
-    var imageProviderView: ImageProviderView { _imageProviderView }
+    let imageProviderView: ImageProviderView
+    let serversView: ServerAssemblyView
 
     init() {
-        assembly = Assembly(capturer: ImageProviderView.captureMethods[0])
-        _imageProviderView = ImageProviderView(pool: assembly.pool)
+        let assembly = Assembly(capturer: ImageProviderView.captureMethods[0])
+        self.assembly = assembly
+        imageProviderView = ImageProviderView(pool: assembly.pool)
+        serversView = ServerAssemblyView(assembly: assembly.servers)
+        
+        assembly.servers.scan.start()
     }
     
     var body: some View {
         VStack {
             imageProviderView
+            serversView
         }.padding()
     }
 }

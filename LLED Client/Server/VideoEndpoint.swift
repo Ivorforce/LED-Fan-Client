@@ -52,7 +52,7 @@ class VideoEndpoint: ObservableObject {
             return
         }
 
-        connection = NWConnection(host: NWEndpoint.Host(server.urlString), port: NWEndpoint.Port(integerLiteral: ArtnetProvider.port), using: .udp)
+        connection = ArtnetProvider.connection(host: server.urlString)
         guard let connection = connection else {
             print("Failed to create connection")
             return

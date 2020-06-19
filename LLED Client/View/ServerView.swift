@@ -34,11 +34,11 @@ struct ServerView: View {
     var body: some View {
         VStack {
             HStack() {
-                Text("Server IP")
+                Text("Server Address")
                     .bold()
                     .frame(width: 100, alignment: .leading)
 
-                TextField("...", text: $server.urlString)
+                Text(server.urlString)
                     .frame(minWidth: 100)
                 
                 HStack {

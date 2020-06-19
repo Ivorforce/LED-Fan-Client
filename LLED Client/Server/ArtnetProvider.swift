@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Network
 
 class ArtnetProvider {
     static let port: UInt16 = 6454
@@ -65,5 +66,29 @@ class ArtnetProvider {
         let packets = payload.split(maxCount: 512).enumerated().map { self.packOne(payload: $1, offset: $0) }
         sequence = sequence.addingReportingOverflow(1).partialValue
         return packets
+    }
+    
+    static func connection(host: String) -> NWConnection? {
+        return NWConnection(host: .init(host), port: .init(integerLiteral: ArtnetProvider.port), using: .udp)
+    }
+    
+    static func artpoll() -> Data {
+        var packet = Data()
+        
+        packet.append("Art-Net".data(using: .ascii)!)
+        packet.append(0x00)
+        
+//      opcode (2 x 8 low byte first)
+        packet.append(0x00)
+        packet.append(0x20)  // Artpoll packet
+//      prototocol version (2 x 8 high byte first)
+        packet.append(0x00)
+        packet.append(14)
+        // talktome
+        packet.append(0x02)
+        // priority
+        packet.append(0x00)
+        
+        return packet
     }
 }

@@ -15,6 +15,8 @@
 		8099F0B1249CCEBE0022FA49 /* ResourcePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */; };
 		8099F0B3249CD9FB0022FA49 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B2249CD9FB0022FA49 /* Thread.swift */; };
 		8099F0B5249CDE100022FA49 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B4249CDE100022FA49 /* Assembly.swift */; };
+		8099F0B9249CEACC0022FA49 /* ServerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B8249CEACC0022FA49 /* ServerAssembly.swift */; };
+		8099F0BB249CEDC70022FA49 /* ServerAssemblyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0BA249CEDC70022FA49 /* ServerAssemblyView.swift */; };
 		80B76F23248BB22100442A55 /* OpenGL+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B76F22248BB22100442A55 /* OpenGL+Texture.swift */; };
 		80B76F27248BD64600442A55 /* default.fs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F26248BD64600442A55 /* default.fs */; };
 		80B76F29248BD64F00442A55 /* default.vs in Resources */ = {isa = PBXBuildFile; fileRef = 80B76F28248BD64F00442A55 /* default.vs */; };
@@ -68,6 +70,8 @@
 		8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePool.swift; sourceTree = "<group>"; };
 		8099F0B2249CD9FB0022FA49 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		8099F0B4249CDE100022FA49 /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
+		8099F0B8249CEACC0022FA49 /* ServerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAssembly.swift; sourceTree = "<group>"; };
+		8099F0BA249CEDC70022FA49 /* ServerAssemblyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAssemblyView.swift; sourceTree = "<group>"; };
 		80B76F22248BB22100442A55 /* OpenGL+Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenGL+Texture.swift"; sourceTree = "<group>"; };
 		80B76F26248BD64600442A55 /* default.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = default.fs; sourceTree = "<group>"; };
 		80B76F28248BD64F00442A55 /* default.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = default.vs; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				8099F0AE249CCDAA0022FA49 /* AssemblyView.swift */,
+				8099F0BA249CEDC70022FA49 /* ServerAssemblyView.swift */,
 				80E68F212485831400F47DB1 /* ContentView.swift */,
 				80C30A0824893CDC006E218C /* ServerView.swift */,
 				80C309F3248829B6006E218C /* VideoInterfaceView.swift */,
@@ -150,12 +155,13 @@
 		80C309FA24882E89006E218C /* Server */ = {
 			isa = PBXGroup;
 			children = (
+				8099F0B4249CDE100022FA49 /* Assembly.swift */,
+				8099F0B8249CEACC0022FA49 /* ServerAssembly.swift */,
 				80E68F322485B2F900F47DB1 /* Server.swift */,
 				80C309F524882C32006E218C /* ScreenMode.swift */,
 				80C309F724882C44006E218C /* VideoEndpoint.swift */,
 				80C309FC24882F74006E218C /* ArtnetProvider.swift */,
 				80C30A0A24894C81006E218C /* REST.swift */,
-				8099F0B4249CDE100022FA49 /* Assembly.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -319,6 +325,7 @@
 				80B76F2F248C23F800442A55 /* OpenGL.swift in Sources */,
 				80B76F37248C36D600442A55 /* MonitorScreen.swift in Sources */,
 				80C309F824882C44006E218C /* VideoEndpoint.swift in Sources */,
+				8099F0BB249CEDC70022FA49 /* ServerAssemblyView.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
 				80E68F222485831400F47DB1 /* ContentView.swift in Sources */,
 				804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */,
@@ -341,6 +348,7 @@
 				80C30A0924893CDC006E218C /* ServerView.swift in Sources */,
 				80B76F3E248D45DE00442A55 /* MonitorScreenOGL.swift in Sources */,
 				80C309F4248829B6006E218C /* VideoInterfaceView.swift in Sources */,
+				8099F0B9249CEACC0022FA49 /* ServerAssembly.swift in Sources */,
 				80B76F35248C361B00442A55 /* ImageCapture.swift in Sources */,
 				80B76F2B248BD6A700442A55 /* OpenGL+Shader.swift in Sources */,
 				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,

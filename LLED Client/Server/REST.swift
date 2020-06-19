@@ -7,6 +7,79 @@
 //
 
 import Foundation
+import Network
+
+protocol BackgroundTask {
+    func start()
+    func cancel()
+}
+
+class DataBackgroundTask: BackgroundTask {
+    var connection: NWConnection?
+    
+    func createConnection() -> NWConnection? {
+        return nil
+    }
+    
+    func start() {
+        connect(createConnection())
+    }
+
+    func connect(_ connection: NWConnection?) {
+        self.connection = connection
+        
+        guard let connection = connection else {
+            print("Failed to create connection")
+            return
+        }
+        
+        connection.stateUpdateHandler = { (newState) in
+            switch (newState) {
+                case .ready:
+                    self.execute(on: connection)
+                default:
+                    break
+            }
+        }
+
+        connection.start(queue: .global())
+    }
+    
+    func execute(on connection: NWConnection) {
+    }
+        
+    func cancel() {
+        connection?.cancel()
+        connection = nil
+    }
+}
+
+class ReadyTask: ObservableObject {
+    enum State {
+        case success, failure, inProgress, none
+    }
+    
+    var task: BackgroundTask
+    var state: State = .none {
+        didSet { objectWillChange.send() }
+    }
+    
+    init(task: BackgroundTask) {
+        self.task = task
+    }
+    
+    func cancel() {
+        if state == .inProgress {
+            task.cancel()
+            state = .none
+        }
+    }
+    
+    func start() {
+        cancel()
+        task.start()
+    }
+}
 
 class REST {
     let baseURL: URL

@@ -8,6 +8,15 @@
 
 import Foundation
 
+class Assembly: ObservableObject {
+    let pool: ImagePool
+    var servers = ServerAssembly()
+
+    init(capturer: ImageCapture) {
+        pool = ImagePool(capturer: capturer)
+    }
+}
+
 class ImagePool: ResourcePool<NSImage> {
     var capturer: ImageCapture {
         didSet {
@@ -15,7 +24,7 @@ class ImagePool: ResourcePool<NSImage> {
             objectWillChange.send()
         }
     }
-
+    
     init(capturer: ImageCapture) {
         self.capturer = capturer
         super.init(capturer.imageResource)
@@ -27,13 +36,5 @@ class ImagePool: ResourcePool<NSImage> {
     
     override func _stop() {
         capturer.stop()
-    }
-}
-
-class Assembly: ObservableObject {
-    let pool: ImagePool
-    
-    init(capturer: ImageCapture) {
-        pool = ImagePool(capturer: capturer)
     }
 }
