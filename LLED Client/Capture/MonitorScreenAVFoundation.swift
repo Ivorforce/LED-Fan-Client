@@ -29,7 +29,7 @@ class MonitorScreenAVFoundation : ImageCapture {
             print("Failed to create AVF screen input!")
             return
         }
-        input.minFrameDuration = .init(seconds: delay, preferredTimescale: 1)
+        input.minFrameDuration = .init(seconds: delay * 1000, preferredTimescale: 1000)
         if enforceSquare {
             input.cropRect = NSScreen.main!.frame.centeredSquare()
         }
