@@ -23,8 +23,9 @@ class AsyncTimer {
         let timer = AsyncTimer(timeInterval: timeInterval, fun: fun)
         
         DispatchQueue.global(qos: .background).async { [weak timer] in
+            var time = DispatchTime.now()
+
             while !(timer?.stopped ?? true) {
-                let time = DispatchTime.now()
                 fun()
                 
                 // Only keep it retained for the duration of the delay block
@@ -36,12 +37,15 @@ class AsyncTimer {
                     continue
                 }
                 
-                let executionTime: UInt64 = DispatchTime.now().uptimeNanoseconds - time.uptimeNanoseconds
+                let endTime = DispatchTime.now()
+                let executionTime: UInt64 = endTime.uptimeNanoseconds - time.uptimeNanoseconds
                 let requiredDelay = timer.timeInterval - TimeInterval(executionTime) / 1000 / 1000 / 1000
                 
                 if requiredDelay > 0 && !timer.stopped {
                     Thread.sleep(forTimeInterval: requiredDelay)
                 }
+                
+                time = endTime
             }
         }
         
