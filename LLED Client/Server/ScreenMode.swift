@@ -16,6 +16,7 @@ protocol ScreenMode {
 
     var description: String { get }
     var net: Int { get }
+    var desiredSize: NSSize { get }
 
     func pack(image: NSImage) -> Data
 }
@@ -40,6 +41,10 @@ struct Cartesian: ScreenMode {
     
     let width: Int
     let height: Int
+    
+    var desiredSize: NSSize {
+        return NSSize(width: width, height: height)
+    }
     
     func pack(image: NSImage) -> Data {
         let resized = image.resized(to: NSSize(width: width, height: height))!

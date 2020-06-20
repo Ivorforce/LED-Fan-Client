@@ -79,6 +79,28 @@ class ServerAssembly: ObservableObject {
         }
     }
     
+    var desiredSize: NSSize {
+        return NSSize(
+            width: available.compactMap(\.screenMode).map(\.desiredSize.width).max() ?? 100,
+            height: available.compactMap(\.screenMode).map(\.desiredSize.height).max() ?? 100
+        )
+    }
+    
+    func distribute(image: NSImage) -> [Server: Data] {
+        var dict: [Server: Data] = [:]
+        for server in available {
+            guard
+                let screenMode = server.screenMode,
+                let image = image.resized(to: screenMode.desiredSize)
+            else {
+                continue
+            }
+            
+            dict[server] = screenMode.pack(image: image)
+        }
+        return dict
+    }
+    
     func scan() {
         guard artpoll.state == .done else {
             return

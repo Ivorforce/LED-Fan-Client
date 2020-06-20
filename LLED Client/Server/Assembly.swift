@@ -17,7 +17,16 @@ class Assembly: ObservableObject {
     }
 }
 
-class ImagePool: ResourcePool<NSImage> {
+class ImagePoolObserverInfo: ResourcePoolObserverInfo {
+    let size: NSSize
+    
+    init(delay: TimeInterval, priority: Int, size: NSSize) {
+        self.size = size
+        super.init(delay: delay, priority: priority)
+    }
+}
+
+class ImagePool: ResourcePool<NSImage, ImagePoolObserverInfo> {
     var capturer: ImageCapture {
         didSet {
             resource = capturer.imageResource
@@ -30,8 +39,8 @@ class ImagePool: ResourcePool<NSImage> {
         super.init(capturer.imageResource)
     }
     
-    override func _start(delay: TimeInterval) {
-        capturer.start(delay: delay)
+    override func _start(info: ImagePoolObserverInfo) {
+        capturer.start(delay: info.delay, desiredSize: info.size)
     }
     
     override func _stop() {

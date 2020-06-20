@@ -33,23 +33,25 @@ extension Int {
 
 extension NSImage {
     func resized(to newSize: NSSize) -> NSImage? {
-        if let bitmapRep = NSBitmapImageRep(
+        guard let bitmapRep = NSBitmapImageRep(
             bitmapDataPlanes: nil, pixelsWide: Int(newSize.width), pixelsHigh: Int(newSize.height),
             bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
             colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0
-        ) {
-            bitmapRep.size = newSize
-            NSGraphicsContext.saveGraphicsState()
-            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
-            draw(in: NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height), from: .zero, operation: .copy, fraction: 1.0)
-            NSGraphicsContext.restoreGraphicsState()
-
-            let resizedImage = NSImage(size: newSize)
-            resizedImage.addRepresentation(bitmapRep)
-            return resizedImage
+        ) else {
+            return nil
         }
+        
+        bitmapRep.size = newSize
+        
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
+        draw(in: NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height), from: .zero, operation: .copy, fraction: 1.0)
+        NSGraphicsContext.restoreGraphicsState()
 
-        return nil
+        let resizedImage = NSImage(size: newSize)
+        resizedImage.addRepresentation(bitmapRep)
+
+        return resizedImage
     }
 }
 
@@ -99,5 +101,20 @@ extension NSRect {
             width: side,
             height: side
         )
+    }
+}
+
+extension Array {
+    @inlinable func volatileMap<S>(_ fun: (Element) -> S?) -> [S]? {
+        let result = compactMap { fun($0) }
+        return result.count == count ? result : nil
+    }
+    
+    @inlinable public func reduce<S>(_ nextPartialResult: (S, S) throws -> S) rethrows -> S? {
+        guard let asS = volatileMap({ $0 as? S }), let first = asS.first else {
+            return nil
+        }
+        
+        return try asS.dropFirst().reduce(first, nextPartialResult)
     }
 }

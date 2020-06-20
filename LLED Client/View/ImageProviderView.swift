@@ -60,10 +60,10 @@ struct CaptureSyphonView: View {
 
 struct ImageCapturePreview: View {
     // TODO Observation never stops
-    @ObservedObject var image: ResourcePool<NSImage>.State
+    @ObservedObject var image: ImagePool.State
         
-    init(pool: ResourcePool<NSImage>) {
-        image = pool.observedState(delay: .seconds(0.1))
+    init(pool: ImagePool) {
+        image = pool.observedState(info: .init(delay: .seconds(0.1), priority: 10, size: NSSize(width: 100, height: 100)))
     }
     
     var body: some View {

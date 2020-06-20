@@ -21,7 +21,7 @@ class VideoConnection: ObservableObject {
         didSet { _flush() }
     }
     
-    var observerToken: ResourcePool<NSImage>.ObservationToken?
+    var observerToken: ImagePool.ObservationToken?
     
     init(assembly: Assembly) {
         self.assembly = assembly
@@ -49,14 +49,15 @@ class VideoConnection: ObservableObject {
             connections[server] = connection
         }
         
-        observerToken = assembly.pool.observe(delay: .seconds(1 / fps)) { image in
+        observerToken = assembly.pool.observe(info: .init(delay: .seconds(1 / fps), priority: 0, size: assembly.servers.desiredSize)) { image in
+            let distribution = self.assembly.servers.distribute(image: image)
+            
             for (server, connection) in self.connections {
-                guard let screenMode = server.screenMode else {
+                guard let payload = distribution[server] else {
                     print("Lost screen mode for server \(server)")
                     continue
                 }
                 
-                let payload = screenMode.pack(image: image)
                 let packets = server.artnet.pack(payload: payload)
                 for packet in packets {
                     connection.send(content: packet, completion: NWConnection.SendCompletion.idempotent)

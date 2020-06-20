@@ -17,11 +17,15 @@ class MonitorScreenAVFoundation : ImageCapture {
     
     var captureSession: AVCaptureSession?
         
+    var imageSize = NSSize()
+    
     override init() {
         
     }
     
-    override func start(delay: TimeInterval) {
+    override func start(delay: TimeInterval, desiredSize: NSSize) {
+        imageSize = desiredSize
+        
         let session = AVCaptureSession()
         session.sessionPreset = .low
         
@@ -78,11 +82,13 @@ extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegat
         var cgImageO: CGImage?
         VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImageO)
         guard let cgImage = cgImageO else {
-            print("Failed to create image frm image buffer!")
+            print("Failed to create image from image buffer!")
             return
         }
 
         let image = NSImage(cgImage: cgImage, size: NSSize(width: width, height: height))
-        _ = self.imageResource.push(image, force: true)
+        let resizedImage = image.resized(to: imageSize)!
+        
+        _ = self.imageResource.push(resizedImage, force: true)
     }
 }

@@ -8,7 +8,25 @@
 
 import Foundation
 
-class ResourcePool<Resource>: ObservableObject {
+protocol ResourcePoolObserverInfoProtocol {
+    static func merge(_ lhs: Self, rhs: Self) -> Self
+}
+
+class ResourcePoolObserverInfo: ResourcePoolObserverInfoProtocol {
+    let delay: TimeInterval
+    let priority: Int
+    
+    init(delay: TimeInterval, priority: Int) {
+        self.delay = delay
+        self.priority = priority
+    }
+    
+    static func merge(_ lhs: ResourcePoolObserverInfo, rhs: ResourcePoolObserverInfo) -> Self {
+        return (lhs.priority > rhs.priority ? lhs : rhs) as! Self
+    }
+}
+
+class ResourcePool<Resource, ObserverInfo: ResourcePoolObserverInfo>: ObservableObject {
     var resource: BufferedResource<Resource> { didSet {
         _flushTimer()
         objectWillChange.send()
@@ -25,7 +43,8 @@ class ResourcePool<Resource>: ObservableObject {
         DispatchQueue.main.async {
             let observers = self._observers
             
-            guard let delay = observers.map({ $0.delay }).max() else {
+            guard let info = observers.map(\.info).reduce(ObserverInfo.merge) as? ObserverInfo else {
+                print("Failed to merge observer infos!")
                 self.timer?.invalidate()
                 self.timer = nil
                 self._stop()
@@ -34,7 +53,8 @@ class ResourcePool<Resource>: ObservableObject {
                         
             let resource = self.resource
             
-            self._start(delay: delay)
+            let delay = info.delay
+            self._start(info: info)
             self.timer = AsyncTimer.scheduledTimer(withTimeInterval: delay) {
                 guard let resource = resource.pop(timeout: .now() + delay) else {
                     return
@@ -47,7 +67,7 @@ class ResourcePool<Resource>: ObservableObject {
         }
     }
     
-    func _start(delay: TimeInterval) {
+    func _start(info: ObserverInfo) {
         
     }
     
@@ -55,20 +75,20 @@ class ResourcePool<Resource>: ObservableObject {
         
     }
     
-    func observedState(delay: TimeInterval) -> State {
+    func observedState(info: ObserverInfo) -> State {
         let token = ObservationToken(pool: self)
         let state = State(token: token)
         
-        self._observers.append(.init(id: token.id, delay: delay) {
+        self._observers.append(.init(id: token.id, info: info) {
             state.state = $0
         })
         self._flushTimer()
         return state
     }
     
-    func observe(delay: TimeInterval, fun: @escaping (Resource) -> Void) -> ObservationToken {
+    func observe(info: ObserverInfo, fun: @escaping (Resource) -> Void) -> ObservationToken {
         let token = ObservationToken(pool: self)
-        self._observers.append(.init(id: token.id, delay: delay, fun: fun))
+        self._observers.append(.init(id: token.id, info: info, fun: fun))
         self._flushTimer()
         return token
     }
@@ -109,15 +129,16 @@ extension ResourcePool {
             self.token = token
         }
     }
-    
+        
     final class Observer {
         let id: UUID
-        let delay: TimeInterval
+        let info: ObserverInfo
+        
         let fun: (Resource) -> Void
         
-        init(id: UUID, delay: TimeInterval, fun: @escaping (Resource) -> Void) {
+        init(id: UUID, info: ObserverInfo, fun: @escaping (Resource) -> Void) {
             self.id = id
-            self.delay = delay
+            self.info = info
             self.fun = fun
         }
     }
