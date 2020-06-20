@@ -21,11 +21,15 @@ class VideoConnection: ObservableObject {
         didSet { _flush() }
     }
     
+    var practicalFPS: Double? = nil
+    
     var observerToken: ImagePool.ObservationToken?
     
     var payloadsResource = BufferedResource<[Server: Data]>(limit: 2)
     var sendTimer: AsyncTimer?
     
+    let sendFPS = FPSCounter(limit: 120, updateDelay: .seconds(5))
+
     init(assembly: Assembly) {
         self.assembly = assembly
     }
@@ -59,7 +63,10 @@ class VideoConnection: ObservableObject {
             }
         }
         
+        sendFPS.begin()
         sendTimer = AsyncTimer.scheduledTimer(withTimeInterval: 0) {
+            self.sendFPS.mark()
+            
             let distribution = self.payloadsResource.pop()
             
             for (server, connection) in self.connections {

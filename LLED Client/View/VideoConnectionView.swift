@@ -34,11 +34,14 @@ struct VideoConnectionView: View {
     @ObservedObject var assembly: ServerAssembly
     @ObservedObject var endpoint: VideoConnection
     @ObservedObject var endpointProxy: VideoConnectionUIProxy
+    
+    let fpsView: FPSView
 
     init(endpoint: VideoConnection) {
         self.assembly = endpoint.assembly.servers
         self.endpoint = endpoint
         self.endpointProxy = VideoConnectionUIProxy(endpoint: endpoint)
+        self.fpsView = FPSView(fpsCounter: endpoint.sendFPS)
     }
             
     var body: some View {
@@ -67,8 +70,23 @@ struct VideoConnectionView: View {
                     view.isHidden = !self.endpoint.isSending
                 })
                     .frame(width: 20, height: 20)
+                
+                fpsView
             }
         }
+    }
+}
+
+struct FPSView: View {
+    @ObservedObject var fpsCounter: FPSCounter
+    
+    init(fpsCounter: FPSCounter) {
+        self.fpsCounter = fpsCounter
+    }
+    
+    var body: some View {
+        Text(String(format: "FPS: %.1f", fpsCounter.fps ?? 0))
+            .frame(width: 100)
     }
 }
 
