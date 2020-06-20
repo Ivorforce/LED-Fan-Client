@@ -32,6 +32,10 @@ class AsyncTimer {
                     return
                 }
                 
+                guard timer.timeInterval > 0 else {
+                    continue
+                }
+                
                 let executionTime: UInt64 = DispatchTime.now().uptimeNanoseconds - time.uptimeNanoseconds
                 let requiredDelay = timer.timeInterval - TimeInterval(executionTime) / 1000 / 1000 / 1000
                 

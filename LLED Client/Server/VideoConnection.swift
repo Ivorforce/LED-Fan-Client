@@ -23,6 +23,9 @@ class VideoConnection: ObservableObject {
     
     var observerToken: ImagePool.ObservationToken?
     
+    var payloadsResource = BufferedResource<[Server: Data]>(limit: 2)
+    var sendTimer: AsyncTimer?
+    
     init(assembly: Assembly) {
         self.assembly = assembly
     }
@@ -30,6 +33,7 @@ class VideoConnection: ObservableObject {
     func _flush() {
         objectWillChange.send()
         observerToken?.invalidate()
+        sendTimer?.invalidate()
         
         guard isSending else {
             connections.values.forEach { $0.cancel() }
@@ -50,11 +54,16 @@ class VideoConnection: ObservableObject {
         }
         
         observerToken = assembly.pool.observe(info: .init(delay: .seconds(1 / fps), priority: 0, size: assembly.servers.desiredSize)) { image in
-            let distribution = self.assembly.servers.distribute(image: image)
+            self.payloadsResource.offer {
+                self.assembly.servers.distribute(image: image)
+            }
+        }
+        
+        sendTimer = AsyncTimer.scheduledTimer(withTimeInterval: 0) {
+            let distribution = self.payloadsResource.pop()
             
             for (server, connection) in self.connections {
                 guard let payload = distribution[server] else {
-                    print("Lost screen mode for server \(server)")
                     continue
                 }
                 
