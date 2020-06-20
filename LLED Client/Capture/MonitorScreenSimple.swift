@@ -9,7 +9,7 @@
 import Cocoa
 
 class MonitorScreenSimple : ActiveImageCapture {
-    override var name: String { "Capture Screen" }
+    override var name: String { "Capture Screen (Alternate)" }
         
     override func grab(desiredSize: NSSize) -> NSImage {
         guard let screen = NSScreen.main else {

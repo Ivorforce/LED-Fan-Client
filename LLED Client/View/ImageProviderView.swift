@@ -76,7 +76,8 @@ struct ImageCapturePreview: View {
 struct ImageProviderView: View {
     static let captureMethods = [
         MonitorScreenAVFoundation(),
-        SyphonScreen()
+        SyphonScreen(),
+        MonitorScreenSimple()
     ]
         
     @ObservedObject var pool: ImagePool
