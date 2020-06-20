@@ -130,7 +130,7 @@ class Server: ObservableObject {
         "ssid": ssid,
         "password": password
     ]) }
-    func pair() { pair(ssid: "", password: "") }
+    func pair() { rest(["wifi/pair"])?.post() }
 }
 
 extension Server: Hashable {

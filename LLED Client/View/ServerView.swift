@@ -36,7 +36,7 @@ struct ServerWifiView: View {
                 }) {
                     Text("Connect")
                 }
-                    .disabled(server.state != .connected || ssid.isEmpty || password.isEmpty || self.isConnecting.value)
+                    .disabled(server.state != .connected || ssid.isEmpty || self.isConnecting.value)
             }
         }
     }
