@@ -33,7 +33,7 @@ class MonitorScreenAVFoundation : ImageCapture {
         }
         input.minFrameDuration = .init(seconds: delay * 1000, preferredTimescale: 1000)
         input.cropRect = desiredSize.centeredFit(bounds: NSScreen.main!.frame)
-        print(input.cropRect)
+        input.scaleFactor = desiredSize.width / input.cropRect.width * 2
         session.addInput(input)
         
         let output = AVCaptureVideoDataOutput()
@@ -84,6 +84,7 @@ extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegat
         }
 
         let image = NSImage(cgImage: cgImage, size: NSSize(width: width, height: height))
+        print(image.size)
         let resizedImage = image.resized(to: imageSize)!
         
         _ = self.imageResource.push(resizedImage, force: true)
