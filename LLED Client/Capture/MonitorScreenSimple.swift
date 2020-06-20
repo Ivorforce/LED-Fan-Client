@@ -11,15 +11,20 @@ import Cocoa
 class MonitorScreenSimple : ActiveImageCapture {
     override var name: String { "Capture Screen (Alternate)" }
         
-    override func grab(desiredSize: NSSize) -> NSImage {
-        guard let screen = NSScreen.main else {
-            print("No screen found lol")
+    var captureRect: NSRect?
+    
+    override func start(delay: TimeInterval, desiredSize: NSSize) {
+        super.start(delay: delay, desiredSize: desiredSize)
+        
+        captureRect = NSScreen.main.map { desiredSize.centeredFit(bounds: $0.frame) }
+    }
+    
+    override func grab() -> NSImage {
+        guard let captureRect = captureRect else {
             return NSImage()
         }
         
-        let rect = desiredSize.centeredFit(bounds: screen.frame)
-        
-        guard let cgImage = CGWindowListCreateImage(rect, .optionOnScreenOnly, .zero, .nominalResolution) else {
+        guard let cgImage = CGWindowListCreateImage(captureRect, .optionOnScreenOnly, .zero, .nominalResolution) else {
             print("Failed to create screen image!")
             return NSImage()
         }
