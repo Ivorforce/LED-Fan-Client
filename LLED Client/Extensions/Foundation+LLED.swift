@@ -128,3 +128,26 @@ extension Array {
         return try asS.dropFirst().reduce(first, nextPartialResult)
     }
 }
+
+extension CGImage {
+    func resized(to size: NSSize, quality: CGInterpolationQuality = .default) -> CGImage? {
+        var bitmapInfo: UInt32 = CGBitmapInfo.byteOrder32Big.rawValue
+        bitmapInfo |= CGImageAlphaInfo.premultipliedLast.rawValue & CGBitmapInfo.alphaInfoMask.rawValue
+        
+        guard let context = CGContext(data: nil,
+                                width: Int(size.width),
+                                height: Int(size.height),
+                                bitsPerComponent: bitsPerComponent,
+                                bytesPerRow: 0,
+                                space: colorSpace ?? CGColorSpace(name: CGColorSpace.sRGB)!,
+                                bitmapInfo: bitmapInfo)
+        else {
+            return nil
+        }
+        
+        context.interpolationQuality = quality
+        context.draw(self, in: CGRect(origin: .zero, size: size))
+
+        return context.makeImage()
+    }
+}

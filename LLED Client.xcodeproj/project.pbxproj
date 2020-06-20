@@ -40,7 +40,7 @@
 		80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C309FC24882F74006E218C /* ArtnetProvider.swift */; };
 		80C30A0924893CDC006E218C /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0824893CDC006E218C /* ServerView.swift */; };
 		80C30A0B24894C81006E218C /* REST.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C30A0A24894C81006E218C /* REST.swift */; };
-		80CE90A7249E73C30092C215 /* AnyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE90A6249E73C30092C215 /* AnyImage.swift */; };
+		80CE90A7249E73C30092C215 /* LLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE90A6249E73C30092C215 /* LLImage.swift */; };
 		80CE90A9249E74C30092C215 /* ImagePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE90A8249E74C30092C215 /* ImagePool.swift */; };
 		80E68F202485831400F47DB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E68F1F2485831400F47DB1 /* AppDelegate.swift */; };
 		80E68F242485831700F47DB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E68F232485831700F47DB1 /* Assets.xcassets */; };
@@ -101,7 +101,7 @@
 		80C30A0824893CDC006E218C /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		80C30A0A24894C81006E218C /* REST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REST.swift; sourceTree = "<group>"; };
 		80C30A0C24895758006E218C /* NSImage+LLED.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSImage+LLED.h"; sourceTree = "<group>"; };
-		80CE90A6249E73C30092C215 /* AnyImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyImage.swift; sourceTree = "<group>"; };
+		80CE90A6249E73C30092C215 /* LLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLImage.swift; sourceTree = "<group>"; };
 		80CE90A8249E74C30092C215 /* ImagePool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePool.swift; sourceTree = "<group>"; };
 		80E68F1C2485831400F47DB1 /* LLED Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LLED Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E68F1F2485831400F47DB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */,
-				80CE90A6249E73C30092C215 /* AnyImage.swift */,
+				80CE90A6249E73C30092C215 /* LLImage.swift */,
 				80CE90A8249E74C30092C215 /* ImagePool.swift */,
 			);
 			path = Image;
@@ -348,7 +348,7 @@
 				80B76F37248C36D600442A55 /* MonitorScreenSimple.swift in Sources */,
 				80C309F824882C44006E218C /* VideoConnection.swift in Sources */,
 				80CE90A9249E74C30092C215 /* ImagePool.swift in Sources */,
-				80CE90A7249E73C30092C215 /* AnyImage.swift in Sources */,
+				80CE90A7249E73C30092C215 /* LLImage.swift in Sources */,
 				8099F0BB249CEDC70022FA49 /* ServerAssemblyView.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
 				804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */,

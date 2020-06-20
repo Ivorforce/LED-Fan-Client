@@ -29,9 +29,6 @@ class MonitorScreenSimple : ActiveImageCapture {
             return LLNSImage.none
         }
         
-        let image = NSImage()
-        image.addRepresentation(NSBitmapImageRep(cgImage: cgImage))
-        
-        return LLNSImage(image: image)
+        return LLCGImage(image: cgImage)
     }
 }

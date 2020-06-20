@@ -57,9 +57,6 @@ extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegat
             print("Failed to find image buffer!")
             return
         }
-        
-        let width = CVPixelBufferGetWidth(pixelBuffer)
-        let height = CVPixelBufferGetWidth(pixelBuffer)
 
 //        CVOpenGLTextureRef texture;
 //        CVOpenGLTextureCacheCreateTextureFromImage(kCFAllocatorDefault, _textureCache, pixelBuffer, NULL, &texture);
@@ -83,9 +80,6 @@ extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegat
             return
         }
 
-        let image = NSImage(cgImage: cgImage, size: NSSize(width: width, height: height))
-        let resizedImage = image.resized(to: imageSize)!
-        
-        _ = self.imageResource.push(LLNSImage(image: resizedImage), force: true)
+        _ = self.imageResource.push(LLCGImage(image: cgImage), force: true)
     }
 }
