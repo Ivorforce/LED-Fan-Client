@@ -18,10 +18,10 @@ class ImageCapture: NSObject {
 }
 
 class ActiveImageCapture: ImageCapture {
-    var timer: Timer?
+    var timer: AsyncTimer?
     
     override func start(delay: TimeInterval, desiredSize: NSSize) {
-        timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: true) { _ in
+        timer = AsyncTimer.scheduledTimer(withTimeInterval: delay) {
             let image = self.grab()
             self.imageResource.push(image)
         }
