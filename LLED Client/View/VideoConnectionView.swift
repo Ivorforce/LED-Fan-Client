@@ -8,13 +8,37 @@
 
 import SwiftUI
 
+class VideoConnectionUIProxy: ObservableObject {
+    var endpoint: VideoConnection
+    var defaultFPS: Int = 30
+    
+    init(endpoint: VideoConnection) {
+        self.endpoint = endpoint
+        
+        let roundedFPS = Int(endpoint.fps)
+        fps = roundedFPS != defaultFPS ? String(roundedFPS) : ""
+    }
+    
+    var fps: String {
+        didSet {
+            objectWillChange.send()
+
+            var fps = Double(self.fps) ?? Double(defaultFPS)
+            fps = fps < 100 && fps > 0 ? fps : Double(defaultFPS)
+            endpoint.fps = fps
+        }
+    }
+}
+
 struct VideoConnectionView: View {
     @ObservedObject var assembly: ServerAssembly
     @ObservedObject var endpoint: VideoConnection
+    @ObservedObject var endpointProxy: VideoConnectionUIProxy
 
     init(endpoint: VideoConnection) {
         self.assembly = endpoint.assembly.servers
         self.endpoint = endpoint
+        self.endpointProxy = VideoConnectionUIProxy(endpoint: endpoint)
     }
             
     var body: some View {
@@ -24,13 +48,7 @@ struct VideoConnectionView: View {
                     .fixedSize()
                     .frame(width: 50, alignment: .leading)
                 
-                TextField("30", text: Binding(
-                    get: { self.endpoint.fps != 30 ? String(self.endpoint.fps) : "" },
-                    set: {
-                        let fps = Double($0) ?? 30
-                        self.endpoint.fps = fps < 100 && fps > 0 ? fps : 30
-                    }
-                ))
+                TextField("30", text: $endpointProxy.fps)
                     .frame(minWidth: 100)
                 
                 Button(action: {
