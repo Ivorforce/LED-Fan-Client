@@ -27,7 +27,7 @@ class BufferedResource<Resource> {
         negativeSemaphore = DispatchSemaphore(value: limit)
     }
     
-    func push(_ resource: Resource, force: Bool = true) {
+    func push(_ resource: Resource, force: Bool = false) {
         if force {
             // Buffer is synced the whole way through so we're sure
             // our buffer state is intact if we time out

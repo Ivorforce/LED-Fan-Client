@@ -80,6 +80,6 @@ extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegat
             return
         }
 
-        _ = self.imageResource.push(LLCGImage(image: cgImage), force: true)
+        _ = self.imageResource.push(LLCGImage(image: cgImage))
     }
 }
