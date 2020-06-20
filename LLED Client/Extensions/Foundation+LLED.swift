@@ -92,14 +92,24 @@ extension Data {
     }
 }
 
-extension NSRect {
-    func centeredSquare() -> NSRect {
-        let side = min(size.width, size.height)
+extension NSSize {
+    func scaleToFit(size: NSSize) -> NSSize {
+        let wRatio = width / size.width
+        let hRatio = height / size.height
+        
+        // Find ratio that is closer to fit by
+        let scale = wRatio > hRatio ? (1.0 / wRatio) : (1.0 / hRatio)
+        return NSSize(width: round(width * scale), height: round(height * scale))
+    }
+    
+    func centeredFit(bounds: NSRect) -> NSRect {
+        let fitSize = scaleToFit(size: bounds.size)
+        
         return NSRect(
-            x: minX + (size.width - side) / 2,
-            y: minY + (size.height - side) / 2,
-            width: side,
-            height: side
+            x: round(bounds.minX + (bounds.size.width - fitSize.width) / 2),
+            y: round(bounds.minY + (bounds.size.height - fitSize.height) / 2),
+            width: fitSize.width,
+            height: fitSize.height
         )
     }
 }

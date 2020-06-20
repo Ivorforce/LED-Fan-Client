@@ -81,21 +81,29 @@ class ServerAssembly: ObservableObject {
     
     var desiredSize: NSSize {
         return NSSize(
-            width: available.compactMap(\.screenMode).map(\.desiredSize.width).max() ?? 100,
-            height: available.compactMap(\.screenMode).map(\.desiredSize.height).max() ?? 100
+            width: available.compactMap(\.screenMode).map(\.requiredSize.width).max() ?? 100,
+            height: available.compactMap(\.screenMode).map(\.requiredSize.height).max() ?? 100
         )
     }
     
     func distribute(image: NSImage) -> [Server: Data] {
+        let desiredSize = self.desiredSize
+        
+        guard let image = image.size != desiredSize
+            ? image.resized(to: desiredSize)
+            : image
+        else {
+            print("Failed to resize image for assembly!")
+            return [:]
+        }
+        
         var dict: [Server: Data] = [:]
         for server in available {
-            guard
-                let screenMode = server.screenMode,
-                let image = image.resized(to: screenMode.desiredSize)
-            else {
+            guard let screenMode = server.screenMode else {
                 continue
             }
             
+            // Crop here when required
             dict[server] = screenMode.pack(image: image)
         }
         return dict

@@ -13,8 +13,6 @@ import VideoToolbox
 class MonitorScreenAVFoundation : ImageCapture {
     override var name: String { "Capture Screen" }
     
-    var enforceSquare: Bool = true
-    
     var captureSession: AVCaptureSession?
         
     var imageSize = NSSize()
@@ -34,9 +32,8 @@ class MonitorScreenAVFoundation : ImageCapture {
             return
         }
         input.minFrameDuration = .init(seconds: delay * 1000, preferredTimescale: 1000)
-        if enforceSquare {
-            input.cropRect = NSScreen.main!.frame.centeredSquare()
-        }
+        input.cropRect = desiredSize.centeredFit(bounds: NSScreen.main!.frame)
+        print(input.cropRect)
         session.addInput(input)
         
         let output = AVCaptureVideoDataOutput()

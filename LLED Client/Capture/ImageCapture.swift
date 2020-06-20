@@ -22,7 +22,8 @@ class ActiveImageCapture: ImageCapture {
     
     override func start(delay: TimeInterval, desiredSize: NSSize) {
         timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: true) { _ in
-            self.imageResource.push(self.grab(), force: true)
+            let image = self.grab(desiredSize: desiredSize)
+            self.imageResource.push(image, force: true)
         }
     }
     
@@ -31,5 +32,5 @@ class ActiveImageCapture: ImageCapture {
         timer = nil
     }
     
-    func grab() -> NSImage { return NSImage() }
+    func grab(desiredSize: NSSize) -> NSImage { return NSImage() }
 }

@@ -22,7 +22,7 @@ class ResourcePoolObserverInfo: ResourcePoolObserverInfoProtocol {
     }
     
     static func merge(_ lhs: ResourcePoolObserverInfo, rhs: ResourcePoolObserverInfo) -> Self {
-        return (lhs.priority > rhs.priority ? lhs : rhs) as! Self
+        return (lhs.priority < rhs.priority ? lhs : rhs) as! Self
     }
 }
 
@@ -44,7 +44,8 @@ class ResourcePool<Resource, ObserverInfo: ResourcePoolObserverInfo>: Observable
             let observers = self._observers
             
             guard let info = observers.map(\.info).reduce(ObserverInfo.merge) as? ObserverInfo else {
-                print("Failed to merge observer infos!")
+                // Observers may have peaced out in the meantime
+                
                 self.timer?.invalidate()
                 self.timer = nil
                 self._stop()
