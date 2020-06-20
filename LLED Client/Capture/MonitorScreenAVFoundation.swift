@@ -33,11 +33,12 @@ class MonitorScreenAVFoundation : ImageCapture {
         }
         input.minFrameDuration = .init(seconds: delay * 1000, preferredTimescale: 1000)
         input.cropRect = desiredSize.centeredFit(bounds: NSScreen.main!.frame)
-        input.scaleFactor = desiredSize.width / input.cropRect.width * 2
+//        input.scaleFactor = desiredSize.width / input.cropRect.width * 4
+        input.scaleFactor = 1
         session.addInput(input)
         
         let output = AVCaptureVideoDataOutput()
-        output.alwaysDiscardsLateVideoFrames = true
+        output.alwaysDiscardsLateVideoFrames = false
         output.setSampleBufferDelegate(self, queue: .main)
         session.addOutput(output)
         
