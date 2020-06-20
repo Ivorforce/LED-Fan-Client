@@ -19,19 +19,19 @@ class MonitorScreenSimple : ActiveImageCapture {
         captureRect = NSScreen.main.map { desiredSize.centeredFit(bounds: $0.frame) }
     }
     
-    override func grab() -> NSImage {
+    override func grab() -> LLAnyImage {
         guard let captureRect = captureRect else {
-            return NSImage()
+            return LLNSImage.none
         }
         
         guard let cgImage = CGWindowListCreateImage(captureRect, .optionOnScreenOnly, .zero, .nominalResolution) else {
             print("Failed to create screen image!")
-            return NSImage()
+            return LLNSImage.none
         }
         
         let image = NSImage()
         image.addRepresentation(NSBitmapImageRep(cgImage: cgImage))
         
-        return image
+        return LLNSImage(image: image)
     }
 }

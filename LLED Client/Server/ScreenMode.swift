@@ -18,7 +18,7 @@ protocol ScreenMode {
     var net: Int { get }
     var requiredSize: NSSize { get }
 
-    func pack(image: NSImage) -> Data
+    func pack(image: LLAnyImage) -> Data
 }
 
 struct Cartesian: ScreenMode {
@@ -46,9 +46,8 @@ struct Cartesian: ScreenMode {
         return NSSize(width: width, height: height)
     }
     
-    func pack(image: NSImage) -> Data {
-        let rgb = image.toRGB()
-        return rgb
+    func pack(image: LLAnyImage) -> Data {
+        return image.rgbRepresentation
     }
 
     var description: String {

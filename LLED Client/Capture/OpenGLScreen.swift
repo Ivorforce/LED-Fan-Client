@@ -191,6 +191,7 @@ class OpenGLScreen : ImageCapture, ObservableObject {
             return
         }
         
-        imageResource.push(NSImage(cgImage: cgImage, size: textureSize))
+        let nsImage = NSImage(cgImage: cgImage, size: textureSize)
+        imageResource.push(LLNSImage(image: nsImage))
     }
 }

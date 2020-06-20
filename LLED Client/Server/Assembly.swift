@@ -25,25 +25,3 @@ class ImagePoolObserverInfo: ResourcePoolObserverInfo {
         super.init(delay: delay, priority: priority)
     }
 }
-
-class ImagePool: ResourcePool<NSImage, ImagePoolObserverInfo> {
-    var capturer: ImageCapture {
-        didSet {
-            resource = capturer.imageResource
-            objectWillChange.send()
-        }
-    }
-    
-    init(capturer: ImageCapture) {
-        self.capturer = capturer
-        super.init(capturer.imageResource)
-    }
-    
-    override func _start(info: ImagePoolObserverInfo) {
-        capturer.start(delay: info.delay, desiredSize: info.size)
-    }
-    
-    override func _stop() {
-        capturer.stop()
-    }
-}

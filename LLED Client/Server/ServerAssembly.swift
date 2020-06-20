@@ -86,7 +86,7 @@ class ServerAssembly: ObservableObject {
         )
     }
     
-    func distribute(image: NSImage) -> [Server: Data] {
+    func distribute(image: LLAnyImage) -> [Server: Data] {
         let desiredSize = self.desiredSize
         
         guard let image = image.size != desiredSize

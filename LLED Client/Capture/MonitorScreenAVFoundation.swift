@@ -86,6 +86,6 @@ extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegat
         let image = NSImage(cgImage: cgImage, size: NSSize(width: width, height: height))
         let resizedImage = image.resized(to: imageSize)!
         
-        _ = self.imageResource.push(resizedImage, force: true)
+        _ = self.imageResource.push(LLNSImage(image: resizedImage), force: true)
     }
 }

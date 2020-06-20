@@ -11,7 +11,7 @@ import Foundation
 class ImageCapture: NSObject {
     var name: String { return "Unknown Capture Device" }
     
-    var imageResource = BufferedResource<NSImage>(limit: 2)
+    var imageResource = BufferedResource<LLAnyImage>(limit: 2)
     
     func start(delay: TimeInterval, desiredSize: NSSize) {}
     func stop() {}
@@ -32,5 +32,5 @@ class ActiveImageCapture: ImageCapture {
         timer = nil
     }
     
-    func grab() -> NSImage { return NSImage() }
+    func grab() -> LLAnyImage { return LLNSImage.none }
 }

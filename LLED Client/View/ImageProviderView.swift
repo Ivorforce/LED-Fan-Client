@@ -67,7 +67,7 @@ struct ImageCapturePreview: View {
     }
     
     var body: some View {
-        Image(nsImage: image.state ?? NSImage())
+        Image(nsImage: image.state?.nsImageRepresentation ?? NSImage())
             .resizable()
             .scaledToFit()
     }
