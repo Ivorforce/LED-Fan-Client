@@ -27,6 +27,6 @@ class MonitorScreenSimple : ActiveImageCapture {
         let image = NSImage()
         image.addRepresentation(NSBitmapImageRep(cgImage: cgImage))
         
-        return image.resized(to: desiredSize) ?? image
+        return image
     }
 }
