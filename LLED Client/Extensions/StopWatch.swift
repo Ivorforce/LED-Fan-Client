@@ -13,7 +13,9 @@ class FPSCounter: StopWatch, ObservableObject {
     var lastCheck = Date()
     
     var fps: Double? {
-        didSet { self.objectWillChange.send() }
+        didSet {
+            DispatchQueue.main.async { self.objectWillChange.send() }
+        }
     }
     
     init(limit: Int, updateDelay: TimeInterval) {
