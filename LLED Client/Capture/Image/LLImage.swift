@@ -46,7 +46,7 @@ class LLCGImage: LLAnyImage {
         return image
     }
     
-    var rgbRepresentation: Data { nsImageRepresentation.toRGB() }
+    var rgbRepresentation: Data { NSImage.cgImage(toRGB: image) }
 }
 
 class LLNSImage: LLAnyImage {

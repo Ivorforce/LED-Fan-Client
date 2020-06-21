@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSImage (LLEDAdditions)
 
++ (NSData *) cgImageToRGB: (CGImageRef) image;
 - (NSData *) toRGB;
 
 @end
