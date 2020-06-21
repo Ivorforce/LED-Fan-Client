@@ -38,7 +38,6 @@ class AsyncTimer {
                 let endTime = DispatchTime.now()
                 let executionTime: UInt64 = endTime.uptimeNanoseconds - time.uptimeNanoseconds
                 let requiredDelay = requiredTimeInterval - TimeInterval(executionTime / 1000) / 1000 / 1000
-                print("\(requiredTimeInterval) -> \(requiredDelay)")
                 
                 if requiredTimeInterval > 0 {
                     Thread.sleep(forTimeInterval: requiredDelay)
