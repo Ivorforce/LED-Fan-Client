@@ -27,7 +27,7 @@ class LLCGImage: LLAnyImage {
     var size: NSSize { NSSize(width: image.width, height: image.height) }
     
     func resized(to size: NSSize) -> LLAnyImage? {
-        return image.resized(to: size, quality: .low).map(LLCGImage.init)
+        return image.resized(to: size, quality: .medium).map(LLCGImage.init)
     }
     
     var nsImageRepresentation: NSImage {
