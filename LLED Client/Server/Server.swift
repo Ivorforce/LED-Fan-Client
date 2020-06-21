@@ -125,7 +125,7 @@ class Server: ObservableObject {
     var brightness: Double = 1.0 {
         didSet {
             self.objectWillChange.send()
-            rest(["brightness"])?.post(["brightness": 0.5])
+            rest(["brightness"])?.post(["brightness": brightness * brightness])
         }
     }
     
