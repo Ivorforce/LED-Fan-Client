@@ -9,21 +9,25 @@
 import Foundation
 
 class AsyncTimer {
+    static let minSleepTime = 0.0001
+    
+    let dispatchQueue: DispatchQueue
     var stopped = true
     
     var timeInterval: TimeInterval
     var fun: () -> Void
     
-    init(timeInterval: TimeInterval, fun: @escaping () -> Void) {
+    init(timeInterval: TimeInterval, queue: DispatchQueue?, fun: @escaping () -> Void) {
         self.timeInterval = timeInterval
+        self.dispatchQueue = queue ?? DispatchQueue.global()
         self.fun = fun
     }
     
-    static func scheduledTimer(withTimeInterval timeInterval: TimeInterval, qos: DispatchQoS.QoSClass = .default, fun: @escaping () -> Void) -> AsyncTimer {
-        let timer = AsyncTimer(timeInterval: timeInterval, fun: fun)
+    static func scheduledTimer(withTimeInterval timeInterval: TimeInterval, queue: DispatchQueue?, fun: @escaping () -> Void) -> AsyncTimer {
+        let timer = AsyncTimer(timeInterval: timeInterval, queue: queue, fun: fun)
         timer.stopped = false
         
-        DispatchQueue.global(qos: qos).async { [weak timer] in
+        timer.dispatchQueue.async { [weak timer] in
             var time = DispatchTime.now()
 
             while !(timer?.stopped ?? true) {
@@ -38,15 +42,10 @@ class AsyncTimer {
                 }
 
                 let executionTime: UInt64 = endTime.uptimeNanoseconds - time.uptimeNanoseconds
-                let requiredDelay = requiredTimeInterval - TimeInterval(executionTime / 1000) / 1000 / 1000
+                let requiredDelay = max(minSleepTime, requiredTimeInterval - TimeInterval(executionTime / 1000) / 1000 / 1000)
                 
-                if requiredDelay > 0 {
-                    Thread.sleep(forTimeInterval: requiredDelay)
-                    time = DispatchTime(uptimeNanoseconds: endTime.uptimeNanoseconds + UInt64(requiredDelay * 1000 * 1000) * 1000)
-                }
-                else {
-                    time = endTime
-                }
+                Thread.sleep(forTimeInterval: requiredDelay)
+                time = DispatchTime(uptimeNanoseconds: endTime.uptimeNanoseconds + UInt64(requiredDelay * 1000 * 1000) * 1000)
             }
         }
         

@@ -41,13 +41,14 @@ class ResourcePool<Resource, ObserverInfo: ResourcePoolObserverInfo>: Observable
     
     func _flushTimer() {
         DispatchQueue.main.async {
+            self.timer?.invalidate()
+            self.timer = nil
+
             let observers = self._observers
             
             guard let info = observers.map(\.info).reduce(ObserverInfo.merge) as? ObserverInfo else {
                 // Observers may have peaced out in the meantime
                 
-                self.timer?.invalidate()
-                self.timer = nil
                 self._stop()
                 return
             }
@@ -56,7 +57,7 @@ class ResourcePool<Resource, ObserverInfo: ResourcePoolObserverInfo>: Observable
             
             let delay = info.delay
             self._start(info: info)
-            self.timer = AsyncTimer.scheduledTimer(withTimeInterval: 0) {
+            self.timer = AsyncTimer.scheduledTimer(withTimeInterval: 0, queue: .lled(label: "pool")) {
                 guard let resource = resource.pop(timeout: .now() + delay) else {
                     return
                 }

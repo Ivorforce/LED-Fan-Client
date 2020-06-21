@@ -29,6 +29,8 @@ class VideoConnection: ObservableObject {
     var sendTimer: AsyncTimer?
     
     let sendFPS = FPSCounter(limit: 120, updateDelay: .seconds(5))
+    
+    var activity: NSObjectProtocol?
 
     init(assembly: Assembly) {
         self.assembly = assembly
@@ -42,9 +44,20 @@ class VideoConnection: ObservableObject {
         guard isSending else {
             connections.values.forEach { $0.cancel() }
             connections = [:]
+            
+            activity.map(ProcessInfo.processInfo.endActivity)
+            activity = nil
+            
             return
         }
 
+        if activity == nil {
+            activity = ProcessInfo.processInfo.beginActivity(
+                options: [.userInitiated, .latencyCritical, .idleSystemSleepDisabled],
+                reason: "Video Streaming"
+            )
+        }
+        
         connections = [:]
         
         for server in assembly.servers.available {
@@ -64,7 +77,7 @@ class VideoConnection: ObservableObject {
         }
         
         sendFPS.begin()
-        sendTimer = AsyncTimer.scheduledTimer(withTimeInterval: 0) {
+        sendTimer = AsyncTimer.scheduledTimer(withTimeInterval: 0, queue: .lled(label: "packets")) {
             self.sendFPS.mark()
             
             let distribution = self.payloadsResource.pop()

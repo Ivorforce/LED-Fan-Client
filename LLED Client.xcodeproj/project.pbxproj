@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		803B6EF4249EA9240053C122 /* StopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6EF3249EA9240053C122 /* StopWatch.swift */; };
 		803B6EF6249FB5350053C122 /* RollingArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6EF5249FB5350053C122 /* RollingArray.swift */; };
+		803B6EF8249FD41D0053C122 /* LLEDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6EF7249FD41D0053C122 /* LLEDExtensions.swift */; };
 		804BF623248A4D9100528016 /* NSImage+LLED.m in Sources */ = {isa = PBXBuildFile; fileRef = 804BF622248A4D9100528016 /* NSImage+LLED.m */; };
 		804BF627248AA21800528016 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804BF625248AA20700528016 /* Syphon.framework */; };
 		804BF628248AA21800528016 /* Syphon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 804BF625248AA20700528016 /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -70,6 +71,7 @@
 /* Begin PBXFileReference section */
 		803B6EF3249EA9240053C122 /* StopWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatch.swift; sourceTree = "<group>"; };
 		803B6EF5249FB5350053C122 /* RollingArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingArray.swift; sourceTree = "<group>"; };
+		803B6EF7249FD41D0053C122 /* LLEDExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLEDExtensions.swift; sourceTree = "<group>"; };
 		804BF622248A4D9100528016 /* NSImage+LLED.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSImage+LLED.m"; sourceTree = "<group>"; };
 		804BF625248AA20700528016 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		804BF62A248ADFDA00528016 /* Syphon+LLED.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Syphon+LLED.swift"; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				8099F0B2249CD9FB0022FA49 /* Thread.swift */,
 				8099F0BF249D2F590022FA49 /* TimedBool.swift */,
 				803B6EF5249FB5350053C122 /* RollingArray.swift */,
+				803B6EF7249FD41D0053C122 /* LLEDExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				80C309F4248829B6006E218C /* VideoConnectionView.swift in Sources */,
 				8099F0B9249CEACC0022FA49 /* ServerAssembly.swift in Sources */,
 				80B76F35248C361B00442A55 /* ImageCapture.swift in Sources */,
+				803B6EF8249FD41D0053C122 /* LLEDExtensions.swift in Sources */,
 				80B76F2B248BD6A700442A55 /* OpenGL+Shader.swift in Sources */,
 				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,
 			);
