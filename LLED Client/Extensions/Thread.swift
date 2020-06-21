@@ -9,7 +9,7 @@
 import Foundation
 
 class AsyncTimer {
-    var stopped = false
+    var stopped = true
     
     var timeInterval: TimeInterval
     var fun: () -> Void
@@ -19,10 +19,11 @@ class AsyncTimer {
         self.fun = fun
     }
     
-    static func scheduledTimer(withTimeInterval timeInterval: TimeInterval, fun: @escaping () -> Void) -> AsyncTimer {
+    static func scheduledTimer(withTimeInterval timeInterval: TimeInterval, qos: DispatchQoS.QoSClass = .default, fun: @escaping () -> Void) -> AsyncTimer {
         let timer = AsyncTimer(timeInterval: timeInterval, fun: fun)
+        timer.stopped = false
         
-        DispatchQueue.global(qos: .background).async { [weak timer] in
+        DispatchQueue.global(qos: qos).async { [weak timer] in
             var time = DispatchTime.now()
 
             while !(timer?.stopped ?? true) {
