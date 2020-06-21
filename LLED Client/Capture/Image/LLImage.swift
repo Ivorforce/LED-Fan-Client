@@ -19,6 +19,8 @@ protocol LLAnyImage {
 }
 
 class LLCGImage: LLAnyImage {
+    static let ciContext = CIContext(options: nil)
+    
     let image: CGImage
     
     init(image: CGImage) {
@@ -35,8 +37,7 @@ class LLCGImage: LLAnyImage {
         let inputImage = CIImage(cgImage: image)
         let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
 
-        let context = CIContext(options: nil)
-        return context.createCGImage(outputImage, from: outputImage.extent).map(LLCGImage.init)
+        return Self.ciContext.createCGImage(outputImage, from: outputImage.extent).map(LLCGImage.init)
     }
     
     var nsImageRepresentation: NSImage {
@@ -49,6 +50,8 @@ class LLCGImage: LLAnyImage {
 }
 
 class LLNSImage: LLAnyImage {
+    static let ciContext = CIContext(options: nil)
+
     static var none = LLNSImage(image: NSImage())
     
     let image: NSImage
@@ -74,8 +77,7 @@ class LLNSImage: LLAnyImage {
 
         let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
 
-        let context = CIContext(options: nil)
-        return context.createCGImage(outputImage, from: outputImage.extent).map(LLCGImage.init)
+        return Self.ciContext.createCGImage(outputImage, from: outputImage.extent).map(LLCGImage.init)
     }
 
     var nsImageRepresentation: NSImage { image }

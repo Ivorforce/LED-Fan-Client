@@ -3,4 +3,29 @@
    uuid = "427F7F65-5BC4-4913-9746-2769F16D32B2"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "88E0324A-5399-4210-BAD9-1EF2863B7738"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "IOAccelLogContextLeak"
+            moduleName = "">
+            <Locations>
+               <Location
+                  uuid = "88E0324A-5399-4210-BAD9-1EF2863B7738 - b7b5af6795abcf03"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "IOAccelLogContextLeak"
+                  moduleName = "IOAccelerator"
+                  usesParentBreakpointCondition = "Yes"
+                  offsetFromSymbolStart = "0">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
