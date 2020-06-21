@@ -41,8 +41,11 @@ class ResourcePool<Resource, ObserverInfo: ResourcePoolObserverInfo>: Observable
     
     func _flushTimer() {
         DispatchQueue.main.async {
-            self.timer?.invalidate()
-            self.timer = nil
+            if let timer = self.timer {
+                timer.invalidate()
+                self.timer = nil
+                self._stop()
+            }
 
             let observers = self._observers
             

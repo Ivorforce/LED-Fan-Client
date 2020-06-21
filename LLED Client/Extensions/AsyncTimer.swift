@@ -29,17 +29,24 @@ class AsyncTimer {
     
     static func scheduledTimer(withTimeInterval timeInterval: TimeInterval, queue: DispatchQueue?, fun: @escaping (AsyncTimer) -> Void) -> AsyncTimer {
         let timer = AsyncTimer(timeInterval: timeInterval, queue: queue, fun: fun)
-        timer.stopped = false
-        
-        timer.dispatchQueue.async { [weak timer] in
+        timer.schedule()
+        return timer
+    }
+    
+    func schedule() {
+        stopped = false
+        let boxedTimer = WeakBox(self)
+        let minSleepTime = Self.minSleepTime
+
+        dispatchQueue.async {
             var time = DispatchTime.now()
 
-            while !(timer?.stopped ?? true) {
-                timer?.fire()
+            while !(boxedTimer.value?.stopped ?? true) {
+                boxedTimer.value?.fire()
                                 
                 let endTime = DispatchTime.now()
                 
-                let requiredTimeInterval = (timer?.stopped ?? true) ? 0 : (timer?.timeInterval ?? 0)
+                let requiredTimeInterval = (boxedTimer.value?.stopped ?? true) ? 0 : (boxedTimer.value?.timeInterval ?? 0)
                 guard requiredTimeInterval > 0 else {
                     time = endTime
                     continue
@@ -52,8 +59,6 @@ class AsyncTimer {
                 time = DispatchTime(uptimeNanoseconds: endTime.uptimeNanoseconds + UInt64(requiredDelay * 1000 * 1000) * 1000)
             }
         }
-        
-        return timer
     }
     
     deinit {
