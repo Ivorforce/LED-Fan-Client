@@ -47,26 +47,20 @@ class FPSCounter: StopWatch, ObservableObject {
 }
 
 class StopWatch {
-    var limit: Int
-    
     var startDate = Date()
-    var dates = [Date]()
+    var dates: RollingArray<Date>
     
     init(limit: Int) {
-        self.limit = limit
+        dates = .init(limit: limit)
     }
     
     func begin() {
-        dates = []
+        dates.clear()
         startDate = Date()
     }
     
     func mark() {
         dates.append(Date())
-        
-        if dates.count > limit {
-            dates = Array(dates[dates.count - limit ..< dates.count])
-        }
     }
     
     func meanDifference() -> TimeInterval? {
@@ -74,6 +68,7 @@ class StopWatch {
             return nil
         }
         
+        let dates = self.dates.values
         let sum = zip(dates[0 ..< dates.count], dates[1 ..< dates.count - 1])
             .map { $1.timeIntervalSince($0) }
             .reduce(TimeInterval(0), +)
