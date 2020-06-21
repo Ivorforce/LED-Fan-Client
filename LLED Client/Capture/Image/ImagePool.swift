@@ -20,7 +20,7 @@ class ImagePool: ResourcePool<LLAnyImage, ImagePoolObserverInfo> {
     var filterResourceTimer: AsyncTimer?
     
     var applyContrast = true {
-        willSet {
+        didSet {
             _flushResource()
             objectWillChange.send()
         }
