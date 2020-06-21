@@ -57,7 +57,7 @@ class ResourcePool<Resource, ObserverInfo: ResourcePoolObserverInfo>: Observable
             
             let delay = info.delay
             self._start(info: info)
-            self.timer = AsyncTimer.scheduledTimer(withTimeInterval: 0, queue: .lled(label: "pool")) {
+            self.timer = AsyncTimer.scheduledTimer(withTimeInterval: 0, queue: .lled(label: "pool")) { _ in
                 guard let resource = resource.pop(timeout: .now() + delay) else {
                     return
                 }

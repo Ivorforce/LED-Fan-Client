@@ -21,7 +21,7 @@ class ActiveImageCapture: ImageCapture {
     var timer: AsyncTimer?
     
     override func start(delay: TimeInterval, desiredSize: NSSize) {
-        timer = AsyncTimer.scheduledTimer(withTimeInterval: delay, queue: .lled(label: "imagecapture")) {
+        timer = AsyncTimer.scheduledTimer(withTimeInterval: delay, queue: .lled(label: "imagecapture")) { _ in
             let image = self.grab()
             self.imageResource.push(image)
         }

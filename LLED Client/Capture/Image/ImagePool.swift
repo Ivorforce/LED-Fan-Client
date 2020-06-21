@@ -32,19 +32,16 @@ class ImagePool: ResourcePool<LLAnyImage, ImagePoolObserverInfo> {
     }
 
     func _flushResource() {
-        if applyContrast {
-            resource = filterResource
-        }
-        else {
-            resource = capturer.imageResource
-        }
+        resource = applyContrast
+            ? filterResource
+            : capturer.imageResource
     }
     
     override func _start(info: ImagePoolObserverInfo) {
         capturer.start(delay: info.delay, desiredSize: info.size)
         
         if applyContrast {
-            filterResourceTimer = .scheduledTimer(withTimeInterval: 0, queue: .lled(label: "filter")) {
+            filterResourceTimer = .scheduledTimer(withTimeInterval: 0, queue: .lled(label: "filter")) { _ in
                 guard
                     let source = self.capturer.imageResource.pop(timeout: .now() + info.delay),
                     let filtered = source.colorFiltered(["inputContrast": 1.5])

@@ -15,15 +15,19 @@ class AsyncTimer {
     var stopped = true
     
     var timeInterval: TimeInterval
-    var fun: () -> Void
+    var fun: (AsyncTimer) -> Void
     
-    init(timeInterval: TimeInterval, queue: DispatchQueue?, fun: @escaping () -> Void) {
+    init(timeInterval: TimeInterval, queue: DispatchQueue?, fun: @escaping (AsyncTimer) -> Void) {
         self.timeInterval = timeInterval
         self.dispatchQueue = queue ?? DispatchQueue.global()
         self.fun = fun
     }
     
-    static func scheduledTimer(withTimeInterval timeInterval: TimeInterval, queue: DispatchQueue?, fun: @escaping () -> Void) -> AsyncTimer {
+    func fire() {
+        fun(self)
+    }
+    
+    static func scheduledTimer(withTimeInterval timeInterval: TimeInterval, queue: DispatchQueue?, fun: @escaping (AsyncTimer) -> Void) -> AsyncTimer {
         let timer = AsyncTimer(timeInterval: timeInterval, queue: queue, fun: fun)
         timer.stopped = false
         
@@ -31,7 +35,7 @@ class AsyncTimer {
             var time = DispatchTime.now()
 
             while !(timer?.stopped ?? true) {
-                fun()
+                timer?.fire()
                                 
                 let endTime = DispatchTime.now()
                 

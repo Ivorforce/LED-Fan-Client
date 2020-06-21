@@ -77,7 +77,7 @@ class VideoConnection: ObservableObject {
         }
         
         sendFPS.begin()
-        sendTimer = AsyncTimer.scheduledTimer(withTimeInterval: 0, queue: .lled(label: "packets")) {
+        sendTimer = AsyncTimer.scheduledTimer(withTimeInterval: 0, queue: .lled(label: "packets")) { _ in
             self.sendFPS.mark()
             
             let distribution = self.payloadsResource.pop()
