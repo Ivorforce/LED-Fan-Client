@@ -69,6 +69,10 @@ class ServerAssembly: ObservableObject {
         
     var artpoll: ArtpollTask!
     
+    var applyContrast = true {
+        willSet { objectWillChange.send() }
+    }
+    
     init() {
         self.artpoll = ArtpollTask { artpoll in
             guard !self.available.contains(where: { $0.urlString == artpoll.host }) else {
@@ -97,6 +101,13 @@ class ServerAssembly: ObservableObject {
             return [:]
         }
         
+        guard let filteredImage = applyContrast
+            ? image.colorFiltered(["inputContrast": 1.5])
+            : image
+        else {
+            return [:]
+        }
+        
         var dict: [Server: Data] = [:]
         for server in available {
             guard let screenMode = server.screenMode else {
@@ -104,7 +115,7 @@ class ServerAssembly: ObservableObject {
             }
             
             // Crop here when required
-            dict[server] = screenMode.pack(image: image)
+            dict[server] = screenMode.pack(image: filteredImage)
         }
         return dict
     }

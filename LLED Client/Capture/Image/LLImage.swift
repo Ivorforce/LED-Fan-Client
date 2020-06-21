@@ -12,6 +12,7 @@ protocol LLAnyImage {
     var size: NSSize { get }
     
     func resized(to: NSSize) -> LLAnyImage?
+    func colorFiltered(_ parameters: [String: Any]) -> LLAnyImage?
     
     var nsImageRepresentation: NSImage { get }
     var rgbRepresentation: Data { get }
@@ -28,6 +29,14 @@ class LLCGImage: LLAnyImage {
     
     func resized(to size: NSSize) -> LLAnyImage? {
         return image.resized(to: size, quality: .medium).map(LLCGImage.init)
+    }
+    
+    func colorFiltered(_ parameters: [String : Any]) -> LLAnyImage? {
+        let inputImage = CIImage(cgImage: image)
+        let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
+
+        let context = CIContext(options: nil)
+        return context.createCGImage(outputImage, from: outputImage.extent).map(LLCGImage.init)
     }
     
     var nsImageRepresentation: NSImage {
@@ -54,6 +63,21 @@ class LLNSImage: LLAnyImage {
         return image.resized(to: size).map(LLNSImage.init)
     }
     
+    func colorFiltered(_ parameters: [String : Any]) -> LLAnyImage? {
+        guard
+            let tiffdata = image.tiffRepresentation,
+            let bitmap = NSBitmapImageRep(data: tiffdata),
+            let inputImage = CIImage(bitmapImageRep: bitmap)
+        else {
+           return nil
+        }
+
+        let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
+
+        let context = CIContext(options: nil)
+        return context.createCGImage(outputImage, from: outputImage.extent).map(LLCGImage.init)
+    }
+
     var nsImageRepresentation: NSImage { image }
     
     var rgbRepresentation: Data { image.toRGB() }

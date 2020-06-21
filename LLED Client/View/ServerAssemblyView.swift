@@ -55,6 +55,10 @@ struct ServerAssemblyView: View {
     
     var body: some View {
         VStack {
+            Toggle(isOn: $assembly.applyContrast) {
+                Text("Apply Image Filter")
+            }
+            
             HStack {
                 Text("Servers").frame(width: 150, alignment: .leading)
                 Spacer()
