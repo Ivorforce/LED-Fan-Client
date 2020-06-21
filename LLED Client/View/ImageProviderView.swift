@@ -120,6 +120,10 @@ struct ImageProviderView: View {
             }
             
             methodView
+            
+            Toggle(isOn: $pool.applyContrast) {
+                Text("Apply Image Filter")
+            }
         }
     }
     
