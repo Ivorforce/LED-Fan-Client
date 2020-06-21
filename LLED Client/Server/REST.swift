@@ -22,10 +22,6 @@ class REST {
         })
         task.resume()
     }
-    
-    func getVariable(handler: @escaping (String?) -> Void) {
-        REST(baseURL.appendingPathComponent("get")).get(handler: handler)
-    }
 
     func post(_ parameters: [String: Any] = [:]) {
         var request = URLRequest(url: baseURL.appendingPathComponent("set"))
@@ -38,9 +34,5 @@ class REST {
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
         })
         task.resume()
-    }
-
-    func setVariable(_ parameters: [String: Any]) {
-        return REST(baseURL.appendingPathComponent("set")).post(parameters)
     }
 }

@@ -151,6 +151,14 @@ struct ServerView: View {
             }
             
             HStack {
+                Text("Brightness")
+                    .frame(width: 100)
+
+                Slider(value: $server.brightness, in: 0.1 ... 1)
+                    .disabled(!isConnected)
+            }
+
+            HStack {
                 Text("Speed")
                     .frame(width: 100)
 
@@ -162,7 +170,7 @@ struct ServerView: View {
                 }
                     .disabled(!isConnected)
             }
-            
+
             Text("WiFi")
                 .bold()
                 .frame(width: 100)
