@@ -29,20 +29,18 @@ class AsyncTimer {
             while !(timer?.stopped ?? true) {
                 fun()
                 
-                // Only keep it retained for the duration of the delay block
-                guard let timer = timer else {
-                    return
-                }
-                
-                guard timer.timeInterval > 0 else {
+                let requiredTimeInterval = (timer?.stopped ?? true) ? 0 : (timer?.timeInterval ?? 0)
+                guard requiredTimeInterval > 0 else {
+                    time = DispatchTime.now()
                     continue
                 }
                 
                 let endTime = DispatchTime.now()
                 let executionTime: UInt64 = endTime.uptimeNanoseconds - time.uptimeNanoseconds
-                let requiredDelay = timer.timeInterval - TimeInterval(executionTime) / 1000 / 1000 / 1000
+                let requiredDelay = requiredTimeInterval - TimeInterval(executionTime / 1000) / 1000 / 1000
+                print("\(requiredTimeInterval) -> \(requiredDelay)")
                 
-                if requiredDelay > 0 && !timer.stopped {
+                if requiredTimeInterval > 0 {
                     Thread.sleep(forTimeInterval: requiredDelay)
                 }
                 
