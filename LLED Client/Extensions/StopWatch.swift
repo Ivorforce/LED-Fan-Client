@@ -65,7 +65,7 @@ class StopWatch {
         dates.append(Date())
         
         if dates.count > limit {
-            dates = Array(dates[0 ..< limit])
+            dates = Array(dates[dates.count - limit ..< dates.count])
         }
     }
     
