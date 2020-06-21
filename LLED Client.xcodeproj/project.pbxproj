@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8009DFC2249FF820003639B5 /* ReliableDiseappear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009DFC1249FF820003639B5 /* ReliableDiseappear.swift */; };
 		803B6EF4249EA9240053C122 /* StopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6EF3249EA9240053C122 /* StopWatch.swift */; };
 		803B6EF6249FB5350053C122 /* RollingArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6EF5249FB5350053C122 /* RollingArray.swift */; };
 		803B6EF8249FD41D0053C122 /* LLEDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6EF7249FD41D0053C122 /* LLEDExtensions.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8009DFC1249FF820003639B5 /* ReliableDiseappear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReliableDiseappear.swift; sourceTree = "<group>"; };
 		803B6EF3249EA9240053C122 /* StopWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatch.swift; sourceTree = "<group>"; };
 		803B6EF5249FB5350053C122 /* RollingArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingArray.swift; sourceTree = "<group>"; };
 		803B6EF7249FD41D0053C122 /* LLEDExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLEDExtensions.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				8099F0BF249D2F590022FA49 /* TimedBool.swift */,
 				803B6EF5249FB5350053C122 /* RollingArray.swift */,
 				803B6EF7249FD41D0053C122 /* LLEDExtensions.swift */,
+				8009DFC1249FF820003639B5 /* ReliableDiseappear.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				80B76F2F248C23F800442A55 /* OpenGL.swift in Sources */,
 				80B76F37248C36D600442A55 /* MonitorScreenSimple.swift in Sources */,
 				80C309F824882C44006E218C /* VideoConnection.swift in Sources */,
+				8009DFC2249FF820003639B5 /* ReliableDiseappear.swift in Sources */,
 				80CE90A9249E74C30092C215 /* ImagePool.swift in Sources */,
 				80CE90A7249E73C30092C215 /* LLImage.swift in Sources */,
 				8099F0BB249CEDC70022FA49 /* ServerAssemblyView.swift in Sources */,

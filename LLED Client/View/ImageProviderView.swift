@@ -63,13 +63,17 @@ struct ImageCapturePreview: View {
     @ObservedObject var image: ImagePool.State
         
     init(pool: ImagePool) {
-        image = pool.observedState(info: .init(delay: .seconds(0.1), priority: 10, size: NSSize(width: 100, height: 100)))
+        image = ImagePool.State(
+            pool: pool,
+            info: .init(delay: .seconds(0.1), priority: 10, size: NSSize(width: 100, height: 100))
+        )
     }
-    
+        
     var body: some View {
         Image(nsImage: image.state?.nsImageRepresentation ?? NSImage())
             .resizable()
             .scaledToFit()
+            .whileActive { self.image.isObserving = $0 }
     }
 }
 

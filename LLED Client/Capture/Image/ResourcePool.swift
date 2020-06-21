@@ -77,17 +77,6 @@ class ResourcePool<Resource, ObserverInfo: ResourcePoolObserverInfo>: Observable
         
     }
     
-    func observedState(info: ObserverInfo) -> State {
-        let token = ObservationToken(pool: self)
-        let state = State(token: token)
-        
-        self._observers.append(.init(id: token.id, info: info) {
-            state.state = $0
-        })
-        self._flushTimer()
-        return state
-    }
-    
     func observe(info: ObserverInfo, fun: @escaping (Resource) -> Void) -> ObservationToken {
         let token = ObservationToken(pool: self)
         self._observers.append(.init(id: token.id, info: info, fun: fun))
@@ -125,10 +114,30 @@ extension ResourcePool {
                 self.objectWillChange.send()
             }
         } }
-        let token: ObservationToken
+        weak var pool: ResourcePool?
+        let info: ObserverInfo
+
+        var token: ObservationToken?
+
+        init(pool: ResourcePool, info: ObserverInfo) {
+            self.pool = pool
+            self.info = info
+        }
         
-        init(token: ObservationToken) {
-            self.token = token
+        var isObserving: Bool {
+            set { newValue ? startObserving() : stopObserving() }
+            get { token != nil }
+        }
+        
+        func startObserving() {
+            token = pool?.observe(info: info) {
+                self.state = $0
+            }
+        }
+        
+        func stopObserving() {
+            token?.invalidate()
+            token = nil
         }
     }
         
