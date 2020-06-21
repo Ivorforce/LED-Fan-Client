@@ -102,7 +102,7 @@ class ServerAssembly: ObservableObject {
         }
         
         guard let filteredImage = applyContrast
-            ? image.colorFiltered(["inputContrast": 1.5])
+            ? image.colorFiltered(["inputContrast": 1.3])
             : image
         else {
             return [:]
