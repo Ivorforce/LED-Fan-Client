@@ -14,7 +14,7 @@ class MonitorScreenAVFoundation : ImageCapture {
     override var name: String { "Capture Screen" }
     
     var captureSession: AVCaptureSession?
-        
+
     var imageSize = NSSize()
     
     override init() {
@@ -25,24 +25,52 @@ class MonitorScreenAVFoundation : ImageCapture {
         imageSize = desiredSize
         
         let session = AVCaptureSession()
-        session.sessionPreset = .low
+        session.beginConfiguration()
         
+        if session.canSetSessionPreset(.medium) {
+            session.sessionPreset = .medium
+        }
+        else {
+            print("Preset not supported!")
+        }
+        
+        // ------------ Input -----------------
+
         guard let input = AVCaptureScreenInput(displayID: CGMainDisplayID()) else {
             print("Failed to create AVF screen input!")
             return
         }
-        input.minFrameDuration = .init(seconds: delay * 1000, preferredTimescale: 1000)
+        input.minFrameDuration = CMTimeMake(value: 1, timescale: Int32(1.0 / delay))
         input.cropRect = desiredSize.centeredFit(bounds: NSScreen.main!.frame)
-//        input.scaleFactor = desiredSize.width / input.cropRect.width * 4
-        input.scaleFactor = 1
+        input.scaleFactor = desiredSize.width / input.cropRect.width * 4
+        
+        guard session.canAddInput(input) else {
+            print("Failed to add input!")
+            return
+        }
         session.addInput(input)
         
+        // ------------ Output -----------------
+        
         let output = AVCaptureVideoDataOutput()
-        output.alwaysDiscardsLateVideoFrames = false
-        output.setSampleBufferDelegate(self, queue: .main)
+        output.alwaysDiscardsLateVideoFrames = true
+        output.setSampleBufferDelegate(self, queue: .lled(label: "screencapture"))
+        output.videoSettings = [:]
+        
+        guard session.canAddOutput(output) else {
+            print("Failed to add output!")
+            return
+        }
         session.addOutput(output)
         
+        // ------------ Start -----------------
+
+        NotificationCenter.default.addObserver(forName: .AVCaptureSessionRuntimeError, object: nil, queue: nil) { notification in
+            print(notification)
+        }
         self.captureSession = session
+        session.commitConfiguration()
+        
         session.startRunning()
     }
     
@@ -53,6 +81,10 @@ class MonitorScreenAVFoundation : ImageCapture {
 }
 
 extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        print("Drop it like it's hot")
+    }
+    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("Failed to find image buffer!")
@@ -81,6 +113,12 @@ extension MonitorScreenAVFoundation: AVCaptureVideoDataOutputSampleBufferDelegat
             return
         }
 
-        _ = self.imageResource.push(LLCGImage(image: cgImage))
+        // TODO instead of resizing on the queue, retain
+        //  the buffer and release when used
+        guard let resized = LLCGImage(image: cgImage).resized(to: imageSize) else {
+            print("Failed to resize!")
+            return
+        }
+        _ = self.imageResource.push(resized)
     }
 }
