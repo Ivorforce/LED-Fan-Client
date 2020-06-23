@@ -91,9 +91,9 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         OpenGL.checkErrors(context: "Vertex Buffer Upload")
     }
     
-    func downloadTexture(textureID: GLuint, type: GLenum, textureSize: NSSize) {
+    func downloadTexture(textureID: GLuint, type: GLenum, textureSize: NSSize) -> LLAnyImage? {
         guard let oglContext = oglContext else {
-            return
+            return nil
         }
         
         let samplesPerPixel = 3
@@ -124,7 +124,7 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         }
         guard let shader = shader, shader.programID != nil else {
             print("No shader!")
-            return
+            return nil
         }
         
         if fbo == nil {
@@ -149,7 +149,7 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         
         guard shader.bind() else {
             print("Failed to bind shader!")
-            return
+            return nil
         }
 
         drawFullScreenRect()
@@ -170,7 +170,7 @@ class OpenGLScreen : ImageCapture, ObservableObject {
 
         guard let dataProvider = CGDataProvider(data: textureBuffer as NSData) else {
             print("Failed to init data provider")
-            return
+            return nil
         }
         let bitsPerComponent = 8
                 
@@ -188,9 +188,9 @@ class OpenGLScreen : ImageCapture, ObservableObject {
             intent: .defaultIntent
         ) else {
             print("Failed to create image!")
-            return
+            return nil
         }
         
-        imageResource.push(LLCGImage(image: cgImage))
+        return LLCGImage(image: cgImage)
     }
 }

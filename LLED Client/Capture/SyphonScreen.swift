@@ -62,7 +62,9 @@ class SyphonScreen : OpenGLScreen {
             return
         }
         
-        downloadTexture(textureID: frame.textureName, type: GLenum(GL_TEXTURE_RECTANGLE), textureSize: frame.textureSize)
+        imageResource.offer {
+            downloadTexture(textureID: frame.textureName, type: GLenum(GL_TEXTURE_RECTANGLE), textureSize: frame.textureSize)
+        }
     }
     
     override var name: String { "Capture Syphon" }
