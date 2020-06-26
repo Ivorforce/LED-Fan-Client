@@ -12,26 +12,30 @@ import OpenGL
 import GLKit
 
 @available(*, deprecated, message: "OpenGL deprecated")
-class SyphonScreen : OpenGLScreen {
+class SyphonScreen : ImageCapture, ObservableObject {
     var captureID: String = "" {
         didSet {
             objectWillChange.send()
-            _flushCapture()
         }
     }
         
     internal var _currentDescription: [String: Any]?
     
     var syphon: SyphonClient?
+    var downloader: OpenGLDownloader?
     
-    override func stop() {
-        super.stop()
-        
-        syphon?.stop()
-        syphon = nil
+    override init() {
+        if let oglContext = OpenGLDownloader.createOpenGLContext(attributes: OpenGLDownloader.defaultPixelFormatAttributes()) {
+            downloader = OpenGLDownloader(context: oglContext)
+        }
+
+        super.init()
     }
     
-    func _flushCapture() {
+    override func start(delay: TimeInterval, desiredSize: NSSize) {
+        // Clean up, then re-setup
+        stop()
+
         guard let description = SyphonServerDirectory.shared()?.server(withID: captureID) else {
             stop()
             return
@@ -41,29 +45,33 @@ class SyphonScreen : OpenGLScreen {
         guard currentCaptureID != captureID else {
             return // No change
         }
-
-        // Clean up, then re-setup
-        stop()
         
-        guard let oglContext = Self.createOpenGLContext(attributes: Self.defaultPixelFormatAttributes()) else {
-            return // Can't render.....
+        guard let downloader = downloader else {
+            print("Failed to start! Need error message support lol")
+            return
         }
-        
-        self.oglContext = oglContext
-        oglContext.makeCurrentContext()
-        
-        syphon = SyphonClient(serverDescription: description, context: oglContext.cglContextObj, options: nil) { syphon in
+        syphon = SyphonClient(serverDescription: description, context: downloader.oglContext.cglContextObj, options: nil) { syphon in
             self.downloadCurrentTexture()
         }
     }
+    
+    override func stop() {
+        super.stop()
+        
+        syphon?.stop()
+        syphon = nil
+    }
             
     func downloadCurrentTexture() {
-        guard let syphon = syphon, let frame = syphon.newFrameImage() else {
+        guard let syphon = syphon, let frame = syphon.newFrameImage(), let downloader = downloader else {
             return
         }
         
         imageResource.offer {
-            downloadTexture(textureID: frame.textureName, textureSize: frame.textureSize)
+            guard let image = downloader.downloadTexture(textureID: frame.textureName, textureSize: frame.textureSize) else {
+                return nil
+            }
+            return LLCGImage(image: image)
         }
     }
     

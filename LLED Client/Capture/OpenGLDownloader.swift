@@ -1,15 +1,12 @@
 //
-//  OpenGLScreen.swift
+//  OpenGLDownloader.swift
 //  LLED Client
 //
-//  Created by Lukas Tenbrink on 06.06.20.
+//  Created by Lukas Tenbrink on 26.06.20.
 //  Copyright © 2020 Lukas Tenbrink. All rights reserved.
 //
 
 import Foundation
-
-import OpenGL
-import GLKit
 
 @available(*, deprecated, message: "OpenGL deprecated")
 class DefaultShader: Shader {
@@ -58,19 +55,13 @@ class DefaultShader: Shader {
 }
 
 @available(*, deprecated, message: "OpenGL deprecated")
-class OpenGLScreen : ImageCapture, ObservableObject {    
-    var oglContext: NSOpenGLContext?
+class OpenGLDownloader {
+    var oglContext: NSOpenGLContext
 
     var shader: DefaultShader?
     var fbo: Framebuffer?
 
     var textureBuffer: Data = Data()
-    
-    override func stop() {
-        oglContext = nil
-        shader = nil
-        fbo = nil
-    }
     
     static func defaultPixelFormatAttributes() -> [Int] {
         return [
@@ -96,12 +87,12 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         
         return oglContext
     }
+
+    init(context: NSOpenGLContext) {
+        self.oglContext = context
+    }
     
-    func downloadTexture(textureID: GLuint, textureSize: NSSize) -> LLAnyImage? {
-        guard let oglContext = oglContext else {
-            return nil
-        }
-        
+    func downloadTexture(textureID: GLuint, textureSize: NSSize) -> CGImage? {
         let samplesPerPixel = 3
         let width = Int(textureSize.width)
         let height = Int(textureSize.height)
@@ -186,7 +177,7 @@ class OpenGLScreen : ImageCapture, ObservableObject {
             print("Failed to create image!")
             return nil
         }
-        
-        return LLCGImage(image: cgImage)
+
+        return cgImage
     }
 }
