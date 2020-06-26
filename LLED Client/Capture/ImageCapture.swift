@@ -22,7 +22,9 @@ class ActiveImageCapture: ImageCapture {
     
     override func start(delay: TimeInterval, desiredSize: NSSize) {
         timer = AsyncTimer.scheduledTimer(withTimeInterval: delay, queue: .lled(label: "imagecapture")) { _ in
-            let image = self.grab()
+            guard let image = self.grab() else {
+                return
+            }
             self.imageResource.push(image)
         }
     }
@@ -32,5 +34,5 @@ class ActiveImageCapture: ImageCapture {
         timer = nil
     }
     
-    func grab() -> LLAnyImage { return LLNSImage.none }
+    func grab() -> LLAnyImage? { return nil }
 }

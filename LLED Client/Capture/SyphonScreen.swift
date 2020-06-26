@@ -12,7 +12,7 @@ import OpenGL
 import GLKit
 
 @available(*, deprecated, message: "OpenGL deprecated")
-class SyphonScreen : ImageCapture, ObservableObject {
+class SyphonScreen : ActiveImageCapture, ObservableObject {
     var captureID: String = "" {
         didSet {
             objectWillChange.send()
@@ -24,6 +24,8 @@ class SyphonScreen : ImageCapture, ObservableObject {
     var syphon: SyphonClient?
     var downloader: OpenGLDownloader?
     
+    let changeResource = BufferedResource<Bool>(limit: 1)
+    
     override init() {
         if let oglContext = OpenGLDownloader.createOpenGLContext(attributes: OpenGLDownloader.defaultPixelFormatAttributes()) {
             downloader = OpenGLDownloader(context: oglContext)
@@ -34,7 +36,7 @@ class SyphonScreen : ImageCapture, ObservableObject {
     
     override func start(delay: TimeInterval, desiredSize: NSSize) {
         // Clean up, then re-setup
-        stop()
+        super.start(delay: delay, desiredSize: desiredSize)
 
         guard let description = SyphonServerDirectory.shared()?.server(withID: captureID) else {
             stop()
@@ -51,8 +53,23 @@ class SyphonScreen : ImageCapture, ObservableObject {
             return
         }
         syphon = SyphonClient(serverDescription: description, context: downloader.oglContext.cglContextObj, options: nil) { syphon in
-            self.downloadCurrentTexture()
+            self.changeResource.offer { true }
         }
+    }
+    
+    override func grab() -> LLAnyImage? {
+        guard let syphon = syphon, let frame = syphon.newFrameImage(), let downloader = downloader else {
+            return nil
+        }
+
+        guard self.changeResource.pop(timeout: .now() + .seconds(1)) != nil else {
+            return nil
+        }
+        
+        guard let image = downloader.downloadTexture(textureID: frame.textureName, textureSize: frame.textureSize) else {
+            return nil
+        }
+        return LLCGImage(image: image)
     }
     
     override func stop() {
@@ -60,19 +77,6 @@ class SyphonScreen : ImageCapture, ObservableObject {
         
         syphon?.stop()
         syphon = nil
-    }
-            
-    func downloadCurrentTexture() {
-        guard let syphon = syphon, let frame = syphon.newFrameImage(), let downloader = downloader else {
-            return
-        }
-        
-        imageResource.offer {
-            guard let image = downloader.downloadTexture(textureID: frame.textureName, textureSize: frame.textureSize) else {
-                return nil
-            }
-            return LLCGImage(image: image)
-        }
     }
     
     override var name: String { "Capture Syphon" }
