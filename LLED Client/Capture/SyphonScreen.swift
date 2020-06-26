@@ -63,7 +63,7 @@ class SyphonScreen : OpenGLScreen {
         }
         
         imageResource.offer {
-            downloadTexture(textureID: frame.textureName, type: GLenum(GL_TEXTURE_RECTANGLE), textureSize: frame.textureSize)
+            downloadTexture(textureID: frame.textureName, textureSize: frame.textureSize)
         }
     }
     

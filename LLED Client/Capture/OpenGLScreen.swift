@@ -12,13 +12,57 @@ import OpenGL
 import GLKit
 
 @available(*, deprecated, message: "OpenGL deprecated")
+class DefaultShader: Shader {
+    var _position: Attribute = .none
+    var _texCoord: Attribute = .none
+
+    var vertexBuffer = DrawVertexBuffer()
+
+    var guImage: GLint = 0
+
+    override func compile(vertex: String, fragment: String) throws {
+        try super.compile(vertex: vertex, fragment: fragment)
+        let floatSize = GLsizei(MemoryLayout<GLfloat>.size)
+        
+        _position = find(attribute: "position")
+        glEnableVertexAttribArray(GLuint(_position.rawValue))
+        glVertexAttribPointer(GLuint(_position.rawValue), 2, GLenum(GL_FLOAT), GLboolean(GL_FALSE), floatSize * 4, nil)
+        OpenGL.checkErrors(context: "Vertex Attrib Array")
+
+        _texCoord = find(attribute: "texCoord")
+        glEnableVertexAttribArray(GLuint(_texCoord.rawValue))
+        glVertexAttribPointer(GLuint(_texCoord.rawValue), 2, GLenum(GL_FLOAT), GLboolean(GL_FALSE), floatSize * 4, UnsafeRawPointer(bitPattern: Int(floatSize) * 2))
+        OpenGL.checkErrors(context: "Vertex Attrib Array")
+
+        guImage = find(uniform: "image").rawValue
+
+        try checkUniformError()
+    }
+    
+    @discardableResult
+    func drawFullScreenRect(texture: GLuint, textureSize: NSSize) -> Bool {
+        glBindTexture(GLenum(GL_TEXTURE_RECTANGLE), texture);
+        glUniform1i(guImage, 0);
+
+        guard bind() else {
+            print("Failed to bind shader!")
+            return false
+        }
+
+        vertexBuffer.textureSize = textureSize
+        vertexBuffer.bind()
+        glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, 4);
+
+        return true
+    }
+}
+
+@available(*, deprecated, message: "OpenGL deprecated")
 class OpenGLScreen : ImageCapture, ObservableObject {    
     var oglContext: NSOpenGLContext?
 
     var shader: DefaultShader?
     var fbo: Framebuffer?
-    var vertexArrayObject: GLuint = 0
-    var vertexBuffer: GLuint = 0
 
     var textureBuffer: Data = Data()
     
@@ -26,19 +70,14 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         oglContext = nil
         shader = nil
         fbo = nil
-        
-        vertexArrayObject = 0
-        vertexBuffer = 0
     }
     
     static func defaultPixelFormatAttributes() -> [Int] {
         return [
-            NSOpenGLPFAOpenGLProfile, .init(NSOpenGLProfileVersion3_2Core),
-            NSOpenGLPFAColorSize, 24,
-            NSOpenGLPFAAlphaSize, 8,
             NSOpenGLPFADoubleBuffer,
-            NSOpenGLPFAAccelerated,
-            NSOpenGLPFANoRecovery
+            NSOpenGLPFADepthSize, 24,
+            NSOpenGLPFAOpenGLProfile,
+            NSOpenGLProfileVersion3_2Core
         ]
     }
     
@@ -58,40 +97,7 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         return oglContext
     }
     
-    func drawFullScreenRect() {
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer);
-        OpenGL.checkErrors(context: "Bind Vertex Buffer")
-        glDrawArrays(GLenum(GL_TRIANGLE_FAN), 0, 4);
-    }
-    
-    func setupVertexBuffer() {
-        if (vertexArrayObject > 0) {
-            glDeleteVertexArrays(1, &vertexArrayObject);
-        }
-        if (vertexBuffer > 0) {
-            glDeleteBuffers(1, &vertexBuffer);
-        }
-        OpenGL.checkErrors(context: "Vertex Buffer Cleanup")
-        
-        glGenVertexArrays(1, &vertexArrayObject);
-        glBindVertexArray(vertexArrayObject);
-        
-        glGenBuffers(1, &vertexBuffer);
-        OpenGL.checkErrors(context: "Vertex Buffer Generation")
-        
-        let vertexData: [GLfloat] = [
-            -1, -1,
-            -1,  1,
-            1,  1,
-            1, -1,
-        ]
-
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)
-        glBufferData(GLenum(GL_ARRAY_BUFFER), 4 * 8 * MemoryLayout<GLfloat>.size, vertexData, GLenum(GL_STATIC_DRAW))
-        OpenGL.checkErrors(context: "Vertex Buffer Upload")
-    }
-    
-    func downloadTexture(textureID: GLuint, type: GLenum, textureSize: NSSize) -> LLAnyImage? {
+    func downloadTexture(textureID: GLuint, textureSize: NSSize) -> LLAnyImage? {
         guard let oglContext = oglContext else {
             return nil
         }
@@ -108,11 +114,7 @@ class OpenGLScreen : ImageCapture, ObservableObject {
 
         oglContext.makeCurrentContext()
         OpenGL.checkErrors(context: "Enter Context")
-        
-        if vertexBuffer <= 0 {
-            setupVertexBuffer()
-        }
-        
+                
         if shader == nil {
             shader = DefaultShader()
             do {
@@ -144,15 +146,9 @@ class OpenGLScreen : ImageCapture, ObservableObject {
         glViewport(0, 0, GLsizei(width), GLsizei(height));
         OpenGL.checkErrors(context: "Viewport")
 
-        glBindTexture(type, textureID);
-        glUniform1i(shader.guImage, 0);
-        
-        guard shader.bind() else {
-            print("Failed to bind shader!")
+        guard shader.drawFullScreenRect(texture: textureID, textureSize: textureSize) else {
             return nil
         }
-
-        drawFullScreenRect()
 
         glBindTexture(GLenum(GL_TEXTURE_RECTANGLE), 0)
         glPixelStorei(GLenum(GL_PACK_ALIGNMENT), 1)

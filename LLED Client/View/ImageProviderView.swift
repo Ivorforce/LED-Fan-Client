@@ -8,56 +8,6 @@
 
 import SwiftUI
 
-struct CaptureSyphonView: View {
-    @ObservedObject var syphon: SyphonScreen
-    
-    static func syphonableName(dict: [String: Any]) -> String {
-        if let name = dict[SyphonServerDescriptionNameKey] as? String, !name.isEmpty {
-            return name
-        }
-        if let appName = dict[SyphonServerDescriptionAppNameKey] as? String, !appName.isEmpty {
-            return appName
-        }
-        
-        return dict[SyphonServerDescriptionUUIDKey] as? String ?? "Unknown Syphonable"
-    }
-    
-    var body: some View {
-        guard let servers = SyphonServerDirectory.shared()?.servers as? [[String: Any]] else {
-            return AnyView(Text("Failed to connect to Syphon"))
-        }
-        
-        guard !servers.isEmpty else {
-            return AnyView(Text("No servers found!"))
-        }
-        
-        var serverDict: [String: [String: Any]] = [:]
-        for server in servers {
-            if let serverID = server[SyphonServerDescriptionUUIDKey] as? String {
-                serverDict[serverID] = server
-            }
-        }
-        
-        let picker = Picker(selection: $syphon.captureID, label:
-            Text("Syphonable").frame(width: 150, alignment: .leading)
-        ) {
-            ForEach(serverDict.keys.sorted(), id: \.self) { serverID in
-                HStack {
-                    (serverDict[serverID]?[SyphonServerDescriptionIconKey] as? NSImage).map {
-                        Image(nsImage: $0)
-                            .resizable()
-                            .frame(width: 18, height: 18)
-                    }
-                    Text(Self.syphonableName(dict: serverDict[serverID]!))
-                }
-                    .tag(serverID)
-            }
-        }
-        
-        return AnyView(picker)
-    }
-}
-
 struct ImageCapturePreview: View {
     // TODO Observation never stops
     @ObservedObject var image: ImagePool.State

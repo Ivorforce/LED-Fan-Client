@@ -133,26 +133,3 @@ extension Shader {
         }
     }
 }
-
-@objc
-class DefaultShader: Shader {
-    var _position: Attribute = .none
-
-    @objc
-    var guImage: GLint = 0
-
-    @objc
-    override func compile(vertex: String, fragment: String) throws {
-        try super.compile(vertex: vertex, fragment: fragment)
-        
-        _position = find(attribute: "position")
-        glEnableVertexAttribArray(GLuint(_position.rawValue))
-        OpenGL.checkErrors(context: "Vertex Attrib Array")
-        glVertexAttribPointer(GLuint(_position.rawValue), 2, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<GLfloat>.size * 2), nil)
-        try checkAttributeError()
-
-        guImage = find(uniform: "image").rawValue
-
-        try checkUniformError()
-    }
-}
