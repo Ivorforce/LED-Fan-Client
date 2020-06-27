@@ -1,12 +1,11 @@
 #version 150
 
+uniform sampler2DRect tex;
 in vec2 fragTexCoord;
 
-uniform sampler2DRect image;
+out vec4 color;
 
-out vec4 fragColour;
-
-void main(void)
-{
-    fragColour = texture(image, fragTexCoord);
+void main() {
+    color = texture(tex, fragTexCoord);
+    color.r = 1;
 }

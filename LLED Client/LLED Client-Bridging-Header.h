@@ -7,7 +7,7 @@
 #import "NSImage+LLED.h"
 
 #import "OpenGL+ObjC.h"
-
 #import <OpenGL/gl.h>
 
+#import "OpenGLDownloader.h"
 #import "FrameReader.h"

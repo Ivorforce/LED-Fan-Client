@@ -27,10 +27,8 @@ class SyphonScreen : ActiveImageCapture, ObservableObject {
     let changeResource = BufferedResource<Bool>(limit: 1)
     
     override init() {
-        if let oglContext = OpenGLDownloader.createOpenGLContext(attributes: OpenGLDownloader.defaultPixelFormatAttributes()) {
-            downloader = OpenGLDownloader(context: oglContext)
-        }
-
+        downloader = OpenGLDownloader()
+        downloader?.prepareOpenGL()
         super.init()
     }
     
@@ -52,7 +50,7 @@ class SyphonScreen : ActiveImageCapture, ObservableObject {
             print("Failed to start! Need error message support lol")
             return
         }
-        syphon = SyphonClient(serverDescription: description, context: downloader.oglContext.cglContextObj, options: nil) { syphon in
+        syphon = SyphonClient(serverDescription: description, context: downloader.openGLContext.cglContextObj, options: nil) { syphon in
             self.changeResource.offer { true }
         }
     }
@@ -66,7 +64,8 @@ class SyphonScreen : ActiveImageCapture, ObservableObject {
             return nil
         }
         
-        guard let image = downloader.downloadTexture(textureID: frame.textureName, textureSize: frame.textureSize) else {
+        downloader.image = frame
+        guard let image = downloader.downloadImage()?.takeUnretainedValue() else {
             return nil
         }
         return LLCGImage(image: image)

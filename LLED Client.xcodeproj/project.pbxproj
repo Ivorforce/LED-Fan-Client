@@ -18,7 +18,7 @@
 		804BF628248AA21800528016 /* Syphon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 804BF625248AA20700528016 /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804BF62A248ADFDA00528016 /* Syphon+LLED.swift */; };
 		8056FE7A24A638BF00AE6C1E /* CaptureSyphonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE7924A638BF00AE6C1E /* CaptureSyphonView.swift */; };
-		8056FE8124A6403000AE6C1E /* OpenGLDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE8024A6403000AE6C1E /* OpenGLDownloader.swift */; };
+		8056FE8424A66AD900AE6C1E /* OpenGLDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE8324A66AD900AE6C1E /* OpenGLDownloader.m */; };
 		8099F0AF249CCDAA0022FA49 /* AssemblyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0AE249CCDAA0022FA49 /* AssemblyView.swift */; };
 		8099F0B1249CCEBE0022FA49 /* ResourcePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */; };
 		8099F0B3249CD9FB0022FA49 /* AsyncTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */; };
@@ -82,7 +82,8 @@
 		804BF625248AA20700528016 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		804BF62A248ADFDA00528016 /* Syphon+LLED.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Syphon+LLED.swift"; sourceTree = "<group>"; };
 		8056FE7924A638BF00AE6C1E /* CaptureSyphonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSyphonView.swift; sourceTree = "<group>"; };
-		8056FE8024A6403000AE6C1E /* OpenGLDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGLDownloader.swift; sourceTree = "<group>"; };
+		8056FE8224A66AD900AE6C1E /* OpenGLDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLDownloader.h; sourceTree = "<group>"; };
+		8056FE8324A66AD900AE6C1E /* OpenGLDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLDownloader.m; sourceTree = "<group>"; };
 		8099F0AE249CCDAA0022FA49 /* AssemblyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyView.swift; sourceTree = "<group>"; };
 		8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePool.swift; sourceTree = "<group>"; };
 		8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTimer.swift; sourceTree = "<group>"; };
@@ -167,8 +168,8 @@
 		80B76F25248BD61B00442A55 /* Shader */ = {
 			isa = PBXGroup;
 			children = (
-				80B76F26248BD64600442A55 /* default.fs */,
 				80B76F28248BD64F00442A55 /* default.vs */,
+				80B76F26248BD64600442A55 /* default.fs */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -230,13 +231,13 @@
 				80B76F34248C361B00442A55 /* ImageCapture.swift */,
 				80B76F36248C36D600442A55 /* MonitorScreenSimple.swift */,
 				80B76F3F2492729900442A55 /* MonitorScreenAVFoundation.swift */,
-				8056FE8024A6403000AE6C1E /* OpenGLDownloader.swift */,
+				8056FE8224A66AD900AE6C1E /* OpenGLDownloader.h */,
+				8056FE8324A66AD900AE6C1E /* OpenGLDownloader.m */,
 				80B76F2C248C1E7D00442A55 /* SyphonScreen.swift */,
 				80B76F3A248D42FF00442A55 /* FrameReader.h */,
 				80B76F3B248D42FF00442A55 /* FrameReader.m */,
 				80C30A0C24895758006E218C /* NSImage+LLED.h */,
 				804BF622248A4D9100528016 /* NSImage+LLED.m */,
-				80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */,
 			);
 			path = Capture;
 			sourceTree = "<group>";
@@ -278,6 +279,7 @@
 				8009DFC524A007CB003639B5 /* Util */,
 				80C309FB24882E90006E218C /* Extensions */,
 				80B76F25248BD61B00442A55 /* Shader */,
+				80C30A0424883B5E006E218C /* LLED Client-Bridging-Header.h */,
 				80E68F282485831700F47DB1 /* Main.storyboard */,
 				80E68F232485831700F47DB1 /* Assets.xcassets */,
 				80E68F2B2485831700F47DB1 /* Info.plist */,
@@ -377,11 +379,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				80C309F624882C32006E218C /* ScreenMode.swift in Sources */,
+				8056FE8424A66AD900AE6C1E /* OpenGLDownloader.m in Sources */,
 				8099F0B5249CDE100022FA49 /* Assembly.swift in Sources */,
 				80B76F2F248C23F800442A55 /* OpenGL.swift in Sources */,
 				80B76F37248C36D600442A55 /* MonitorScreenSimple.swift in Sources */,
 				8032F29824A2736300D67A1F /* OpenGL+VertexBuffer.swift in Sources */,
-				8056FE8124A6403000AE6C1E /* OpenGLDownloader.swift in Sources */,
 				80C309F824882C44006E218C /* VideoConnection.swift in Sources */,
 				8056FE7A24A638BF00AE6C1E /* CaptureSyphonView.swift in Sources */,
 				8009DFC2249FF820003639B5 /* ReliableDiseappear.swift in Sources */,
@@ -571,7 +573,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "ivorius.LLED-Client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "LLED Client/Capture/LLED Client-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "LLED Client/LLED Client-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -602,7 +604,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "ivorius.LLED-Client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "LLED Client/Capture/LLED Client-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "LLED Client/LLED Client-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

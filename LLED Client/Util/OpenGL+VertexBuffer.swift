@@ -26,25 +26,30 @@ class VertexBuffer {
             return
         }
         
-        create()
+        glBindVertexArray(vertexArrayObject);
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)
+        glBufferData(GLenum(GL_ARRAY_BUFFER), contents.count * MemoryLayout<GLfloat>.size, contents, GLenum(GL_STATIC_DRAW))
+        OpenGL.checkErrors(context: "Vertex Buffer Upload")
     }
     
     func bind() {
+        create()
+        glBindVertexArray(vertexArrayObject);
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer);
     }
     
     func create() {
-        delete()
-                
+        guard vertexArrayObject <= 0 || vertexBuffer <= 0 else {
+            return
+        }
+
         glGenVertexArrays(1, &vertexArrayObject);
         glBindVertexArray(vertexArrayObject);
         
         glGenBuffers(1, &vertexBuffer);
         OpenGL.checkErrors(context: "Vertex Buffer Generation")
 
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)
-        glBufferData(GLenum(GL_ARRAY_BUFFER), contents.count * MemoryLayout<GLfloat>.size, contents, GLenum(GL_STATIC_DRAW))
-        OpenGL.checkErrors(context: "Vertex Buffer Upload")
+        _update()
     }
     
     func delete() {
@@ -72,7 +77,6 @@ class DrawVertexBuffer: VertexBuffer {
             if oldValue != textureSize {
                 _flushContents()
             }
-
         }
     }
     
@@ -86,8 +90,8 @@ class DrawVertexBuffer: VertexBuffer {
         contents = [
             -width, -height, 0.0,      0.0,
             -width,  height, 0.0,      texHeight,
-             width, -height, texWidth, 0.0,
-             width,  height, texWidth, texHeight
+             width,  height, texWidth, texHeight,
+             width, -height, texWidth, 0.0
         ]
     }
 }
