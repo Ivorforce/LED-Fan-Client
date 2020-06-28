@@ -34,6 +34,7 @@ class ArtpollTask: NSObject, ObservableObject, GCDAsyncUdpSocketDelegate, GCDAsy
             try socket.beginReceiving()
             try socket.enableBroadcast(true)
         } catch {
+            // TODO Address may be in use (e.g. MadMapper), display an error message or resolve
             print(error)
             socket.close()
             return
@@ -81,8 +82,8 @@ class ServerAssembly: ObservableObject {
     
     var desiredSize: NSSize {
         return NSSize(
-            width: available.compactMap(\.screenMode).map(\.requiredSize.width).max() ?? 100,
-            height: available.compactMap(\.screenMode).map(\.requiredSize.height).max() ?? 100
+            width: available.compactMap(\.screenMode).map(\.requiredSize.width).max() ?? 0,
+            height: available.compactMap(\.screenMode).map(\.requiredSize.height).max() ?? 0
         )
     }
     
