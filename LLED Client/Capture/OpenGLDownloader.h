@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OpenGLDownloader : NSObject
 @property (readwrite, strong) SyphonImage *image;
-@property (readonly) NSSize renderSize;
+@property NSSize renderSize;
 @property (readonly) NSError *error;
 
 @property NSOpenGLContext *openGLContext;

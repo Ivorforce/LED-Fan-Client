@@ -14,6 +14,8 @@
 @property (readwrite, retain) NSError *error;
 
 @property NSMutableData *textureData;
+
+- (void)setupContext;
 @end
 
 @implementation OpenGLDownloader {
@@ -36,12 +38,13 @@
 {
     self = [super init];
     if (self) {
-        [self awakeFromNib];
+        [self setupContext];
+        [self setRenderSize:NSMakeSize(100, 100)];
     }
     return self;
 }
 
-- (void)awakeFromNib
+- (void)setupContext
 {
     NSOpenGLPixelFormatAttribute attrs[] =
     {
@@ -62,7 +65,7 @@
 
     self.needsReshape = YES;
 
-    _imageSize = NSMakeSize(0, 0);
+    _imageSize = NSZeroSize;
 }
 
 - (void)dealloc
@@ -130,14 +133,11 @@
     }
 }
 
-- (void)reshape
-{
-    self.needsReshape = YES;
-}
-
-- (NSSize)renderSize
-{
-    return self.image.textureSize;
+- (void)setRenderSize:(NSSize)renderSize {
+    if (!NSEqualSizes(_renderSize, renderSize)) {
+        _renderSize = renderSize;
+        _needsReshape = true;
+    }
 }
 
 - (CGImageRef)downloadImage
@@ -146,7 +146,6 @@
     SyphonImage *image = self.image;
 
     BOOL changed = self.needsReshape || !NSEqualSizes(_imageSize, image.textureSize);
-    self.needsReshape = changed;
 
     if (self.needsReshape)
     {
@@ -188,7 +187,7 @@
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
-        [framebuffer setSize:_imageSize];
+        [framebuffer setSize:_renderSize];
     }
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -202,14 +201,14 @@
         [framebuffer bind];
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         
-        if (_textureData.length != 3 * _imageSize.width * _imageSize.height) {
-            _textureData = [[NSMutableData alloc] initWithLength:3 * _imageSize.width * _imageSize.height];
+        if (_textureData.length != 3 * _renderSize.width * _renderSize.height) {
+            _textureData = [[NSMutableData alloc] initWithLength:3 * _renderSize.width * _renderSize.height];
         }
-        glReadPixels(0, 0, _imageSize.width, _imageSize.height, GL_RGB, GL_UNSIGNED_BYTE, [_textureData mutableBytes]);
+        glReadPixels(0, 0, _renderSize.width, _renderSize.height, GL_RGB, GL_UNSIGNED_BYTE, [_textureData mutableBytes]);
         [Framebuffer unbind];
 
         CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((CFDataRef) _textureData);
-        CGImageRef ref = CGImageCreate(_imageSize.width, _imageSize.height, 8, 3 * 8, 3 * _imageSize.width, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrderDefault, dataProvider, nil, true, kCGRenderingIntentDefault);
+        CGImageRef ref = CGImageCreate(_renderSize.width, _renderSize.height, 8, 3 * 8, 3 * _renderSize.width, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrderDefault, dataProvider, nil, true, kCGRenderingIntentDefault);
         
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_RECTANGLE, 0);
@@ -219,24 +218,6 @@
     }
     [[self openGLContext] flushBuffer];
     return nil;
-}
-
-- (GLuint)compileShader:(const char *)source ofType:(GLenum)type
-{
-    GLuint shader = glCreateShader(type);
-
-    glShaderSource(shader, 1, &source, NULL);
-    glCompileShader(shader);
-
-    GLint status;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-
-    if (status == GL_FALSE)
-    {
-        glDeleteShader(shader);
-        return 0;
-    }
-    return shader;
 }
 
 @end

@@ -65,6 +65,7 @@ class SyphonScreen : ActiveImageCapture, ObservableObject {
         }
         
         downloader.image = frame
+        downloader.renderSize = frame.textureSize // Download original size
         guard let image = downloader.downloadImage()?.takeUnretainedValue() else {
             return nil
         }
