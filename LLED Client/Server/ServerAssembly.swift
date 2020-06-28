@@ -103,7 +103,7 @@ class ServerAssembly: ObservableObject {
             print("Failed to resize image for assembly!")
             return [:]
         }
-                
+
         var dict: [Server: Data] = [:]
         for server in available {
             guard let screenMode = server.screenMode else {

@@ -36,19 +36,44 @@ extension NSImage {
         guard let bitmapRep = NSBitmapImageRep(
             bitmapDataPlanes: nil, pixelsWide: Int(newSize.width), pixelsHigh: Int(newSize.height),
             bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
-            colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0
-        ) else {
+            colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0),
+            let context = NSGraphicsContext(bitmapImageRep: bitmapRep)
+        else {
+            print("Unable to render")
             return nil
         }
         
         bitmapRep.size = newSize
         
-        NSGraphicsContext.saveGraphicsState()
-        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
+        NSGraphicsContext.current = context
         draw(in: NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height), from: .zero, operation: .copy, fraction: 1.0)
-        NSGraphicsContext.restoreGraphicsState()
 
         let resizedImage = NSImage(size: newSize)
+        resizedImage.addRepresentation(bitmapRep)
+
+        return resizedImage
+    }
+    
+    func renderedAsRGB(size: NSSize? = nil) -> NSImage? {
+        let size = size ?? self.size
+        let width = Int(size.width)
+        let height = Int(size.height)
+        
+        // No-Alpha not supported...... lol
+        guard let bitmapRep = NSBitmapImageRep(
+            bitmapDataPlanes: nil, pixelsWide: width, pixelsHigh: height,
+            bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+            colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0),
+            let context = NSGraphicsContext(bitmapImageRep: bitmapRep)
+        else {
+            print("Unable to render")
+            return nil
+        }
+        
+        NSGraphicsContext.current = context
+        draw(in: NSRect(x: 0, y: 0, width: width, height: height), from: .zero, operation: .copy, fraction: 1.0)
+
+        let resizedImage = NSImage(size: size)
         resizedImage.addRepresentation(bitmapRep)
 
         return resizedImage

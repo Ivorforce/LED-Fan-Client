@@ -19,7 +19,14 @@ class ImageScreen : ActiveImageCapture, ObservableObject {
     ]
 
     var image: NSImage? {
-        didSet { objectWillChange.send() }
+        set { rawImage = newValue?.renderedAsRGB() }
+        get { rawImage }
+    }
+     
+    var rawImage: NSImage? {
+        didSet {
+            objectWillChange.send()
+        }
     }
      
     var demoImage: String? {
@@ -30,7 +37,8 @@ class ImageScreen : ActiveImageCapture, ObservableObject {
     }
     
     override init() {
-        (demoImage, image) = Self.demoImages.first!
+        let (name, img) = Self.demoImages.first!
+        (demoImage, rawImage) = (name, img.renderedAsRGB())
     }
     
     override func grab() -> LLAnyImage? {

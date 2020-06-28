@@ -62,7 +62,7 @@ class LLNSImage: LLAnyImage {
     
     var size: NSSize { image.size }
     
-    func resized(to: NSSize) -> LLAnyImage? {
+    func resized(to size: NSSize) -> LLAnyImage? {
         return image.resized(to: size).map(LLNSImage.init)
     }
     
