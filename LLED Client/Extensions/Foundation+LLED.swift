@@ -151,3 +151,9 @@ extension CGImage {
         return context.makeImage()
     }
 }
+
+extension NSSize {
+    var simpleDescription: String {
+        "\(Int(width))x\(Int(height))"
+    }
+}

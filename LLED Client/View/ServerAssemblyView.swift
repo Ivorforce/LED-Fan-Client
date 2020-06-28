@@ -48,6 +48,8 @@ struct ServerAssemblyView: View {
     @ObservedObject var assembly: ServerAssembly
     @ObservedObject var scan: ArtpollTask
     
+    @State var isShowingSummary = false
+    
     init(assembly: ServerAssembly) {
         self.assembly = assembly
         self.scan = assembly.artpoll
@@ -67,9 +69,24 @@ struct ServerAssemblyView: View {
                 
                 assembly.artpollStateView
             }
-            
-            ForEach(assembly.available, id: \.urlString) { server in
-                MiniatureServerView(server: server)
+                        
+            if !assembly.available.isEmpty {
+                HStack {
+                    Text("Server Arrangement")
+                    
+                    Image(systemName: NSImage.quickLookTemplateName)
+                        .onHover { self.isShowingSummary = $0 }
+                        .popover(isPresented: $isShowingSummary, arrowEdge: .trailing) {
+                            Text("Size: \(self.assembly.desiredSize.simpleDescription)")
+                        }
+                }
+
+                ForEach(assembly.available, id: \.urlString) { server in
+                    MiniatureServerView(server: server)
+                }
+            }
+            else {
+                Text("No servers found!")
             }
         }
     }
