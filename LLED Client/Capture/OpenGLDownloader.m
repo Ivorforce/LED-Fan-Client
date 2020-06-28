@@ -197,35 +197,25 @@
     {
         [shader bind];
         glBindTexture(GL_TEXTURE_RECTANGLE, image.textureName);
-
         glBindVertexArray(_vao);
 
+        [framebuffer bind];
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         
-        {
-            [framebuffer bind];
-            
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-            
-            if (_textureData.length != 3 * _imageSize.width * _imageSize.height) {
-                _textureData = [[NSMutableData alloc] initWithLength:3 * _imageSize.width * _imageSize.height];
-            }
-            glReadPixels(0, 0, _imageSize.width, _imageSize.height, GL_RGB, GL_UNSIGNED_BYTE, [_textureData mutableBytes]);
-            [Framebuffer unbind];
-
-            CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((CFDataRef) _textureData);
-            CGImageRef ref = CGImageCreate(_imageSize.width, _imageSize.height, 8, 3 * 8, 3 * _imageSize.width, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrderDefault, dataProvider, nil, true, kCGRenderingIntentDefault);
-            
-            glBindVertexArray(0);
-            glBindTexture(GL_TEXTURE_RECTANGLE, 0);
-            glUseProgram(0);
-
-            return ref;
+        if (_textureData.length != 3 * _imageSize.width * _imageSize.height) {
+            _textureData = [[NSMutableData alloc] initWithLength:3 * _imageSize.width * _imageSize.height];
         }
+        glReadPixels(0, 0, _imageSize.width, _imageSize.height, GL_RGB, GL_UNSIGNED_BYTE, [_textureData mutableBytes]);
+        [Framebuffer unbind];
 
+        CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((CFDataRef) _textureData);
+        CGImageRef ref = CGImageCreate(_imageSize.width, _imageSize.height, 8, 3 * 8, 3 * _imageSize.width, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrderDefault, dataProvider, nil, true, kCGRenderingIntentDefault);
+        
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_RECTANGLE, 0);
         glUseProgram(0);
+        
+        return ref;
     }
     [[self openGLContext] flushBuffer];
     return nil;
