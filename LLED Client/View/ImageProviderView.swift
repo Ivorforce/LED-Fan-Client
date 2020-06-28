@@ -31,23 +31,28 @@ struct ImageProviderView: View {
     static let captureMethods = [
         MonitorScreenAVFoundation(),
         SyphonScreen(),
-        MonitorScreenSimple()
+        ImageScreen()
+//        MonitorScreenSimple(),
     ]
         
     @ObservedObject var pool: ImagePool
     @State var showPreview = false
     
     let captureSyphonView: CaptureSyphonView
-    
+    let captureImageView: CaptureImageView
+
     init(pool: ImagePool) {
         self.pool = pool
-        captureSyphonView = CaptureSyphonView(syphon: Self.captureMethods[1] as! SyphonScreen)
+        captureSyphonView = CaptureSyphonView(capturer: Self.captureMethods[1] as! SyphonScreen)
+        captureImageView = CaptureImageView(capturer: Self.captureMethods[2] as! ImageScreen)
     }
             
     var methodView: some View {
         switch pool.capturer {
         case is SyphonScreen:
             return AnyView(captureSyphonView)
+        case is ImageScreen:
+            return AnyView(captureImageView)
         default:
             return AnyView(EmptyView())
         }

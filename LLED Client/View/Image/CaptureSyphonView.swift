@@ -39,8 +39,8 @@ struct CaptureSyphonView: View {
     @ObservedObject var syphon: SyphonScreen
     @ObservedObject var syphonProvider: SyphonProvider
     
-    init(syphon: SyphonScreen) {
-        self.syphon = syphon
+    init(capturer: SyphonScreen) {
+        self.syphon = capturer
         syphonProvider = SyphonProvider(directory: .shared())
     }
         

@@ -20,6 +20,8 @@
 		8056FE7A24A638BF00AE6C1E /* CaptureSyphonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE7924A638BF00AE6C1E /* CaptureSyphonView.swift */; };
 		8056FE8424A66AD900AE6C1E /* OpenGLDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE8324A66AD900AE6C1E /* OpenGLDownloader.m */; };
 		8056FE8824A8EE2B00AE6C1E /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE8724A8EE2B00AE6C1E /* Alerts.swift */; };
+		8056FE8A24A8EF4200AE6C1E /* ImageScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE8924A8EF4200AE6C1E /* ImageScreen.swift */; };
+		8056FE8D24A8F64100AE6C1E /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE8C24A8F64100AE6C1E /* CaptureImageView.swift */; };
 		8099F0AF249CCDAA0022FA49 /* AssemblyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0AE249CCDAA0022FA49 /* AssemblyView.swift */; };
 		8099F0B1249CCEBE0022FA49 /* ResourcePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */; };
 		8099F0B3249CD9FB0022FA49 /* AsyncTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */; };
@@ -86,6 +88,8 @@
 		8056FE8224A66AD900AE6C1E /* OpenGLDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLDownloader.h; sourceTree = "<group>"; };
 		8056FE8324A66AD900AE6C1E /* OpenGLDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLDownloader.m; sourceTree = "<group>"; };
 		8056FE8724A8EE2B00AE6C1E /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		8056FE8924A8EF4200AE6C1E /* ImageScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScreen.swift; sourceTree = "<group>"; };
+		8056FE8C24A8F64100AE6C1E /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		8099F0AE249CCDAA0022FA49 /* AssemblyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyView.swift; sourceTree = "<group>"; };
 		8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePool.swift; sourceTree = "<group>"; };
 		8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTimer.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				8056FE7924A638BF00AE6C1E /* CaptureSyphonView.swift */,
+				8056FE8C24A8F64100AE6C1E /* CaptureImageView.swift */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -185,6 +190,17 @@
 				80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */,
 			);
 			path = OpenGL;
+			sourceTree = "<group>";
+		};
+		8056FE8B24A8EF4500AE6C1E /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				80B76F36248C36D600442A55 /* MonitorScreenSimple.swift */,
+				80B76F3F2492729900442A55 /* MonitorScreenAVFoundation.swift */,
+				80B76F2C248C1E7D00442A55 /* SyphonScreen.swift */,
+				8056FE8924A8EF4200AE6C1E /* ImageScreen.swift */,
+			);
+			path = Screen;
 			sourceTree = "<group>";
 		};
 		80B76F25248BD61B00442A55 /* Shader */ = {
@@ -238,13 +254,11 @@
 		80C309FF24883AC1006E218C /* Capture */ = {
 			isa = PBXGroup;
 			children = (
+				8056FE8B24A8EF4500AE6C1E /* Screen */,
 				80CE90A5249E73B00092C215 /* Image */,
 				80B76F34248C361B00442A55 /* ImageCapture.swift */,
-				80B76F36248C36D600442A55 /* MonitorScreenSimple.swift */,
-				80B76F3F2492729900442A55 /* MonitorScreenAVFoundation.swift */,
 				8056FE8224A66AD900AE6C1E /* OpenGLDownloader.h */,
 				8056FE8324A66AD900AE6C1E /* OpenGLDownloader.m */,
-				80B76F2C248C1E7D00442A55 /* SyphonScreen.swift */,
 				80B76F3A248D42FF00442A55 /* FrameReader.h */,
 				80B76F3B248D42FF00442A55 /* FrameReader.m */,
 				80C30A0C24895758006E218C /* NSImage+LLED.h */,
@@ -403,6 +417,7 @@
 				8099F0BB249CEDC70022FA49 /* ServerAssemblyView.swift in Sources */,
 				8056FE8824A8EE2B00AE6C1E /* Alerts.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
+				8056FE8D24A8F64100AE6C1E /* CaptureImageView.swift in Sources */,
 				804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */,
 				8009DFC424A007B9003639B5 /* WeakBox.swift in Sources */,
 				8099F0AF249CCDAA0022FA49 /* AssemblyView.swift in Sources */,
@@ -430,6 +445,7 @@
 				803B6EF8249FD41D0053C122 /* LLEDExtensions.swift in Sources */,
 				80B76F2B248BD6A700442A55 /* OpenGL+Shader.swift in Sources */,
 				80E68F352485B89200F47DB1 /* Foundation+LLED.swift in Sources */,
+				8056FE8A24A8EF4200AE6C1E /* ImageScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
