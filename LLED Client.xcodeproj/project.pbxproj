@@ -144,7 +144,7 @@
 		8009DFC524A007CB003639B5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				8032F29724A2736300D67A1F /* OpenGL+VertexBuffer.swift */,
+				8056FE8524A8A69100AE6C1E /* OpenGL */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -163,6 +163,19 @@
 				8056FE7924A638BF00AE6C1E /* CaptureSyphonView.swift */,
 			);
 			path = Image;
+			sourceTree = "<group>";
+		};
+		8056FE8524A8A69100AE6C1E /* OpenGL */ = {
+			isa = PBXGroup;
+			children = (
+				8032F29724A2736300D67A1F /* OpenGL+VertexBuffer.swift */,
+				80B76F2E248C23F800442A55 /* OpenGL.swift */,
+				80B76F31248C31AB00442A55 /* OpenGL+ObjC.h */,
+				80B76F32248C31AB00442A55 /* OpenGL+ObjC.m */,
+				80B76F22248BB22100442A55 /* OpenGL+Texture.swift */,
+				80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */,
+			);
+			path = OpenGL;
 			sourceTree = "<group>";
 		};
 		80B76F25248BD61B00442A55 /* Shader */ = {
@@ -208,11 +221,6 @@
 				80E68F342485B89200F47DB1 /* Foundation+LLED.swift */,
 				80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */,
 				804BF62A248ADFDA00528016 /* Syphon+LLED.swift */,
-				80B76F2E248C23F800442A55 /* OpenGL.swift */,
-				80B76F31248C31AB00442A55 /* OpenGL+ObjC.h */,
-				80B76F32248C31AB00442A55 /* OpenGL+ObjC.m */,
-				80B76F22248BB22100442A55 /* OpenGL+Texture.swift */,
-				80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */,
 				80B76F412496BFD900442A55 /* BufferedResource.swift */,
 				8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */,
 				8099F0BF249D2F590022FA49 /* TimedBool.swift */,
