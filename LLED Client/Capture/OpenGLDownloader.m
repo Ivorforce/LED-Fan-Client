@@ -6,6 +6,9 @@
 //  Copyright © 2020 Lukas Tenbrink. All rights reserved.
 //
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 #import "OpenGLDownloader.h"
 #import "LLED_Client-Swift.h"
 
@@ -221,3 +224,5 @@
 }
 
 @end
+
+#pragma clang diagnostic pop
