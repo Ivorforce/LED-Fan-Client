@@ -145,6 +145,12 @@
 			isa = PBXGroup;
 			children = (
 				8056FE8524A8A69100AE6C1E /* OpenGL */,
+				803B6EF3249EA9240053C122 /* StopWatch.swift */,
+				80B76F412496BFD900442A55 /* BufferedResource.swift */,
+				8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */,
+				8099F0BF249D2F590022FA49 /* TimedBool.swift */,
+				803B6EF5249FB5350053C122 /* RollingArray.swift */,
+				8009DFC324A007B9003639B5 /* WeakBox.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -217,17 +223,11 @@
 		80C309FB24882E90006E218C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				803B6EF3249EA9240053C122 /* StopWatch.swift */,
 				80E68F342485B89200F47DB1 /* Foundation+LLED.swift */,
 				80E68F362485B9B800F47DB1 /* SwiftUI+Ports.swift */,
 				804BF62A248ADFDA00528016 /* Syphon+LLED.swift */,
-				80B76F412496BFD900442A55 /* BufferedResource.swift */,
-				8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */,
-				8099F0BF249D2F590022FA49 /* TimedBool.swift */,
-				803B6EF5249FB5350053C122 /* RollingArray.swift */,
 				803B6EF7249FD41D0053C122 /* LLEDExtensions.swift */,
 				8009DFC1249FF820003639B5 /* ReliableDiseappear.swift */,
-				8009DFC324A007B9003639B5 /* WeakBox.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
