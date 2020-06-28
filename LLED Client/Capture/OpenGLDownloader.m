@@ -12,7 +12,7 @@
 @property (readwrite) BOOL needsReshape;
 @property (readwrite, retain) NSError *error;
 
-@property NSData *textureData;
+@property NSMutableData *textureData;
 @end
 
 static const char *vertex = "#version 150\n\
@@ -103,7 +103,8 @@ void main() {\
     [_openGLContext makeCurrentContext];
     const GLint on = 1;
     [[self openGLContext] setValues:&on forParameter:NSOpenGLCPSwapInterval];
-
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    
     GLuint vertShader = [self compileShader:vertex ofType:GL_VERTEX_SHADER];
     GLuint fragShader = [self compileShader:frag ofType:GL_FRAGMENT_SHADER];
 
@@ -156,15 +157,13 @@ void main() {\
 
         glGenTextures(1, &_fboTexture);
         glBindTexture(GL_TEXTURE_2D, _fboTexture);
-        
+
         // Nearest because we don't need to rescale anyway
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         // Clamp because the texture should not need to repeat
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        // TODO Image size 100x100?
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 100, 100, 0, GL_RGB, GL_FLOAT, nil);
 
         glGenFramebuffers(1, &_fbo);
         glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
@@ -198,6 +197,7 @@ void main() {\
     SyphonImage *image = self.image;
 
     BOOL changed = self.needsReshape || !NSEqualSizes(_imageSize, image.textureSize);
+    self.needsReshape = changed;
 
     if (self.needsReshape)
     {
@@ -238,6 +238,10 @@ void main() {\
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
+        glBindTexture(GL_TEXTURE_2D, _fboTexture);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _imageSize.width, _imageSize.height, 0, GL_RGB, GL_FLOAT, nil);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -255,13 +259,14 @@ void main() {\
             glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             
-            if (_textureData.length != 3 * 100 * 100) {
-                _textureData = [[NSMutableData alloc] initWithLength:3 * 100 * 100];
+            if (_textureData.length != 3 * _imageSize.width * _imageSize.height) {
+                _textureData = [[NSMutableData alloc] initWithLength:3 * _imageSize.width * _imageSize.height];
             }
-            glReadPixels(0, 0, 100, 100, GL_RGB, GL_UNSIGNED_BYTE, [_textureData bytes]);
+            glReadPixels(0, 0, _imageSize.width, _imageSize.height, GL_RGB, GL_UNSIGNED_BYTE, [_textureData mutableBytes]);
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
             CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((CFDataRef) _textureData);
-            CGImageRef ref = CGImageCreate(100, 100, 8, 3 * 8, 3 * 100, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrderDefault, dataProvider, nil, true, kCGRenderingIntentDefault);
+            CGImageRef ref = CGImageCreate(_imageSize.width, _imageSize.height, 8, 3 * 8, 3 * _imageSize.width, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrderDefault, dataProvider, nil, true, kCGRenderingIntentDefault);
             
             glBindVertexArray(0);
             glBindTexture(GL_TEXTURE_RECTANGLE, 0);
