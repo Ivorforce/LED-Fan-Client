@@ -168,10 +168,10 @@
 		8056FE8524A8A69100AE6C1E /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
-				8032F29724A2736300D67A1F /* OpenGL+VertexBuffer.swift */,
 				80B76F2E248C23F800442A55 /* OpenGL.swift */,
 				80B76F31248C31AB00442A55 /* OpenGL+ObjC.h */,
 				80B76F32248C31AB00442A55 /* OpenGL+ObjC.m */,
+				8032F29724A2736300D67A1F /* OpenGL+VertexBuffer.swift */,
 				80B76F22248BB22100442A55 /* OpenGL+Texture.swift */,
 				80B76F2A248BD6A700442A55 /* OpenGL+Shader.swift */,
 			);
