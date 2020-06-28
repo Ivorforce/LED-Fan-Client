@@ -33,9 +33,15 @@ class ArtpollTask: NSObject, ObservableObject, GCDAsyncUdpSocketDelegate, GCDAsy
             try socket.bind(toPort: ArtnetProvider.port)
             try socket.beginReceiving()
             try socket.enableBroadcast(true)
-        } catch {
-            // TODO Address may be in use (e.g. MadMapper), display an error message or resolve
-            print(error)
+        } catch let error as NSError {
+            if error.domain == "NSPOSIXErrorDomain", error.code == 48 {
+                NSAlert.warning(title: "Scan Failure", text: "Another program is already using the ArtNET port.")
+            }
+            else {
+                NSAlert.warning(title: "Scan Failure", text: error.localizedDescription)
+                print(error)
+            }
+            
             socket.close()
             return
         }

@@ -19,6 +19,7 @@
 		804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804BF62A248ADFDA00528016 /* Syphon+LLED.swift */; };
 		8056FE7A24A638BF00AE6C1E /* CaptureSyphonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE7924A638BF00AE6C1E /* CaptureSyphonView.swift */; };
 		8056FE8424A66AD900AE6C1E /* OpenGLDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE8324A66AD900AE6C1E /* OpenGLDownloader.m */; };
+		8056FE8824A8EE2B00AE6C1E /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056FE8724A8EE2B00AE6C1E /* Alerts.swift */; };
 		8099F0AF249CCDAA0022FA49 /* AssemblyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0AE249CCDAA0022FA49 /* AssemblyView.swift */; };
 		8099F0B1249CCEBE0022FA49 /* ResourcePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */; };
 		8099F0B3249CD9FB0022FA49 /* AsyncTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */; };
@@ -84,6 +85,7 @@
 		8056FE7924A638BF00AE6C1E /* CaptureSyphonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSyphonView.swift; sourceTree = "<group>"; };
 		8056FE8224A66AD900AE6C1E /* OpenGLDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLDownloader.h; sourceTree = "<group>"; };
 		8056FE8324A66AD900AE6C1E /* OpenGLDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLDownloader.m; sourceTree = "<group>"; };
+		8056FE8724A8EE2B00AE6C1E /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		8099F0AE249CCDAA0022FA49 /* AssemblyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyView.swift; sourceTree = "<group>"; };
 		8099F0B0249CCEBE0022FA49 /* ResourcePool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePool.swift; sourceTree = "<group>"; };
 		8099F0B2249CD9FB0022FA49 /* AsyncTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTimer.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				8099F0BF249D2F590022FA49 /* TimedBool.swift */,
 				803B6EF5249FB5350053C122 /* RollingArray.swift */,
 				8009DFC324A007B9003639B5 /* WeakBox.swift */,
+				8056FE8724A8EE2B00AE6C1E /* Alerts.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				80CE90A9249E74C30092C215 /* ImagePool.swift in Sources */,
 				80CE90A7249E73C30092C215 /* LLImage.swift in Sources */,
 				8099F0BB249CEDC70022FA49 /* ServerAssemblyView.swift in Sources */,
+				8056FE8824A8EE2B00AE6C1E /* Alerts.swift in Sources */,
 				80C309FD24882F74006E218C /* ArtnetProvider.swift in Sources */,
 				804BF62B248ADFDA00528016 /* Syphon+LLED.swift in Sources */,
 				8009DFC424A007B9003639B5 /* WeakBox.swift in Sources */,
