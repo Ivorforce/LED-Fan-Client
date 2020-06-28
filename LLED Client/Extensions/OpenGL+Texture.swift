@@ -93,6 +93,13 @@ import OpenGL
     }
     
     @objc
+    func delete() {
+        if framebufferID > 0 {
+            glDeleteFramebuffers(1, &framebufferID)
+        }
+    }
+    
+    @objc
     func create() {
         guard framebufferID == 0 else {
             return

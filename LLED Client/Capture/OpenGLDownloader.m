@@ -22,8 +22,7 @@
     GLuint _vao;
     GLuint _vbo;
     
-    GLuint _fbo;
-    GLuint _fboTexture;
+    Framebuffer *framebuffer;
 }
 
 + (NSError *)openGLError
@@ -69,6 +68,7 @@
 - (void)dealloc
 {
     [shader delete];
+    [framebuffer delete];
     
     if (_vao)
     {
@@ -117,20 +117,7 @@
             self.error = [[self class] openGLError];
         }
 
-        glGenTextures(1, &_fboTexture);
-        glBindTexture(GL_TEXTURE_2D, _fboTexture);
-
-        // Nearest because we don't need to rescale anyway
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        // Clamp because the texture should not need to repeat
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-        glGenFramebuffers(1, &_fbo);
-        glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
-        
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _fboTexture, 0);
+        framebuffer = [[Framebuffer alloc] init];
 
         glUseProgram(0);
 
@@ -201,9 +188,7 @@
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
-        glBindTexture(GL_TEXTURE_2D, _fboTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _imageSize.width, _imageSize.height, 0, GL_RGB, GL_FLOAT, nil);
-        glBindTexture(GL_TEXTURE_2D, 0);
+        [framebuffer setSize:_imageSize];
     }
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -218,14 +203,15 @@
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         
         {
-            glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+            [framebuffer bind];
+            
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             
             if (_textureData.length != 3 * _imageSize.width * _imageSize.height) {
                 _textureData = [[NSMutableData alloc] initWithLength:3 * _imageSize.width * _imageSize.height];
             }
             glReadPixels(0, 0, _imageSize.width, _imageSize.height, GL_RGB, GL_UNSIGNED_BYTE, [_textureData mutableBytes]);
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            [Framebuffer unbind];
 
             CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((CFDataRef) _textureData);
             CGImageRef ref = CGImageCreate(_imageSize.width, _imageSize.height, 8, 3 * 8, 3 * _imageSize.width, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrderDefault, dataProvider, nil, true, kCGRenderingIntentDefault);
