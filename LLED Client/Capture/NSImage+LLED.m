@@ -73,7 +73,7 @@
 
     // Gotta Convert
     
-    NSMutableData *pixels = [[NSMutableData alloc] initWithLength:expectedSize];
+    NSMutableData *pixels = [[NSMutableData alloc] initWithCapacity: expectedSize];
 
     for (int y = 0; y < bmp.pixelsHigh; y++) {
         unsigned char *rowData = data;
