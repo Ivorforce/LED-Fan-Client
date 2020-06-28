@@ -7,5 +7,4 @@ out vec4 color;
 
 void main() {
     color = texture(tex, fragTexCoord);
-    color.r = 1;
 }

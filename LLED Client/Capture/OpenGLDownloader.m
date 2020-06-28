@@ -7,6 +7,7 @@
 //
 
 #import "OpenGLDownloader.h"
+#import "LLED_Client-Swift.h"
 
 @interface OpenGLDownloader ()
 @property (readwrite) BOOL needsReshape;
@@ -15,26 +16,9 @@
 @property NSMutableData *textureData;
 @end
 
-static const char *vertex = "#version 150\n\
-in vec2 vertCoord;\
-in vec2 texCoord;\
-out vec2 fragTexCoord;\
-void main() {\
-    fragTexCoord = texCoord;\
-    gl_Position = vec4(vertCoord, 1.0, 1.0);\
-}";
-
-static const char *frag = "#version 150\n\
-uniform sampler2DRect tex;\
-in vec2 fragTexCoord;\
-out vec4 color;\
-void main() {\
-    color = texture(tex, fragTexCoord);\
-}";
-
 @implementation OpenGLDownloader {
     NSSize _imageSize;
-    GLuint _program;
+    OpenGLShader *shader;
     GLuint _vao;
     GLuint _vbo;
     
@@ -84,10 +68,8 @@ void main() {\
 
 - (void)dealloc
 {
-    if (_program)
-    {
-        glDeleteProgram(_program);
-    }
+    [shader delete];
+    
     if (_vao)
     {
         glDeleteVertexArrays(1, &_vao);
@@ -105,39 +87,19 @@ void main() {\
     [[self openGLContext] setValues:&on forParameter:NSOpenGLCPSwapInterval];
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
     
-    GLuint vertShader = [self compileShader:vertex ofType:GL_VERTEX_SHADER];
-    GLuint fragShader = [self compileShader:frag ofType:GL_FRAGMENT_SHADER];
+    shader = [[OpenGLShader alloc] init];
+    [shader compileWithVertexResource:@"default" ofType:@"vs" fragmentResource:@"default" ofType:@"fs" error:nil];
 
-    if (vertShader && fragShader)
+    if ([shader bind])
     {
-        _program = glCreateProgram();
-        glAttachShader(_program, vertShader);
-        glAttachShader(_program, fragShader);
-
-        glDeleteShader(vertShader);
-        glDeleteShader(fragShader);
-
-        glLinkProgram(_program);
-        GLint status;
-        glGetProgramiv(_program, GL_LINK_STATUS, &status);
-        if (status == GL_FALSE)
-        {
-            glDeleteProgram(_program);
-            _program = 0;
-        }
-    }
-
-    if (_program)
-    {
-        glUseProgram(_program);
-        GLint tex = glGetUniformLocation(_program, "tex");
+        GLint tex = glGetUniformLocation([shader programID], "tex");
         glUniform1i(tex, 0);
 
         glGenVertexArrays(1, &_vao);
         glGenBuffers(1, &_vbo);
 
-        GLint vertCoord = glGetAttribLocation(_program, "vertCoord");
-        GLint texCoord = glGetAttribLocation(_program, "texCoord");
+        GLint vertCoord = glGetAttribLocation([shader programID], "vertCoord");
+        GLint texCoord = glGetAttribLocation([shader programID], "texCoord");
 
         glBindVertexArray(_vao);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -248,7 +210,7 @@ void main() {\
 
     if (image)
     {
-        glUseProgram(_program);
+        [shader bind];
         glBindTexture(GL_TEXTURE_RECTANGLE, image.textureName);
 
         glBindVertexArray(_vao);

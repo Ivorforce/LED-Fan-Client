@@ -12,7 +12,8 @@ import GLKit
 import GLUT
 
 @objc(OpenGLShader) class Shader: NSObject {
-    var programID: GLuint? = nil
+    @objc
+    var programID: GLuint = 0
 
     @objc
     class func unbind() {
@@ -22,13 +23,23 @@ import GLUT
     @objc
     @discardableResult
     func bind() -> Bool {
-        guard let programID = programID else {
+        guard programID > 0 else {
             return false
         }
         
         glUseProgram(programID)
         
         return true
+    }
+    
+    @objc
+    func delete() {
+        guard programID > 0 else {
+            return
+        }
+
+        glDeleteProgram(programID)
+        self.programID = 0
     }
     
     enum CompileFailure : Error {
@@ -98,13 +109,13 @@ import GLUT
     }
 
     func find(uniform: String) -> Uniform {
-        let val = glGetUniformLocation(programID!, uniform.cString(using: .ascii))
+        let val = glGetUniformLocation(programID, uniform.cString(using: .ascii))
         if val < 0 { print("No such uniform: \(uniform)") }
         return .init(rawValue: val)
     }
 
     func find(attribute: String) -> Attribute {
-        let val = glGetAttribLocation(programID!, attribute.cString(using: .ascii))
+        let val = glGetAttribLocation(programID, attribute.cString(using: .ascii))
         if val < 0 { print("No such attribute: \(attribute)") }
         return .init(rawValue: val)
     }
